@@ -1,3 +1,14 @@
+<?php
+//セッション開始
+session_start();
+
+//エラー表示
+error_reporting(E_ALL | E_STRICT);
+ini_set('display_errors','On');
+
+require '../booststrap.php';
+
+?>
 <!DOCTYPE html>
 <html lang="ja">
 <head>

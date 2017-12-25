@@ -5,8 +5,6 @@
 <title>HAL学生管理システム|</title>
 <link type="text/css" rel="stylesheet" href="css/reset/html5reset-1.6.1.css" />
 <link type="text/css" rel="stylesheet" href="css/materialize.min.css"  media="screen,projection"/>
-<link type="text/css" rel="stylesheet" href="css/themes/default.css">
-<link type="text/css" rel="stylesheet" href="css/themes/default.date.css">
 <link type="text/css" rel="stylesheet" href="css/materialize.min.css" />
 <link type="text/css" rel="stylesheet" href="css/desin/desin_format.css" />
 <link type="text/css" rel="stylesheet" href="css/desin/desin_home.css" />

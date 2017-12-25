@@ -1,5 +1,5 @@
 <?php
-require("DbManager.php");
+//require("DbManager.php");
 class DataAccess
 {
   const DSN ="mysql:host=localhost;dbname=StudentWorks;charset=utf8";//データベース名
@@ -51,7 +51,6 @@ class DataAccess
     $stmt = self::$dbCon->prepare($sql);
     $result = $stmt->execute();
     $rows = $stmt->fetchAll();
-
     return $rows;
   }
   /**

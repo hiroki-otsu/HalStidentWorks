@@ -7,6 +7,8 @@ error_reporting(E_ALL | E_STRICT);
 ini_set('display_errors','On');
 
 require '../booststrap.php';
+//$session = new Session();
+$dataAccess = new DataAccess();
 
 ?>
 <!DOCTYPE html>
@@ -67,24 +69,31 @@ require '../booststrap.php';
           </tr>
         </thead>
         <tbody>
-        <tr>
-          <td class="teachername">川島智弘</td>
-          <td class="teacherenrollment">在籍中</td>
-          <td class="teacherlamp"><div id="lamp_color_green"></td>
-          <td class="teacherdate">2017/01/01 00:00:00</td>
-        </tr>
-        <tr>
-          <td class="teachername">川島智弘</td>
-          <td class="teacherenrollment">離席中</td>
-          <td class="teacherlamp"><div id="lamp_color_orange"></div></td>
-          <td class="teacherdate">2017/01/01 00:00:00</td>
-        </tr>
-        <tr>
-          <td class="teachername">川島智弘</td>
-          <td class="teacherenrollment">不在</td>
-          <td class="teacherlamp"><div id="lamp_color_gray"></div></td>
-          <td class="teacherdate">2017/01/01 00:00:00</td>
-        </tr>
+          <?php
+          $teacher = $dataAccess -> getTeacherList();
+          foreach ($teacher as $value) {
+            switch ($value['teacher_status']) {
+              case 1:
+                $TeacherStatus ="在籍中";
+                $lamp="<div id='lamp_color_green'>";
+                break;
+              case 2:
+                $TeacherStatus="離席中";
+                $lamp="<div id='lamp_color_orange'>";
+                break;
+              default:
+                $TeacherStatus ="不在中";
+                $lamp="<div id='lamp_color_gray'>";
+                break;
+            }
+            print("<tr>");
+            print("<td class='teachername'>".$value['teacher_name'].PHP_EOL."</td>");
+            print("<td class='teacherenrollment'>".$TeacherStatus."</td>");
+            print("<td class='teacherlamp'>".$lamp.PHP_EOL."</td>");
+            print("<td class='teacherdate'>".$value['teacher_update'].PHP_EOL."</td>");
+            print("</tr>");
+          }
+          ?>
         </tbody>
       </table>
     </div>

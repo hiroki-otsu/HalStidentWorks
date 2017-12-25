@@ -1,0 +1,134 @@
+@charset "utf-8";
+body{
+	width:1900px;
+}
+/**
+ * ナビゲーションエリア＆logoエリア&メニューバーエリア
+ *
+ */
+#nav {
+	width: 20rem;
+	height: 100%;
+	display: inline-block;
+	position: fixed;
+	top: 0;
+	left: 0;
+	z-index: 2;
+	background-color: rgb(255, 255, 255);
+}
+#logo {
+	width: 200px;
+	height: 200px;
+	margin:auto;
+	margin-bottom: 30px;
+	background-color: rgb(123, 236, 199);
+}
+.menubar img {
+	vertical-align: middle;
+	margin-right: 25px;
+}
+#menu ul{
+	width: 300px;
+	margin: 0;
+	padding: 0;
+	list-style: none;
+}
+#menu li{
+	font-size:large;
+	font-family: Trebuchet;
+	width: 300px;
+	height: auto;
+	display: inline;
+}
+#menu li a{
+	width: 300px;
+	height: 50px;
+	color:rgb(0, 0, 0);
+	text-decoration: none;
+	padding-left:15px;
+}
+.menubar a{
+	display: table-cell;
+	vertical-align:middle;
+}
+#menu li a:hover{
+	background-color:rgb(221, 221, 221);
+}
+/**
+ * ヘッダーエリア
+ *
+ */
+#header {
+	width: 1600px;
+	height:auto;
+	border-bottom:solid 1px rgb(227, 227, 227);
+	margin-bottom:5px;
+}
+#header h2{
+	font-size:36px;
+	margin: auto;
+}
+/**
+ * システム名
+ * @type {[type]}
+ */
+#title{
+	width: 1600px;
+	height:50px;
+}
+#title h2 {
+	margin-top: 10px;
+	margin-left:10px;
+}
+/**
+ * 学生名&学籍番号
+ * @type {[type]}
+ */
+
+#user {
+	width: 1600px;
+	height:30px;
+}
+#user img {
+	vertical-align:middle;
+	margin-right: 10px;
+}
+#user p {
+	-webkit-margin-before: 0em;
+	-webkit-margin-after: 0em;
+	-webkit-margin-start: 0px;
+	-webkit-margin-end: 0px;
+	font-size:20px;
+	margin-right:50px;
+}
+#user a {
+	float: right;
+	color:rgb(0, 0, 0);
+	text-decoration: none;
+}
+#user a:hover {
+	text-decoration: underline;
+}
+/**
+ * コンテンツエリア
+ *
+ */
+#contents {
+	width: 1600px;
+	height:70rem;
+	float: right;
+	display: inline-block;
+}
+/**
+ * フッター
+ * @type {[type]}
+ */
+#footer {
+	border-top:solid 1px rgb(227, 227, 227);
+	width: 1600px;
+	height: 30px;
+	text-align: center;
+	font-style: italic;
+	vertical-align: middle;
+	display: table-cell;
+}

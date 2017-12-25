@@ -47,10 +47,7 @@ class DataAccess
    */
   public function getTeacherList()
   {
-    $sql="SELECT T.Teacher_Name,E.Enrollment_status,E.Enrollment_Time ";
-    $sql.="from Teacher_Account AS T ";
-    $sql.="Inner Join Enrolled AS E ";
-    $sql.="on T.Teacher_Id = E.Teacher_Id";
+    $sql="SELECT * FROM teacher_account";
     $stmt = self::$dbCon->prepare($sql);
     $result = $stmt->execute();
     $rows = $stmt->fetchAll();

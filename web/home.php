@@ -32,7 +32,7 @@
         <h2>HAL Students System</h2>
       </div>
       <div id="user">
-        <p><a href="mypagehome.php"><img src="image/icon/ic_person_black_24dp_1x.png" width="24" height="24" alt="アカウント"/>ohs50054:大津裕幹</a></p>
+        <p><a href="home.php"><img src="image/icon/ic_person_black_24dp_1x.png" width="24" height="24" alt="アカウント"/>ohs50054:大津裕幹</a></p>
       </div>
     </div><!-- end header -->
     <div id="tab">

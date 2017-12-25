@@ -1,39 +1,39 @@
-#seach {
+#search {
 	width: 750px;
 	height: 80px;
 	margin-top: 30px;
 }
-#seachname {
+#search-name {
 	width: 500px;
 	margin-right:30px;
 	margin-left:10px;
 	float: left;
 }
-#seachbtn {
+#search-btn {
 	width: 50px;
 	height: 20px;
 	margin-top: 10px;
 }
-#teacherlist {
+#teacher-list {
 	width: 1300px;
 	height: 1200px;
 	display: block;
 	margin: auto;
 	overflow: auto;
 }
-.teachername {
+.teacher-name {
 	text-align: center;
 	vertical-align: middle;
 }
-.teacherenrollment {
+.teacher-enrollment {
 	text-align: center;
 	vertical-align: middle;
 }
-.teacherlamp {
+.teacher-lamp {
 	text-align: center;
 	vertical-align: middle;
 }
-.teacherdate {
+.teacher-date {
 	text-align: center;
 	vertical-align: middle;
 }

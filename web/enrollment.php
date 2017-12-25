@@ -48,24 +48,24 @@ $dataAccess = new DataAccess();
         <p><a href="home.php"><img src="image/icon/ic_person_black_24dp_1x.png" width="24" height="24" alt="アカウント"/>ohs50054:大津裕幹</a></p>
       </div>
     </div><!-- end header -->
-    <div id="seach" class="input-field">
+    <div id="search" class="input-field">
       <form action="#!" method="post">
-        <div id="seachname">
+        <div id="search-name">
           <i class="material-icons prefix">account_circle</i>
             <input id="icon_prefix" type="text" class="validate" >
             <label for="icon_prefix">Teacher Name</label>
         </div>
-        <button class="btn waves-effect waves-light" type="submit" name="action">Seach</button>
+        <button class="btn waves-effect waves-light" type="submit" name="action">Search</button>
       </form>
     </div>
-    <div id="teacherlist">
+    <div id="teacher-list">
       <table class="highlight">
         <thead>
           <tr>
-            <th class="teachername">名前</th>
-            <th class="teacherenrollment">在籍状況</th>
-            <th class="teacherlamp">在籍ランプ</th>
-            <th class="teacherdate">更新日時</th>
+            <th class="teacher-name">名前</th>
+            <th class="teacher-enrollment">在籍状況</th>
+            <th class="teacher-lamp">在籍ランプ</th>
+            <th class="teacher-date">更新日時</th>
           </tr>
         </thead>
         <tbody>
@@ -87,10 +87,10 @@ $dataAccess = new DataAccess();
                 break;
             }
             print("<tr>");
-            print("<td class='teachername'>".$value['teacher_name'].PHP_EOL."</td>");
-            print("<td class='teacherenrollment'>".$TeacherStatus."</td>");
-            print("<td class='teacherlamp'>".$lamp.PHP_EOL."</td>");
-            print("<td class='teacherdate'>".$value['teacher_update'].PHP_EOL."</td>");
+            print("<td class='teacher-name'>".$value['teacher_name'].PHP_EOL."</td>");
+            print("<td class='teacher-enrollment'>".$TeacherStatus."</td>");
+            print("<td class='teacher-lamp'>".$lamp.PHP_EOL."</td>");
+            print("<td class='teacher-date'>".$value['teacher_update'].PHP_EOL."</td>");
             print("</tr>");
           }
           ?>

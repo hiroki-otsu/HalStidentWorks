@@ -15,7 +15,6 @@ class DataAccess
     // self::$dbCon = new DbManager();
     // self::$dbCon ->DbConnection();
     // var_dump(self::$dbCon);
-    echo "データベース接続<br>";
   }
   public function __destruct()
   {

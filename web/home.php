@@ -108,8 +108,8 @@
         <div id="contactComment">
           <form action="" method="get">
             <div class="input-field col s3">
-              <input id="contacTitle" type="text" class="validate">
-              <label for="contacTitle">タイトル</label>
+              <input id="contactTitle" type="text" class="validate">
+              <label for="contactTitle">タイトル</label>
             </div>
             <div class="row">
               <div class="row">

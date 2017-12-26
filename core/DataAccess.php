@@ -35,7 +35,7 @@ class DataAccess
     $stmt =self::$dbCon->prepare($sql);
     $stmt->bindValue(":userId", $id, PDO::PARAM_STR);
     $stmt->bindValue(":userPass",$pass, PDO::PARAM_STR);
-    $result = $stmt->execute();
+    $stmt->execute();
     $row = $stmt->fetch();
 
     return $row;
@@ -52,6 +52,22 @@ class DataAccess
     $result = $stmt->execute();
     $rows = $stmt->fetchAll();
     return $rows;
+  }
+    /**
+     * 検索された先生情報を取得するメソッド
+     *
+     * @param $teacherName 先生の名前
+     * @return row 取得した情報を返す
+     */
+  public function getSelectTeacher($teacherName)
+  {
+    $sql="SELECT * from Student_Account WHERE Student_Id = :teacher";
+    $stmt = self::$dbCon->prepare($sql);
+    $stmt->bindValue(":teacher", $teacherName, PDO::PARAM_STR);
+    $stmt->execute();
+    $row = $stmt->fetch();
+
+    return $row;
   }
   /**
    *イベント情報を取得するメソッド(全件)

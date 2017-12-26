@@ -1,0 +1,52 @@
+#eventpost a{
+	width: 250px;
+	height:50px;
+	float: right;
+	margin-right: 30px;
+	margin-bottom: 30px;
+}
+#events {
+	clear: right;
+	width: 1600px;
+	height: 800px;
+}
+#option {
+	width: 300px;
+	height: 45px;
+	display: block;
+	float: right;
+	margin-right: 50px;
+	margin-bottom: 20px;
+}
+#list {
+	display: block;
+	clear: right;
+	width: 1500px;
+	height: 800px;
+	margin: auto;
+	margin-top: 5px;
+}
+#list td{
+	height: 75px;
+	margin: auto;
+}
+.events_name  {
+	width: 900px;
+}
+.school_year {
+	width: 250px;
+}
+.events_date {
+	width: 250px;
+}
+.details_link {
+	width: 250px;
+}
+#pageination {
+	width: 1600px;
+	height: 30px;
+	margin: auto;
+	margin-top: 25px;
+	margin-bottom: 25px;
+	text-align: center;
+}

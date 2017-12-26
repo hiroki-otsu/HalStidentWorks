@@ -106,14 +106,14 @@ class DataAccess
     return $no;
   }
   /**
-   *
+   *　
    *
    * @param  [type] $name [description]
    * @return [type]       [description]
    */
   public function getUserId($name)
   {
-    $sql="SELECT Student_Id from  Student_Account WHERE Student_Name=:userName";
+    $sql="SELECT Student_No from  Student_Account WHERE Student_Name=:userName";
     $stmt =self::$dbCon->prepare($sql);
     $stmt->bindValue(":userName", $name, PDO::PARAM_STR);
     $result = $stmt->execute();

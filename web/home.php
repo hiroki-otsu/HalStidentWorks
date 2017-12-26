@@ -6,8 +6,8 @@
 <link type="text/css" rel="stylesheet" href="css/reset/html5reset-1.6.1.css" />
 <link type="text/css" rel="stylesheet" href="css/materialize.min.css"  media="screen,projection"/>
 <link type="text/css" rel="stylesheet" href="css/materialize.min.css" />
-<link type="text/css" rel="stylesheet" href="css/desin/desin_format.css" />
-<link type="text/css" rel="stylesheet" href="css/desin/desin_home.css" />
+<link type="text/css" rel="stylesheet" href="css/design/design_format.css" />
+<link type="text/css" rel="stylesheet" href="css/design/design_home.css" />
 <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet" />
 </head>
 <body>

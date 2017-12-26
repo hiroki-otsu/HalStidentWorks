@@ -22,7 +22,7 @@ class DataAccess
     //unset(self::$dbCon);
   }
   /**
-   *学生名の情報を取得するメソッド
+   * ログインした学生の情報を取得するメソッド
    *
    * @param [string] $id   [ユーザID]
    * @param [string] $pass [パスワード]

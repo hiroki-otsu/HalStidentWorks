@@ -75,4 +75,3 @@ class Session
     return $this->get('_authenticated',false);
   }
 }
- ?>

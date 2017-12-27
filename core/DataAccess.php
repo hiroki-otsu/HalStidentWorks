@@ -49,7 +49,7 @@ class DataAccess
   {
     $sql="SELECT * FROM teacher_account";
     $stmt = self::$dbCon->prepare($sql);
-    $result = $stmt->execute();
+    $stmt->execute();
     $rows = $stmt->fetchAll();
     return $rows;
   }
@@ -77,7 +77,7 @@ class DataAccess
   public function getEventsInformation(){
     $sql="SELECT * from Events ORDER By Events_No DESC";
     $stmt =self::$dbCon->prepare($sql);
-    $result = $stmt->execute();
+    $stmt->execute();
     $rows = $stmt->fetchAll();
 
     return $rows;
@@ -91,7 +91,7 @@ class DataAccess
   {
     $sql="SELECT Max(Events_No) as maxNo from Events";
     $stmt =self::$dbCon->prepare($sql);
-    $result = $stmt->execute();
+    $stmt->execute();
 
     while ($row = $stmt->fetch()) {
       $maxNo = $row["maxNo"];
@@ -116,20 +116,24 @@ class DataAccess
     $sql="SELECT Student_No from  Student_Account WHERE Student_Name=:userName";
     $stmt =self::$dbCon->prepare($sql);
     $stmt->bindValue(":userName", $name, PDO::PARAM_STR);
-    $result = $stmt->execute();
+    $stmt->execute();
+    $id =null;
     while ($row = $stmt->fetch()) {
        $id = $row["Student_Id"];
      }
     return $id;
   }
-  /**
-   * イベントを新規投稿するメソッド
-   *
-   * @param [type] $no        [description]
-   * @param [type] $title     [description]
-   * @param [type] $eventdate [description]
-   * @param [type] $comment   [description]
-   */
+    /**
+     *  開催するイベント情報を登録するメソッド
+     *
+     * @param $no
+     * @param $user
+     * @param $title
+     * @param $comment
+     * @param $eventdate
+     * @param $time
+     * @return bool
+     */
   public function setEvent($no,$user,$title,$comment,$eventdate,$time)
   {
     $sql = "INSERT INTO Events(Events_No,Student_No,Events_Title,Events_Contents,Events_date,Events_Time) ";
@@ -145,17 +149,18 @@ class DataAccess
 
     return $result;
   }
-  /**
-   * 詳細情報を取得するメソッド
-   *
-   * @param string $value [description]
-   */
+    /**
+     * 開催されるイベント詳細情報を取得するメソッド
+     *
+     * @param $no
+     * @return array
+     */
   public function getEventdetails($no)
   {
     $sql ="SELECT * from Events WHERE Events_No=:no";
     $stmt =self::$dbCon->prepare($sql);
     $stmt->bindValue(":no", $no, PDO::PARAM_INT);
-    $result = $stmt->execute();
+    $stmt->execute();
     $row = $stmt->fetchAll();
 
     return $row;
@@ -169,7 +174,7 @@ class DataAccess
   {
     $sql="SELECT Max(LostArticle_No) as maxNo from LostArticle";
     $stmt =self::$dbCon->prepare($sql);
-    $result = $stmt->execute();
+    $stmt->execute();
 
     while ($row = $stmt->fetch()) {
       $maxNo = $row["maxNo"];
@@ -192,11 +197,22 @@ class DataAccess
   {
     $sql="SELECT * from LostArticle order by LostArticle_No desc";
     $stmt =self::$dbCon->prepare($sql);
-    $result = $stmt->execute();
+    $stmt->execute();
     $rows = $stmt->fetchAll();
 
     return $rows;
   }
+
+    /**
+     *  忘れ物情報を登録するメソッド
+     *
+     * @param $no
+     * @param $title
+     * @param $comment
+     * @param $img
+     * @param $time
+     * @return bool
+     */
   public function setLostArticle($no,$title,$comment,$img,$time)
   {
     $sql = "INSERT INTO LostArticle(LostArticle_No,LostArticle_Title,LostArticle_comment,LostArticle_Image,LostArticle_Time)";
@@ -212,4 +228,4 @@ class DataAccess
     return $result;
   }
 }
- ?>
+

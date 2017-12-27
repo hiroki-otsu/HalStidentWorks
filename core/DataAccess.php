@@ -49,7 +49,7 @@ class DataAccess
   {
     $sql="SELECT * FROM teacher_account";
     $stmt = self::$dbCon->prepare($sql);
-    $stmt->execute();
+    $result = $stmt->execute();
     $rows = $stmt->fetchAll();
     return $rows;
   }

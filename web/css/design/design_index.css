@@ -1,0 +1,84 @@
+@charset "utf-8";
+
+body{
+    width:1900px;
+}
+/**
+ * ヘッダーエリア
+ *
+ */
+#header {
+    width:100%;
+    height:auto;
+    border-bottom:solid 1px rgb(227, 227, 227);
+    margin-bottom:5px;
+}
+#header h2{
+    font-size:36px;
+    margin: auto;
+}
+/**
+ * システム名
+ * @type {[type]}
+ */
+#title{
+    width: 1600px;
+    height:50px;
+}
+#title h2 {
+    margin-top: 10px;
+    margin-left:10px;
+}
+/**
+ * コンテンツエリア
+ *
+ */
+#contents {
+    width:100%;
+    height:50rem;
+    display:block;
+    margin-bottom:5px;
+    padding-top: 130px;
+}
+
+#login-form {
+    width:50rem;
+    height:60%;
+    display:block;
+    vertical-align: middle;
+    margin: auto;
+}
+
+#login-student {
+    width: 25rem;
+    height:5rem;
+    margin-left:5px;
+    margin-bottom:20px;
+}
+
+#login-pass {
+    width: 25rem;
+    height:5rem;
+    margin-left:5px;
+    margin-bottom:20px;
+}
+
+#btn-login {
+    width: 200px;
+    height:50px;
+    float: left;
+    margin-bottom: 15px;
+}
+
+/**
+ * フッター
+ * @type {[type]}
+ */
+#footer {
+    border-top:solid 1px rgb(227, 227, 227);
+    width:100%;
+    height: 30px;
+    text-align: center;
+    font-style: italic;
+    vertical-align: middle;
+}

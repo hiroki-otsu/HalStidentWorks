@@ -7,7 +7,7 @@ error_reporting(E_ALL | E_STRICT);
 ini_set('display_errors','On');
 
 require '../booststrap.php';
-//$session = new Session();
+$session = new Session();
 $dataAccess = new DataAccess();
 
 ?>

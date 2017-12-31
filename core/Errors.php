@@ -4,9 +4,13 @@ class errors
 {
     protected $errors = array();
 
-    public function errors($errorName,$errorMsg){
-        $this ->errors = array(
-            $errorName => $errorMsg
-        );
+    public function setErrors($errorMsg){
+        $this->errors[] ='<li>'.$errorMsg.'</li>';
+    }
+
+    public function  getErrors(){
+        foreach ($this->errors as $msg){
+            print $msg;
+        }
     }
 }

@@ -16,13 +16,14 @@ class Request
     }
     return false;
   }
-  /**
-   *$_GET[変数]から取得するメソッド
-   *
-   * @param  [type] $name    [description]
-   * @param  [type] $default [description]
-   * @return [type]          [description]
-   */
+
+    /**
+     *$_GET[変数]から取得するメソッド
+     *
+     * @param $name
+     * @param null $default
+     * @return null
+     */
   public function getGet($name, $default = null)
   {
     if (isset($_GET[$name])) {
@@ -30,13 +31,14 @@ class Request
     }
     return $default;
   }
-  /**
-   *$_POST[変数]から取得するメソッド
-   *
-   * @param  [type] $name
-   * @param  [type] $default
-   * @return [type]          [description]
-   */
+
+    /**
+     *$_POST[変数]から取得するメソッド
+     *
+     * @param $name
+     * @param null $default
+     * @return null
+     */
   public function getPost($name, $default = null)
   {
     if (isset($_POST[$name])) {
@@ -47,7 +49,6 @@ class Request
   /**
    *サーバのホスト名を取得するメソッド
    *
-   * @return [type] [description]
    */
   public function getHost()
   {
@@ -59,7 +60,7 @@ class Request
   /**
    *HTTPSでアクセスされたか判定するメソッド
    *
-   * @return
+   * @return false
    */
   public function isSsl()
   {

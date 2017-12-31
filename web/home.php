@@ -1,3 +1,13 @@
+<?php
+//エラー表示
+error_reporting(E_ALL | E_STRICT);
+ini_set('display_errors','On');
+//外部ファイル読み込み
+require '../bootstrap.php';
+//インスタンス化
+$session = new Session();
+$access = new DataAccess();
+?>
 <!DOCTYPE html>
 <html lang="ja">
 <head>
@@ -32,7 +42,7 @@
         <h2>HAL Students System</h2>
       </div>
       <div id="user">
-        <p><a href="home.php"><img src="image/icon/ic_person_black_24dp_1x.png" width="24" height="24" alt="アカウント"/>ohs50054:大津裕幹</a></p>
+        <p><a href="home.php"><img src="image/icon/ic_person_black_24dp_1x.png" width="24" height="24" alt="アカウント"/><?php echo $session->get('ohs50054')?></a></p>
       </div>
     </div><!-- end header -->
     <div id="tab">

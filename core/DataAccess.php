@@ -31,7 +31,7 @@ class DataAccess
    */
   public function getLoginUserInformation($id,$pass)
   {
-    $sql="SELECT Student_Name from Student_Account WHERE Student_Id = :userId and Student_Pass = :userPass";
+    $sql="SELECT Student_Name from student_account WHERE Student_No = :userId and Student_Pass = :userPass";
     $stmt =self::$dbCon->prepare($sql);
     $stmt->bindValue(":userId", $id, PDO::PARAM_STR);
     $stmt->bindValue(":userPass",$pass, PDO::PARAM_STR);

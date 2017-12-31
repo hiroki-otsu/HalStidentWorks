@@ -1,4 +1,11 @@
 <?php
+//エラー表示
+error_reporting(E_ALL | E_STRICT);
+ini_set('display_errors','On');
+//外部ファイル読み込み
+require '../bootstrap.php';
+//インスタンス化
+$error = new Errors();
 
 ?>
 <!DOCTYPE html>
@@ -26,6 +33,15 @@
                 <li class="collection-item">ログインフォーム</li>
                 <li class="collection-item">
                     <form action="Login.php" method="post">
+                        <div id="error-msg">
+                            <ul>
+                                <?php
+                                $error = new Errors();
+                                print_r($error);
+                                $error->getErrors();
+                                ?>
+                            </ul>
+                        </div>
                         <div class="input-field" id="login-student">
                             <input id="user" type="text" name="student" value="" class="validate">
                             <label for="user">ユーザID</label>

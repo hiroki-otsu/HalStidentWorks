@@ -1,7 +1,4 @@
 <?php
-//セッション開始
-session_start();
-
 //エラー表示
 error_reporting(E_ALL | E_STRICT);
 ini_set('display_errors','On');
@@ -45,7 +42,7 @@ $dataAccess = new DataAccess();
         <h2>HAL Students System</h2>
       </div>
       <div id="user">
-        <p><a href="home.php"><img src="image/icon/ic_person_black_24dp_1x.png" width="24" height="24" alt="アカウント"/>ohs50054:大津裕幹</a></p>
+          <p><a href="home.php"><img src="image/icon/ic_person_black_24dp_1x.png" width="24" height="24" alt="アカウント"/><?php echo $session->get('ohs50054')?></a></p>
       </div>
     </div><!-- end header -->
     <div id="search" class="input-field">

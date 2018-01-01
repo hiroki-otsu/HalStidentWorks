@@ -5,8 +5,6 @@ ini_set('display_errors','On');
 //外部ファイル読み込み
 require '../bootstrap.php';
 //インスタンス化
-$error = new Errors();
-
 ?>
 <!DOCTYPE html>
 <html lang="ja">
@@ -37,7 +35,6 @@ $error = new Errors();
                             <ul>
                                 <?php
                                 $error = new Errors();
-                                print_r($error);
                                 $error->getErrors();
                                 ?>
                             </ul>

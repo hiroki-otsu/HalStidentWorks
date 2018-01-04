@@ -71,12 +71,7 @@ $access = new DataAccess();
             </tr>
           </thead>
           <tbody>
-            <tr>
-              <td class="events_name">Kotlinを学ぼう!!</td>
-              <td class="school_year">２年生・3年生</td>
-              <td class="events_date">2017-11-12</td>
-              <td class="details_link"><a href="events_details.php"><img src="image/icon/ic_expand_more_black_24dp_1x.png" width="24" height="24" alt="詳細リンク"  /></a></td>
-            </tr>
+              <?php print $access -> getEventsInformation(); ?>
           </tbody>
         </table>
       </div>

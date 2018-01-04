@@ -48,15 +48,15 @@ $access = new DataAccess();
     <div id="tab">
       <div class="col s12">
         <ul class="tabs">
-          <li class="tab col s2"><a class="active" href="#test1">成績</a></li>
-          <li class="tab col s2"><a href="#test2">出席</a></li>
-          <li class="tab col s2"><a href="#test3">メッセージ</a></li>
-          <li class="tab col s2"><a href="#test5">イベント</a></li>
-          <li class="tab col s2"><a href="#test4">パスワード</a></li>
+          <li class="tab col s2"><a class="active" href="#achievement">成績</a></li>
+          <li class="tab col s2"><a href="#attend">出席</a></li>
+          <li class="tab col s2"><a href="#message">メッセージ</a></li>
+          <li class="tab col s2"><a href="#events">イベント</a></li>
+          <li class="tab col s2"><a href="#pass">パスワード</a></li>
           <li class="tab col s2"><a href="#test6">お問い合わせ</a></li>
         </ul>
       </div>
-      <div id="test1" class="col s2">
+      <div id="achievement" class="col s2">
         <div id="achievement">
           <table class="centered">
             <thead>
@@ -67,49 +67,68 @@ $access = new DataAccess();
                   <th id="subjectRating">評定</th>
               </tr>
               <tbody>
-                <tr>
-                  <td class="code">JV34</td>
-                  <td class="name">JavaプログラミングⅣ</td>
-                  <td class="score"><a class="waves-effect waves-light modal-trigger" href="#modal1"><img src="image/icon/ic_expand_more_black_24dp_1x.png" width="24" height="24" alt="" /></a></td>
-                  <td class="rating"><a class="waves-effect waves-light modal-trigger" href="#modal1"><img src="image/icon/ic_expand_more_black_24dp_1x.png" width="24" height="24" alt="" /></a></td>
-                </tr>
+              <?php
+                $dataList =$access -> getAchievementDataList();
+                foreach($dataList as $value){
+                    echo '<tr>';
+                    print '<td class="code">'.$value['subject_code'].'</td>';
+                    print '<td class="name">'.$value['subject_name'].'</td>';
+                    print '<td class="score"><a class="waves-effect waves-light modal-trigger" href="#0'.$value['subject_code'].'"><img src="image/icon/ic_expand_more_black_24dp_1x.png" width="24" height="24" alt="" /></a></td>';
+                    print '<td class="rating"><a class="waves-effect waves-light modal-trigger" href="#1'.$value['subject_code'].'"><img src="image/icon/ic_expand_more_black_24dp_1x.png" width="24" height="24" alt="" /></a></td>';
+                    print '</tr>';
+                }
+              ?>
               </tbody>
             </thead>
           </table>
         </div>
-
-        <div id="modal1" class="modal modal-fixed-footer">
-          <div class="modal-content">
-            <h4>JavaプログラミングⅣ</h4>
-            <p>A bunch of text</p>
-          </div>
-          <div class="modal-footer">
-            <a href="#!" class="modal-action modal-close waves-effect waves-green btn-flat ">Agree</a>
-          </div>
-        </div>
-
-        <div id="modal1" class="modal modal-fixed-footer">
-          <div class="modal-content">
-            <h4>JavaプログラミングⅣ</h4>
-            <p>A bunch of text</p>
-          </div>
-          <div class="modal-footer">
-            <a href="#!" class="modal-action modal-close waves-effect waves-green btn-flat ">Agree</a>
-          </div>
-        </div>
-
+          <?php
+            $dataList =$access -> getAchievementDataList();
+            foreach ($dataList as $value) {
+                switch ($value['task_status']){
+                    case 0:
+                        echo '<div id="0'.$value['subject_code'].'" class="modal modal-fixed-footer">';
+                        echo '<div class="modal-content">';
+                        echo '<h4>'.$value['subject_name'].'[課題]</h4>';
+                        break;
+                    case 1:
+                        echo '<div id="1'.$value['subject_code'].'" class="modal modal-fixed-footer">';
+                        echo '<div class="modal-content">';
+                        echo '<h4>'.$value['subject_name'].'[評価]</h4>';
+                        break;
+                }
+                echo '<table class="centered">';
+                echo '<thead>';
+                echo '<tr>';
+                echo '<th>課題名</th>';
+                echo '<th>点数</th>';
+                echo '</tr>';
+                echo '<tbody>';
+                echo '<tr>';
+                echo '<td>'.$value['task_name'].'</td>';
+                echo '<td>'.$value['task_score'].'</td>';
+                echo '</tr>';
+                echo '</tbody>';
+                echo '</thead>';
+                echo '</table>';
+                echo '</div>';
+                echo '<div class="modal-footer">';
+                echo '<a href="#!" class="modal-action modal-close waves-effect waves-green btn-flat ">Agree</a>';
+                echo '</div>';
+                echo '</div>';
+            }
+          ?>
+      </div>
+      <div id="attend" class="col s12">
 
       </div>
-      <div id="test2" class="col s12">
+      <div id="message" class="col s12">
 
       </div>
-      <div id="test3" class="col s12">
+      <div id="events" class="col s12">
 
       </div>
-      <div id="test4" class="col s12">
-
-      </div>
-      <div id="test5" class="col s12">
+      <div id="pass" class="col s12">
 
       </div>
       <div id="test6" class="col s12">

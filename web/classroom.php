@@ -101,61 +101,39 @@ $access = new DataAccess();
             </tr>
           </thead>
           <tbody>
-            <tr>
-              <td>161</td>
-              <td>有</td>
-              <td>有</td>
-              <td>L</td>
-              <td><a class="waves-effect waves-light btn modal-trigger" href="#modal1">確認</a></td>
-            </tr>
-            <tr>
-              <td>162</td>
-              <td>有</td>
-              <td>有</td>
-              <td>S</td>
-              <td><a class="waves-effect waves-light btn modal-trigger" href="#modal1">確認</a></td>
-            </tr>
-            <tr>
-              <td>163</td>
-              <td>有</td>
-              <td>有</td>
-              <td>S</td>
-              <td><a class="waves-effect waves-light btn modal-trigger" href="#modal1">確認</a></td>
-            </tr>
-            <tr>
-              <td>164</td>
-              <td>有</td>
-              <td>有</td>
-              <td>S</td>
-              <td><a class="waves-effect waves-light btn modal-trigger" href="#modal1">確認</a></td>
-            </tr>
-            <tr>
-              <td>165</td>
-              <td>無</td>
-              <td>無</td>
-              <td>S</td>
-              <td><a class="waves-effect waves-light btn modal-trigger" href="#modal1">確認</a></td>
-            </tr>
-            <tr>
-              <td>171</td>
-              <td>有</td>
-              <td>有</td>
-              <td>S</td>
-              <td><a class="waves-effect waves-light btn modal-trigger" href="#modal1">確認</a></td>
-            </tr>
-            <tr>
-              <td>172</td>
-              <td>有</td>
-              <td>有</td>
-              <td>S</td>
-              <td><a class="waves-effect waves-light btn modal-trigger" href="#modal1">確認</a></td>
-            </tr>
+            <?php
+                $class = $access->getClassRoomDataList();
+                foreach ($class as $value){
+                    echo '<tr>';
+                    echo '<td>'.$value['classroom_no'].'</td>';
+                    switch ($value['lan_port']){
+                        case 0:
+                            echo '<td>無</td>';
+                            break;
+                        case 1:
+                            echo '<td>有</td>';
+                            break;
+                    }
+                    switch ('power_port'){
+                        case 0:
+                            echo '<td>無</td>';
+                            break;
+                        case 1:
+                            echo '<td>有</td>';
+                            break;
+                    }
+                    echo '<td>'.$value['classroom_size'].'</td>';
+                    echo '<td><a class="waves-effect waves-light btn modal-trigger" href="#'.$value['classroom_no'].'">確認</a></td>';
+                    echo '</tr>';
+                }
+            ?>
           </tbody>
         </table>
       </div><!-- list  -->
     </div><!-- plans -->
 
     <!-- Modal Structure -->
+    <?php ?>
     <div id="modal1" class="modal modal-fixed-footer">
       <div class="modal-content">
         <h4>161教室</h4>

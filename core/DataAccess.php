@@ -21,14 +21,41 @@ class DataAccess
     self::$dbCon = null;
     //unset(self::$dbCon);
   }
-  /**
-   * ログインした学生の情報を取得するメソッド
-   *
-   * @param [string] $id   [ユーザID]
-   * @param [string] $pass [パスワード]
-   *
-   * @return $row 取得した情報返す。
-   */
+
+    /**
+     * 現在登録されている最大値のnoを取得するメソッド
+     *
+     * @param $field
+     * @param $table
+     * @return string
+     */
+    public function getMaxEventNo($field,$table){
+
+      $sql="SELECT Max(:field) as maxNo from :table";
+      $stmt =self::$dbCon->prepare($sql);
+      $stmt->bindValue(":field",$field, PDO::PARAM_STR);
+      $stmt->bindValue(":table",$table, PDO::PARAM_STR);
+      $stmt->execute();
+
+      while ($row = $stmt->fetch()) {
+          $maxNo = $row["maxNo"];
+      }
+      if (empty($maxNo)) {
+          $no = sprintf('%05d', 1); // 00001
+      }
+      else {
+          $maxNo++;
+          $no = sprintf('%05d', $maxNo);
+      }
+      return $no;
+    }
+    /**
+     * ログインするユーザの情報を取得するメソッド
+     *
+     * @param $id   学籍番号
+     * @param $pass パスワード
+     * @return mixed
+     */
   public function getLoginUserInformation($id,$pass)
   {
     $sql="SELECT Student_Name from student_account WHERE Student_No = :userId and Student_Pass = :userPass";
@@ -40,28 +67,87 @@ class DataAccess
 
     return $row;
   }
-  /**
-   *先生情報を取得するメソッド(全件)
-   *
-   * @return $row 取得した情報を返す
-   */
+
+    /**
+     *　ログインしているユーザの学籍番号を取得するメソッド
+     *
+     * @param  [type] $name [description]
+     * @return [type]       [description]
+     */
+    public function getUserId($name)
+    {
+        $sql="SELECT Student_No from  Student_Account WHERE Student_Name=:userName";
+        $stmt =self::$dbCon->prepare($sql);
+        $stmt->bindValue(":userName", $name, PDO::PARAM_STR);
+        $stmt->execute();
+        $id =null;
+        while ($row = $stmt->fetch()) {
+            $id = $row["Student_Id"];
+        }
+        return $id;
+    }
+    /**
+     *
+     */
+    public function getAchievementDataList(){
+        $sql="select * From achievement a ";
+        $sql.='inner join subject s ';
+        $sql.='on s.subject_code = a.subject_code ';
+        $sql.='inner join student_account student ';
+        $sql.='on student.student_no = a.student_no ';
+        $sql.='order by a.subject_code';
+        $stmt = self::$dbCon->prepare($sql);
+        $stmt->execute();
+        $rows = null;
+        while ($result = $stmt->fetch(PDO::FETCH_ASSOC)) {
+            yield $result;
+        }
+    }
+    /**
+     * 教官情報を全件取得するメソッド
+     *
+     * @return array
+     */
   public function getTeacherList()
   {
     $sql="SELECT * FROM teacher_account";
     $stmt = self::$dbCon->prepare($sql);
-    $result = $stmt->execute();
+    $stmt->execute();
     $rows = $stmt->fetchAll();
     return $rows;
   }
+
     /**
-     * 検索された先生情報を取得するメソッド
+     * 全件情報を取得するメソッド
+     *
+     * @param $table
+     * @param $field
+     * @param $sort
+     * @return array
+     */
+  public function getAllDataList($table)
+  {
+      $sql="SELECT * FROM $table";
+      $stmt = self::$dbCon->prepare($sql);
+//      $stmt->bindValue(':selectTable',$table,PDO::PARAM_STR);
+//      $stmt->bindValue(':field',$field,PDO::PARAM_STR);
+//      $stmt->bindValue(':sort',$sort,PDO::PARAM_STR);
+      $stmt->execute();
+      $rows = null;
+      while ($result = $stmt->fetch(PDO::FETCH_ASSOC)){
+          yield $result;
+      }
+  }
+
+    /**
+     * 検索された教官情報を取得するメソッド
      *
      * @param $teacherName 先生の名前
      * @return row 取得した情報を返す
      */
   public function getSelectTeacher($teacherName)
   {
-    $sql="SELECT * from Student_Account WHERE Student_Id = :teacher";
+    $sql="SELECT * from Student_Account WHERE teacher = :teacher";
     $stmt = self::$dbCon->prepare($sql);
     $stmt->bindValue(":teacher", $teacherName, PDO::PARAM_STR);
     $stmt->execute();
@@ -69,72 +155,18 @@ class DataAccess
 
     return $row;
   }
-  /**
-   *イベント情報を取得するメソッド(全件)
-   *
-   * @return [Array] [イベント情報を返す]
-   */
-  public function getEventsInformation(){
-    $sql="SELECT * from Events ORDER By Events_No DESC";
-    $stmt =self::$dbCon->prepare($sql);
-    $stmt->execute();
-    $rows = $stmt->fetchAll();
-
-    return $rows;
-  }
-  /**
-   * 現在投稿されいる最大値のnoを取得するメソッド
-   *
-   * @return [type] [description]
-   */
-  public function getMaxEventNo()
-  {
-    $sql="SELECT Max(Events_No) as maxNo from Events";
-    $stmt =self::$dbCon->prepare($sql);
-    $stmt->execute();
-
-    while ($row = $stmt->fetch()) {
-      $maxNo = $row["maxNo"];
-    }
-    if (empty($maxNo)) {
-      $no = sprintf('%05d', 1); // 00001
-    }
-    else {
-      $maxNo++;
-      $no = sprintf('%05d', $maxNo);
-    }
-    return $no;
-  }
-  /**
-   *　
-   *
-   * @param  [type] $name [description]
-   * @return [type]       [description]
-   */
-  public function getUserId($name)
-  {
-    $sql="SELECT Student_No from  Student_Account WHERE Student_Name=:userName";
-    $stmt =self::$dbCon->prepare($sql);
-    $stmt->bindValue(":userName", $name, PDO::PARAM_STR);
-    $stmt->execute();
-    $id =null;
-    while ($row = $stmt->fetch()) {
-       $id = $row["Student_Id"];
-     }
-    return $id;
-  }
     /**
-     *  開催するイベント情報を登録するメソッド
+     *  開催予定のイベント情報を登録するメソッド
      *
      * @param $no
      * @param $user
      * @param $title
      * @param $comment
-     * @param $eventdate
+     * @param $eventDate
      * @param $time
      * @return bool
      */
-  public function setEvent($no,$user,$title,$comment,$eventdate,$time)
+  public function setEvent($no,$user,$title,$comment,$eventDate,$time)
   {
     $sql = "INSERT INTO Events(Events_No,Student_No,Events_Title,Events_Contents,Events_date,Events_Time) ";
     $sql.= " VALUES (:no,:user,:title,:comment,:date,:time)";
@@ -143,21 +175,49 @@ class DataAccess
     $stmt->bindValue(":user", $user, PDO::PARAM_STR);
     $stmt->bindValue(":title",$title, PDO::PARAM_STR);
     $stmt->bindValue(":comment",$comment, PDO::PARAM_STR);
-    $stmt->bindValue(":date", $eventdate, PDO::PARAM_STR);
+    $stmt->bindValue(":date", $eventDate, PDO::PARAM_STR);
     $stmt->bindValue(":time",  $time, PDO::PARAM_INT);
     $result = $stmt->execute();
 
     return $result;
   }
+
+    /**
+     * イベント情報を取得するメソッド(全件)
+     *
+     * @return null|string
+     */
+    public function getEventsInformation(){
+        $sql="SELECT * from events ORDER By events_No DESC";
+        $stmt =self::$dbCon->prepare($sql);
+        $stmt->execute();
+        $rows = $stmt->fetchAll();
+        $event=$this->showEventsList($rows);
+        return $event;
+    }
+
+    private function showEventsList($list,$event= null){
+        foreach ($list as $value) {
+            $event ='<tr>';
+            $event.='<td class="events_name">'.$value['events_title'].PHP_EOL.'</td>';
+            $event.='<td class="school_year">'.$value['events_target'].PHP_EOL.'</td>';
+            $event.='<td class="events_date">'.$value['events_date'].PHP_EOL.'</td>';
+            $event.='<td class="details_link"><a href="events_details.php?event='.$value['events_no'].PHP_EOL.'">';
+            $event.='<img src="image/icon/ic_expand_more_black_24dp_1x.png" width="24" height="24" alt="詳細リンク" /></a></td>';
+            $event.='<tr>';
+        }
+        return $event;
+    }
+
     /**
      * 開催されるイベント詳細情報を取得するメソッド
      *
      * @param $no
      * @return array
      */
-  public function getEventdetails($no)
+  public function getEventDetails($no)
   {
-    $sql ="SELECT * from Events WHERE Events_No=:no";
+    $sql ="SELECT * from events WHERE events_no=:no";
     $stmt =self::$dbCon->prepare($sql);
     $stmt->bindValue(":no", $no, PDO::PARAM_INT);
     $stmt->execute();
@@ -165,6 +225,7 @@ class DataAccess
 
     return $row;
   }
+
   /**
    * 現在登録されている最大noを取得するメソッド
    *
@@ -188,6 +249,7 @@ class DataAccess
     }
     return $no;
   }
+
   /**
    * 投稿されている忘れ物情報を取得するメソッド(全件)
    *

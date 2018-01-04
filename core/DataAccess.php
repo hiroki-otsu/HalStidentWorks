@@ -289,5 +289,15 @@ class DataAccess
 
     return $result;
   }
+
+  public function getClassRoomDataList(){
+      $sql='SELECT * FROM classroom;';
+      $stmt = self::$dbCon->prepare($sql);
+      $stmt->execute();
+      $rows = null;
+      while ($result = $stmt->fetch(PDO::FETCH_ASSOC)){
+          yield $result;
+      }
+  }
 }
 

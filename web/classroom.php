@@ -133,33 +133,113 @@ $access = new DataAccess();
     </div><!-- plans -->
 
     <!-- Modal Structure -->
-    <?php ?>
-    <div id="modal1" class="modal modal-fixed-footer">
-      <div class="modal-content">
-        <h4>161教室</h4>
-        <table class="centered highlight">
-
-          <tbody>
-            <tr>
-              <td>1限目</td>
-              <td>×</td>
-              <td>使用中</td>
-              <td><a class="waves-effect waves-light btn modal-trigger" href="#modal1" disabled="disabled">予約申請</a></td>
-            </tr>
-            <tr>
-              <td>2限目</td>
-              <td>〇</td>
-              <td>空き</td>
-              <td><a class="waves-effect waves-light btn modal-trigger" href="#modal1">予約申請</a></td>
-            </tr>
-          </tbody>
-        </table>
-      </div>
-      <div class="modal-footer">
-        <a href="#!" class="modal-action modal-close waves-effect waves-green btn-flat ">Agree</a>
-      </div>
-    </div>
-
+      <?php
+    $schedule = $access->getClassSchedule();
+    foreach ($schedule as $value){
+        echo '<div id="'.$value['classroom_no'].'" class="modal modal-fixed-footer">';
+        echo '<div class="modal-content">';
+        echo '<h4>'.$value['classroom_no'].'教室</h4>';
+        echo '<table class="centered highlight">';
+        echo '<tbody>';
+        echo '<tr>';
+        switch ($value['first_limit']){
+            case 0:
+                echo '<td>1限目</td>';
+                echo '<td>×</td>';
+                echo '<td>使用中</td>';
+                echo '<td><a class="waves-effect waves-light btn modal-trigger" href="#modal1" disabled="disabled">予約申請</a></td>';
+                break;
+            case 1:
+                echo '<td>1限目</td>';
+                echo '<td>〇</td>';
+                echo '<td>使用可能</td>';
+                echo '<td><a class="waves-effect waves-light btn modal-trigger" href="#modal1">予約申請</a></td>';
+                break;
+        }
+        echo '</tr>';
+        switch ($value['second_limit']){
+            case 0:
+                echo '<td>2限目</td>';
+                echo '<td>×</td>';
+                echo '<td>使用中</td>';
+                echo '<td><a class="waves-effect waves-light btn modal-trigger" href="#modal1" disabled="disabled">予約申請</a></td>';
+                break;
+            case 1:
+                echo '<td>2限目</td>';
+                echo '<td>〇</td>';
+                echo '<td>使用可能</td>';
+                echo '<td><a class="waves-effect waves-light btn modal-trigger" href="#modal1">予約申請</a></td>';
+                break;
+        }
+        echo '</tr>';
+        switch ($value['third_limit']){
+            case 0:
+                echo '<td>3限目</td>';
+                echo '<td>×</td>';
+                echo '<td>使用中</td>';
+                echo '<td><a class="waves-effect waves-light btn modal-trigger" href="#modal1" disabled="disabled">予約申請</a></td>';
+                break;
+            case 1:
+                echo '<td>3限目</td>';
+                echo '<td>〇</td>';
+                echo '<td>使用可能</td>';
+                echo '<td><a class="waves-effect waves-light btn modal-trigger" href="#modal1">予約申請</a></td>';
+                break;
+        }
+        echo '</tr>';
+        switch ($value['fourth_limit']){
+            case 0:
+                echo '<td>4限目</td>';
+                echo '<td>×</td>';
+                echo '<td>使用中</td>';
+                echo '<td><a class="waves-effect waves-light btn modal-trigger" href="#modal1" disabled="disabled">予約申請</a></td>';
+                break;
+            case 1:
+                echo '<td>4限目</td>';
+                echo '<td>〇</td>';
+                echo '<td>使用可能</td>';
+                echo '<td><a class="waves-effect waves-light btn modal-trigger" href="#modal1">予約申請</a></td>';
+                break;
+        }
+        echo '</tr>';
+        switch ($value['five_limit']){
+            case 0:
+                echo '<td>5限目</td>';
+                echo '<td>×</td>';
+                echo '<td>使用中</td>';
+                echo '<td><a class="waves-effect waves-light btn modal-trigger" href="#modal1" disabled="disabled">予約申請</a></td>';
+                break;
+            case 1:
+                echo '<td>5限目</td>';
+                echo '<td>〇</td>';
+                echo '<td>使用可能</td>';
+                echo '<td><a class="waves-effect waves-light btn modal-trigger" href="#modal1">予約申請</a></td>';
+                break;
+        }
+        echo '</tr>';
+        switch ($value['sixth_limit']){
+            case 0:
+                echo '<td>6限目</td>';
+                echo '<td>×</td>';
+                echo '<td>使用中</td>';
+                echo '<td><a class="waves-effect waves-light btn modal-trigger" href="#modal1" disabled="disabled">予約申請</a></td>';
+                break;
+            case 1:
+                echo '<td>6限目</td>';
+                echo '<td>〇</td>';
+                echo '<td>使用可能</td>';
+                echo '<td><a class="waves-effect waves-light btn modal-trigger" href="#modal1">予約申請</a></td>';
+                break;
+        }
+        echo '</tbody>';
+        echo '</table>';
+        echo '</div>';
+        echo '<div class="modal-footer">';
+        echo '<a href="#!" class="modal-action modal-close waves-effect waves-green btn-flat ">Agree</a>';
+        echo '</div>';
+        echo '</div>';
+    }
+    ?>
     <div id="footer">
       <footer>2017 HAL Students System</footer>
     </div><!-- footer -->

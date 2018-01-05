@@ -98,11 +98,30 @@ class DataAccess
         $sql.='order by a.subject_code';
         $stmt = self::$dbCon->prepare($sql);
         $stmt->execute();
+        $row =$stmt->fetchAll(PDO::FETCH_ASSOC);
+
+        return $row;
+    }
+
+    /**
+     *
+     *
+     * @return Generator
+     */
+    public function getLessonDataList(){
+        $sql='SELECT sub.subject_code,sub.subject_name ';
+        $sql.='FROM lesson ';
+        $sql.='inner join subject sub ';
+        $sql.='on sub.subject_code = lesson.subject_code ';
+        $sql.='where department_code = "IH31"';
+        $stmt = self::$dbCon->prepare($sql);
+        $stmt->execute();
         $rows = null;
         while ($result = $stmt->fetch(PDO::FETCH_ASSOC)) {
             yield $result;
         }
     }
+
     /**
      * 教官情報を全件取得するメソッド
      *
@@ -250,11 +269,11 @@ class DataAccess
     return $no;
   }
 
-  /**
-   * 投稿されている忘れ物情報を取得するメソッド(全件)
-   *
-   * @return [Array] [忘れ物情報を返す]
-   */
+    /**
+     *  投稿されている忘れ物情報を取得するメソッド(全件)
+     *
+     * @return array
+     */
   public function getLostArticlesList()
   {
     $sql="SELECT * from LostArticle order by LostArticle_No desc";

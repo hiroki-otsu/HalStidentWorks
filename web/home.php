@@ -62,9 +62,9 @@ $access = new DataAccess();
             <thead>
               <tr>
                   <th id="subjectCode">科目コード</th>
-                  <th id="subjectName">科目名</th>
-                  <th id="subjectScore">点数</th>
-                  <th id="subjectRating">評定</th>
+                  <th id="subjectName">科目名称</th>
+                  <th id="subjectScore">課題</th>
+                  <th id="subjectRating">評価</th>
               </tr>
               <tbody>
               <?php

@@ -68,15 +68,15 @@ $access = new DataAccess();
               </tr>
               <tbody>
               <?php
-                $dataList =$access -> getAchievementDataList();
-                foreach($dataList as $value){
-                    echo '<tr>';
-                    print '<td class="code">'.$value['subject_code'].'</td>';
-                    print '<td class="name">'.$value['subject_name'].'</td>';
-                    print '<td class="score"><a class="waves-effect waves-light modal-trigger" href="#0'.$value['subject_code'].'"><img src="image/icon/ic_expand_more_black_24dp_1x.png" width="24" height="24" alt="" /></a></td>';
-                    print '<td class="rating"><a class="waves-effect waves-light modal-trigger" href="#1'.$value['subject_code'].'"><img src="image/icon/ic_expand_more_black_24dp_1x.png" width="24" height="24" alt="" /></a></td>';
-                    print '</tr>';
-                }
+              $dataList =$access -> getLessonDataList();
+              foreach($dataList as $value){
+                  echo '<tr>';
+                  print '<td class="code">'.$value['subject_code'].'</td>';
+                  print '<td class="name">'.$value['subject_name'].'</td>';
+                  print '<td class="score"><a class="waves-effect waves-light modal-trigger" href="#0'.$value['subject_code'].'"><img src="image/icon/ic_expand_more_black_24dp_1x.png" width="24" height="24" alt="" /></a></td>';
+                  print '<td class="rating"><a class="waves-effect waves-light modal-trigger" href="#1'.$value['subject_code'].'"><img src="image/icon/ic_expand_more_black_24dp_1x.png" width="24" height="24" alt="" /></a></td>';
+                  print '</tr>';
+              }
               ?>
               </tbody>
             </thead>
@@ -84,17 +84,17 @@ $access = new DataAccess();
         </div>
           <?php
             $dataList =$access -> getAchievementDataList();
-            foreach ($dataList as $value) {
-                switch ($value['task_status']){
+            for ($i=0;$i<count($dataList);$i++){
+                switch ($dataList[$i]['task_status']) {
                     case 0:
-                        echo '<div id="0'.$value['subject_code'].'" class="modal modal-fixed-footer">';
+                        echo '<div id="0' . $dataList[$i]['subject_code'] . '" class="modal modal-fixed-footer">';
                         echo '<div class="modal-content">';
-                        echo '<h4>'.$value['subject_name'].'[課題]</h4>';
+                        echo '<h4>' . $dataList[$i]['subject_name'] . '[課題]</h4>';
                         break;
                     case 1:
-                        echo '<div id="1'.$value['subject_code'].'" class="modal modal-fixed-footer">';
+                        echo '<div id="1' . $dataList[$i]['subject_code'] . '" class="modal modal-fixed-footer">';
                         echo '<div class="modal-content">';
-                        echo '<h4>'.$value['subject_name'].'[評価]</h4>';
+                        echo '<h4>' . $dataList[$i]['subject_name'] . '[評価]</h4>';
                         break;
                 }
                 echo '<table class="centered">';
@@ -104,20 +104,35 @@ $access = new DataAccess();
                 echo '<th>点数</th>';
                 echo '</tr>';
                 echo '<tbody>';
+                $flg = true;
+                $count=0;
+                $serial=0;
                 echo '<tr>';
-                echo '<td>'.$value['task_name'].'</td>';
-                echo '<td>'.$value['task_score'].'</td>';
+                echo '<td>'.$dataList[$i+$count]['task_name'].'</td>';
+                echo '<td>'.$dataList[$i+$count]['task_score'].'</td>';
                 echo '</tr>';
-                echo '</tbody>';
-                echo '</thead>';
-                echo '</table>';
-                echo '</div>';
-                echo '<div class="modal-footer">';
-                echo '<a href="#!" class="modal-action modal-close waves-effect waves-green btn-flat ">Agree</a>';
-                echo '</div>';
-                echo '</div>';
+                while ($flg){
+                    $count++;
+                    if ($dataList[$i]['subject_code'] == $dataList[$serial+$count]['subject_code']){
+                        echo '<tr>';
+                        echo '<td>'.$dataList[$i+$count]['task_name'].'</td>';
+                        echo '<td>'.$dataList[$i+$count]['task_score'].'</td>';
+                        echo '</tr>';
+                        $serial++;
+                    }else{
+                        $flg = false;
+                        echo '</tbody>';
+                        echo '</thead>';
+                        echo '</table>';
+                        echo '</div>';
+                        echo '<div class="modal-footer">';
+                        echo '<a href="#!" class="modal-action modal-close waves-effect waves-green btn-flat ">Agree</a>';
+                        echo '</div>';
+                        echo '</div>';
+                    }
+                }
             }
-          ?>
+            ?>
       </div>
       <div id="attend" class="col s12">
 

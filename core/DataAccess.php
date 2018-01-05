@@ -290,8 +290,28 @@ class DataAccess
     return $result;
   }
 
+    /**
+     * 全教室の全件情報を取得するメソッド
+     *
+     * @return Generator
+     */
   public function getClassRoomDataList(){
       $sql='SELECT * FROM classroom;';
+      $stmt = self::$dbCon->prepare($sql);
+      $stmt->execute();
+      $rows = null;
+      while ($result = $stmt->fetch(PDO::FETCH_ASSOC)){
+          yield $result;
+      }
+  }
+
+    /**
+     * 各教室の状況を取得するメソッド
+     *
+     * @return Generator
+     */
+  public function getClassSchedule(){
+      $sql='SELECT * FROM schedule;';
       $stmt = self::$dbCon->prepare($sql);
       $stmt->execute();
       $rows = null;

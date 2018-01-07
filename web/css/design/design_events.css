@@ -2,32 +2,38 @@
 	width: 250px;
 	height:50px;
 	float: right;
-	margin-right: 30px;
-	margin-bottom: 30px;
+	margin-top:10px;
+	margin-right:5px;
+	margin-bottom:10px;
 }
 #events {
 	clear: right;
-	width: 1600px;
-	height: 800px;
+	width: 100%;
+	height: 700px;
+	margin-right: auto;
+	margin-left: auto;
 }
 #option {
 	width: 300px;
 	height: 45px;
 	display: block;
-	float: right;
-	margin-right: 50px;
-	margin-bottom: 20px;
+	float: left;
+	margin-bottom:10px;
+	margin-left: 50px;
+}
+#option label {
+	margin-top:10px;
 }
 #list {
 	display: block;
 	clear: right;
-	width: 1500px;
-	height: 800px;
-	margin: auto;
-	margin-top: 5px;
+	width:103rem;
+	margin-right: auto;
+	margin-left: auto;
+	margin-top:35px;
 }
 #list td{
-	height: 75px;
+	height:66px;
 	margin: auto;
 }
 .events_name  {
@@ -42,11 +48,9 @@
 .details_link {
 	width: 250px;
 }
-#pageination {
-	width: 1600px;
-	height: 30px;
-	margin: auto;
-	margin-top: 25px;
-	margin-bottom: 25px;
+#page {
+	width:100%;
+	height:30px;
+	margin-top: 15px;
 	text-align: center;
 }

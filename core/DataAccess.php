@@ -312,18 +312,51 @@ class DataAccess
     /**
      * 全教室の全件情報を取得するメソッド
      *
-     * @return Generator
+     * @return array
      */
   public function getClassRoomDataList(){
       $sql='SELECT * FROM classroom;';
       $stmt = self::$dbCon->prepare($sql);
       $stmt->execute();
-      $rows = null;
-      while ($result = $stmt->fetch(PDO::FETCH_ASSOC)){
-          yield $result;
-      }
-  }
+      $row = $stmt->fetchAll(PDO::FETCH_ASSOC);
+      $result =$this->setPagination($row);
 
+      return $result;
+  }
+  private function setPagination($roomListData){
+      $list = array();
+      $COUNT=10;
+      $number=0;
+      for ($i=0;$i<count($roomListData);$i++){
+          if($i===$COUNT){
+              $number=0;
+              $COUNT=$COUNT+10;
+          }
+          else{
+              $lan=$this->setPortStatus($roomListData[$i]['lan_port']);
+              $power=$this->setPortStatus($roomListData[$i]['power_port']);
+              $list[$COUNT][$number++]= array(
+                  'class'=> $roomListData[$i]['classroom_no'],
+                  'lan'=>$lan,
+                  'power'=>$power,
+                  'size'=>$roomListData[$i]['classroom_size'],
+              );
+          }
+      }
+      return $list;
+  }
+  private function setPortStatus($portStatus){
+      $status =null;
+      switch ($portStatus){
+          case 0:
+              $status ='無';
+              break;
+          case 1:
+              $status ='有';
+              break;
+      }
+      return $status;
+  }
     /**
      * 各教室の状況を取得するメソッド
      *

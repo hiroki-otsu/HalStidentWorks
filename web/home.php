@@ -181,17 +181,17 @@ $access = new DataAccess();
                 <h5>パスワード有効期限:01月02日(火)</h5>
             </div>
             <div id="pass">
-                <form action="#" method="post">
+                <form action="password_change.php" method="post">
                     <div class="input-field " id="current">
-                        <input id="password" type="password" class="validate">
+                        <input id="password" type="password" class="validate" name="current">
                         <label for="password">現在のパスワード</label>
                     </div>
                     <div class="input-field " id="new">
-                        <input id="password" type="password" class="validate">
+                        <input id="password" type="password" class="validate" name="new">
                         <label for="password">新しいパスワード</label>
                     </div>
                     <div class="input-field " id="confirmation">
-                        <input id="password" type="password" class="validate">
+                        <input id="password" type="password" class="validate" name="confirmation">
                         <label for="password">新しいパスワード(確認)</label>
                     </div>
                     <button class="btn waves-effect waves-light" type="submit" name="action" id="btn-update">

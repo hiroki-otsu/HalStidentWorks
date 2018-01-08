@@ -13,4 +13,10 @@ class errors
             print $msg;
         }
     }
+    public function checkBlankSpace($value,$msg){
+        if(empty($value)){
+            $this->setErrors($msg);
+        }
+        return $value;
+    }
 }

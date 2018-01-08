@@ -15,9 +15,35 @@ $request = new Request();
 $access = new DataAccess();
 $error = new Errors();
 
-if($request->isPost()){
-    $request->getPost('current');
-    $request->getPost('new');
-    $request->getPost('confirmation');
+if($request->isPost()) {
 
+    $current=$request->getPost('current');
+    $newPass= $request->getPost('new');
+    $confirmation=$request->getPost('confirmation');
+    $flg =true;
+
+    if(empty($current)){//入力された項目が[空白]かチェック
+        echo '空白';
+        $flg=false;
+    }
+    if(empty($newPass)){//入力された項目が[空白]かチェック
+        echo '空白';
+        $flg=false;
+    }
+    if(empty($confirmation)){//入力された項目が[空白]かチェック
+        echo '空白';
+        $flg=false;
+    }
+    if($flg){//もし空白があった場合false/無かった場合でtrue
+        if($newPass===$confirmation){//新しいパスワードと確認で入力されたパスワードが同じか確認
+            echo '同じ';
+
+        }
+        else{
+            echo '異なる';
+        }
+    }
+    else {
+
+    }
 }

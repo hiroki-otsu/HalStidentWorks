@@ -159,7 +159,7 @@ $access = new DataAccess();
                     <thead>
                     <tr>
                         <th id="">件名</th>
-                        <th id="">送信者</th>
+                        <th id="">差出人</th>
                         <th id="">時間</th>
                         <th id="">詳細</th>
                     </tr>

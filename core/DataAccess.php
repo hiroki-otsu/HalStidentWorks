@@ -90,7 +90,7 @@ class DataAccess
      */
     public function update($pass,$student){
         $user = explode(':',$student);
-        $today = date("Y/m/d");
+        $today = date("Y/m/d",strtotime("+3 month"));
         $options = array('cost' => 10);
         $passWord = password_hash($pass,PASSWORD_DEFAULT,$options);
         $sql='UPDATE student_account ';
@@ -104,7 +104,15 @@ class DataAccess
 
         $stmt->execute();
     }
+    public function getLimitPassWord($user){
+        $sql="SELECT Pass_Update FROM student_account WHERE Student_No=:student";
+        $stmt = self::$dbCon->prepare($sql);
+        $stmt->bindValue(":student",$user, PDO::PARAM_STR);
+        $stmt->execute();
+        $result =$stmt->fetch();
 
+        return $result;
+    }
     /**
      *
      *

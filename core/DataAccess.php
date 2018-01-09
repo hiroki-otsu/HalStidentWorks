@@ -323,6 +323,12 @@ class DataAccess
 
       return $result;
   }
+    /**
+     *
+     *
+     * @param $roomListData
+     * @return array
+     */
   private function setPagination($roomListData){
       $list = array();
       $COUNT=10;
@@ -345,6 +351,12 @@ class DataAccess
       }
       return $list;
   }
+
+    /**
+     *
+     * @param $portStatus
+     * @return null|string
+     */
   private function setPortStatus($portStatus){
       $status =null;
       switch ($portStatus){
@@ -366,10 +378,20 @@ class DataAccess
       $sql='SELECT * FROM schedule;';
       $stmt = self::$dbCon->prepare($sql);
       $stmt->execute();
-      $rows = null;
       while ($result = $stmt->fetch(PDO::FETCH_ASSOC)){
           yield $result;
       }
+  }
+  public function update($pass,$student){
+      $user = explode(':',$student);
+      $sql='UPDATE student_account ';
+      $sql.='SET Student_Pass=:newPass ';
+      $sql.='WHERE Student_No=:student';
+      $stmt =self::$dbCon->prepare($sql);
+      $stmt->bindValue(":newPass",$pass, PDO::PARAM_STR);
+      $stmt->bindValue(":student",$user[0], PDO::PARAM_STR);
+
+      $stmt->execute();
   }
 }
 

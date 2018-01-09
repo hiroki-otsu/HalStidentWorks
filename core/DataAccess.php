@@ -29,12 +29,10 @@ class DataAccess
      * @param $table
      * @return string
      */
-    public function getMaxEventNo($field,$table){
+    public function getMaxNo($field,$table){
 
-      $sql="SELECT Max(:field) as maxNo from :table";
+      $sql="SELECT Max($field) as maxNo from $table";
       $stmt =self::$dbCon->prepare($sql);
-      $stmt->bindValue(":field",$field, PDO::PARAM_STR);
-      $stmt->bindValue(":table",$table, PDO::PARAM_STR);
       $stmt->execute();
 
       while ($row = $stmt->fetch()) {
@@ -53,27 +51,23 @@ class DataAccess
      * ログインするユーザの情報を取得するメソッド
      *
      * @param $id   学籍番号
-     * @param $pass パスワード
      * @return mixed
      */
-  public function getLoginUserInformation($id,$pass)
+  public function getLoginUserInformation($id)
   {
-
-    $sql="SELECT Student_Name from student_account WHERE Student_No = :userId and Student_Pass = :userPass";
+    $sql="SELECT Student_Name,Student_Pass FROM student_account WHERE Student_No = :userId";
     $stmt =self::$dbCon->prepare($sql);
     $stmt->bindValue(":userId", $id, PDO::PARAM_STR);
-    $stmt->bindValue(":userPass",$pass, PDO::PARAM_STR);
     $stmt->execute();
     $row = $stmt->fetch();
-
     return $row;
   }
 
     /**
-     *　ログインしているユーザの学籍番号を取得するメソッド
+     * ログインしているユーザの学籍番号を取得するメソッド
      *
-     * @param  [type] $name [description]
-     * @return [type]       [description]
+     * @param $name
+     * @return null
      */
     public function getUserId($name)
     {
@@ -87,8 +81,34 @@ class DataAccess
         }
         return $id;
     }
+
+    /**
+     *  学生のパスワードを変更するメソッド
+     * @param $pass
+     * @param $student
+     *
+     */
+    public function update($pass,$student){
+        $user = explode(':',$student);
+        $today = date("Y/m/d");
+        $options = array('cost' => 10);
+        $passWord = password_hash($pass,PASSWORD_DEFAULT,$options);
+        $sql='UPDATE student_account ';
+        $sql.='SET Student_Pass=:newPass,';
+        $sql.='pass_update=:today ';
+        $sql.='WHERE Student_No=:student';
+        $stmt =self::$dbCon->prepare($sql);
+        $stmt->bindValue(":newPass",$passWord, PDO::PARAM_STR);
+        $stmt->bindValue(":today",$today, PDO::PARAM_STR);
+        $stmt->bindValue(":student",$user[0], PDO::PARAM_STR);
+
+        $stmt->execute();
+    }
+
     /**
      *
+     *
+     * @return array
      */
     public function getAchievementDataList(){
         $sql="select * From achievement a ";
@@ -141,9 +161,7 @@ class DataAccess
      * 全件情報を取得するメソッド
      *
      * @param $table
-     * @param $field
-     * @param $sort
-     * @return array
+     * @return Generator
      */
   public function getAllDataList($table)
   {
@@ -246,11 +264,11 @@ class DataAccess
     return $row;
   }
 
-  /**
-   * 現在登録されている最大noを取得するメソッド
-   *
-   * @return [string] [最大値のnoを返す]
-   */
+    /**
+     * 現在登録されている最大noを取得するメソッド
+     *
+     * @return string
+     */
   public function getMaxLostArticleNo()
   {
     $sql="SELECT Max(LostArticle_No) as maxNo from LostArticle";
@@ -325,7 +343,7 @@ class DataAccess
       return $result;
   }
     /**
-     *
+     *　各教室の情報を多次元連想配列に格納するメソッド
      *
      * @param $roomListData
      * @return array
@@ -354,6 +372,7 @@ class DataAccess
   }
 
     /**
+     * 各教室のPortのステータスを確認するメソッド
      *
      * @param $portStatus
      * @return null|string
@@ -382,28 +401,6 @@ class DataAccess
       while ($result = $stmt->fetch(PDO::FETCH_ASSOC)){
           yield $result;
       }
-  }
-    /**
-     *  学生のパスワードを変更するメソッド
-     * @param $pass
-     * @param $student
-     *
-     */
-  public function update($pass,$student){
-      $user = explode(':',$student);
-      $today = date("Y/m/d");
-      $options = array('cost' => 10);
-      $passWord = password_hash($pass,PASSWORD_DEFAULT,$options);
-      $sql='UPDATE student_account ';
-      $sql.='SET Student_Pass=:newPass,';
-      $sql.='pass_update=:today ';
-      $sql.='WHERE Student_No=:student';
-      $stmt =self::$dbCon->prepare($sql);
-      $stmt->bindValue(":newPass",$passWord, PDO::PARAM_STR);
-      $stmt->bindValue(":today",$today, PDO::PARAM_STR);
-      $stmt->bindValue(":student",$user[0], PDO::PARAM_STR);
-
-      $stmt->execute();
   }
 
 }

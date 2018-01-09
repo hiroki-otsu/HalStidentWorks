@@ -411,5 +411,26 @@ class DataAccess
       }
   }
 
+    /**
+     *
+     * @param $title
+     * @param $content
+     * @param $student
+     */
+  public function setContact($title,$content,$student){
+      $date = date("Y/m/d");
+      $user=explode(":",$student);
+      $no=null;
+      $sql = "INSERT INTO inquiry (inquiry_no,inquiry_title,inquiry_contents,date,student_no) ";
+      $sql.= " VALUES (:no,:title,:comment,:date,:student)";
+      $stmt =self::$dbCon->prepare($sql);
+      $stmt->bindValue(":no",$no, PDO::PARAM_STR);
+      $stmt->bindValue(":title",$title, PDO::PARAM_STR);
+      $stmt->bindValue(":comment",$content, PDO::PARAM_STR);
+      $stmt->bindValue(":date", $date, PDO::PARAM_STR);
+      $stmt->bindValue(":student",$user[0], PDO::PARAM_STR);
+
+      $stmt->execute();
+  }
 }
 

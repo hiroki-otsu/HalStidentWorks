@@ -12,6 +12,7 @@ ini_set('display_errors','On');
 require '../bootstrap.php';
 //インスタンス化
 $request = new Request();
+$session = new Session();
 $access = new DataAccess();
 $error = new Errors();
 
@@ -37,13 +38,13 @@ if($request->isPost()) {
     if($flg){//もし空白があった場合false/無かった場合でtrue
         if($newPass===$confirmation){//新しいパスワードと確認で入力されたパスワードが同じか確認
             echo '同じ';
-
+            header('Location: /php/HalStudentWorks/web/');
         }
         else{
             echo '異なる';
         }
     }
     else {
-
+        header('Location: '.$_SERVER['HTTP_REFERER']);
     }
 }

@@ -38,7 +38,8 @@ if($request->isPost()) {
     if($flg){//もし空白があった場合false/無かった場合でtrue
         if($newPass===$confirmation){//新しいパスワードと確認で入力されたパスワードが同じか確認
             echo '同じ';
-            header('Location: /php/HalStudentWorks/web/');
+            $access->update($newPass,$student=$session->get('ohs50054'));
+            header('Location: /php/HalStudentWorks/web/');//変更完了画面へ
         }
         else{
             echo '異なる';

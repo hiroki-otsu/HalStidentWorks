@@ -24,12 +24,13 @@ if ($request->isPost()) {
     }
 
     if(isset($studentNo) && isset($passWord)){
-
-        if( $user = $access->getLoginUserInformation($studentNo,$passWord)){
+        $user = $access->getLoginUserInformation($studentNo);
+        if(password_verify($passWord,$user[1])){
             $userName = $studentNo.':'.$user[0];
             $session ->set($studentNo,$userName);
             header('Location: /php/HalStudentWorks/web/home.php');
-        }else{
+        }
+        else{
             $error->setErrors('パスワードかユーザIDが間違っています');
         }
     }

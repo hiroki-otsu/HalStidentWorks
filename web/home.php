@@ -178,7 +178,13 @@ $access = new DataAccess();
         <div id="test4"></div>
         <div id="test5">
             <div id="expiration-date">
-                <h5>パスワード有効期限:01月02日(火)</h5>
+                <h5>パスワード有効期限:
+                    <?php
+                        $limitDate=$access->getLimitPassWord('ohs50054');
+                        $limit=explode("-",$limitDate[0]);
+                        echo $limit[0].'年'.$limit[1].'月'.$limit[2].'日';
+                    ?>
+                </h5>
             </div>
             <div id="pass">
                 <form action="password_change.php" method="post">
@@ -205,14 +211,14 @@ $access = new DataAccess();
             <div id="contact">
 
             </div>
-            <form action="" method="get">
+            <form action="contact.php" method="get">
                 <div class="input-field" id="contact-title">
-                    <input type="text" class="validate">
+                    <input type="text" class="validate" name="title">
                     <label for="contactTitle">タイトル</label>
                 </div>
                 <div id="contact-content">
                     <div class="input-field" id="contact-comment">
-                        <textarea class="materialize-textarea"></textarea>
+                        <textarea class="materialize-textarea" name="content"></textarea>
                         <label for="content">内容</label>
                     </div>
                 </div>

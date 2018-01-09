@@ -58,6 +58,7 @@ class DataAccess
      */
   public function getLoginUserInformation($id,$pass)
   {
+
     $sql="SELECT Student_Name from student_account WHERE Student_No = :userId and Student_Pass = :userPass";
     $stmt =self::$dbCon->prepare($sql);
     $stmt->bindValue(":userId", $id, PDO::PARAM_STR);
@@ -382,16 +383,28 @@ class DataAccess
           yield $result;
       }
   }
+    /**
+     *  学生のパスワードを変更するメソッド
+     * @param $pass
+     * @param $student
+     *
+     */
   public function update($pass,$student){
       $user = explode(':',$student);
+      $today = date("Y/m/d");
+      $options = array('cost' => 10);
+      $passWord = password_hash($pass,PASSWORD_DEFAULT,$options);
       $sql='UPDATE student_account ';
-      $sql.='SET Student_Pass=:newPass ';
+      $sql.='SET Student_Pass=:newPass,';
+      $sql.='pass_update=:today ';
       $sql.='WHERE Student_No=:student';
       $stmt =self::$dbCon->prepare($sql);
-      $stmt->bindValue(":newPass",$pass, PDO::PARAM_STR);
+      $stmt->bindValue(":newPass",$passWord, PDO::PARAM_STR);
+      $stmt->bindValue(":today",$today, PDO::PARAM_STR);
       $stmt->bindValue(":student",$user[0], PDO::PARAM_STR);
 
       $stmt->execute();
   }
+
 }
 

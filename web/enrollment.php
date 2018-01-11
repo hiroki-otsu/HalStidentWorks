@@ -52,7 +52,9 @@ $dataAccess = new DataAccess();
             <input id="icon_prefix" type="text" class="validate" >
             <label for="icon_prefix">Teacher Name</label>
         </div>
-        <button class="btn waves-effect waves-light" type="submit" name="action">Search</button>
+        <button class="btn waves-effect waves-light" type="submit" name="action">検索
+            <i class="material-icons left">search</i>
+        </button>
       </form>
     </div>
     <div id="teacher-list">

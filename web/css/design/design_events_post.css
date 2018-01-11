@@ -1,7 +1,49 @@
 #event {
-	width: 1500px;
-	height:800px;
-	display: block;
-	margin: auto;
-	margin-top: 50px;
+	width: 103rem;
+	height: 53rem;
+	display: table;
+	margin-top: 15px;
+	margin-right: auto;
+	margin-left: auto;
+}
+#even-title {
+	width: 60rem;
+	height: 4rem;
+	margin-left:30px;
+}
+#category {
+	width: 15rem;
+	height: 4rem;
+	margin-top: 15px;
+	margin-right:30px;
+	float: right;
+}
+#event-date {
+	width: 15rem;
+	height: 4rem;
+	margin-left:30px;
+}
+#school-year {
+	width: 15rem;
+	height: 4rem;
+	margin-left:30px;
+}
+#event-content {
+	width: 100rem;
+	height: 30rem;
+	margin-top: 15px;
+	margin-left:30px;
+	overflow: auto;
+}
+#send {
+	width: 19rem;
+	height: 4rem;
+	margin-top: 15px;
+	float: right;
+}
+#btn-send {
+	width: 250px;
+	height: 50px;
+	margin-left:15px;
+	margin-top: 5px;
 }

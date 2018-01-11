@@ -49,7 +49,7 @@ $access = new DataAccess();
             </div>
         </div>
         <div id="lost-article-post">
-            <a href="event_post.php"class="waves-effect waves-light btn-large">忘れ物を投稿</a>
+            <a href="lost_article_post.php"class="waves-effect waves-light btn-large">忘れ物を投稿</a>
         </div>
         <div id="lost-article">
             <ul class="collection with-header">

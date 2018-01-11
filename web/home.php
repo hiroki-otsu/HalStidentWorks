@@ -51,8 +51,9 @@ $access = new DataAccess();
                 <li class="tab col"><a href="#test2">出席</a></li>
                 <li class="tab col"><a href="#test3">メッセージ</a></li>
                 <li class="tab col"><a href="#test4">イベント</a></li>
-                <li class="tab col"><a href="#test5">パスワード</a></li>
-                <li class="tab col"><a href="#test6">お問い合わせ</a></li>
+                <li class="tab col"><a href="#test5">申請状況</a></li>
+                <li class="tab col"><a href="#test6">パスワード</a></li>
+                <li class="tab col"><a href="#test7">お問い合わせ</a></li>
             </ul>
         </div>
         <div id="test1">
@@ -175,8 +176,13 @@ $access = new DataAccess();
                 </table>
             </div>
         </div><!-- tab03-->
-        <div id="test4"></div>
+        <div id="test4">
+            <h4>イベント</h4>
+        </div>
         <div id="test5">
+            <h4>申請状況</h4>
+        </div>
+        <div id="test6">
             <div id="expiration-date">
                 <h5>パスワード有効期限:
                     <?php
@@ -206,8 +212,8 @@ $access = new DataAccess();
                     </button>
                 </form>
             </div>
-        </div><!-- tab05-->
-        <div id="test6">
+        </div><!-- tab06-->
+        <div id="test7">
             <div id="contact">
 
             </div>

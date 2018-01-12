@@ -38,6 +38,7 @@ if ($request-> isPost()) {
         echo 'コメント';
     }
     if ($flg){
+        $student=$session->get('ohs50054');
         $tmp_name = $file['tmp_name']; // 一時ファイルのパス
         $tmp_size = getimagesize($tmp_name); // 一時ファイルの情報を取得
         $img = $extension = null;
@@ -60,7 +61,7 @@ if ($request-> isPost()) {
         $imageDirectory = 'image/lostArticle/' .$save_filename.'.'.$extension;
         if(move_uploaded_file($_FILES['image']['tmp_name'], $imageDirectory)){
             $msg = $imageDirectory. 'のアップロードに成功しました';
-            $access->setLostArticle($title,$category,$comment,$imageDirectory,$student);
+            $access->setLostArticle($no,$title,$category,$comment,$imageDirectory,$student);
             header();
         }else {
             $msg = 'アップロードに失敗しました';

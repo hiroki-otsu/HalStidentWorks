@@ -55,7 +55,7 @@ $access = new DataAccess();
                     <label for="lost-article-name">タイトル</label>
                 </div>
                 <div class="input-field" id="category">
-                    <select>
+                    <select name="category">
                         <option value="" disabled selected>Choose your option</option>
                         <option value="1">貴重品</option>
                         <option value="2">電化製品</option>
@@ -67,7 +67,7 @@ $access = new DataAccess();
                 <div class="file-field" id="picture">
                     <div class="btn">
                         <span>File</span>
-                        <input type="file" multiple>
+                        <input type="file" multiple name="picture">
                     </div>
                     <div class="file-path-wrapper">
                         <input class="file-path validate" type="text" placeholder="Upload one or more files">

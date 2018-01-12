@@ -65,9 +65,20 @@ $access = new DataAccess();
                   </select>
                   <label>Category Select</label>
               </div>
+
               <div class="input-field" id="event-date">
                   <input id="events-date" type="text" class="datepicker">
                   <label for="events-date">開催日</label>
+              </div>
+
+              <div class="input-field">
+                  <select multiple name="schoolYear">
+                      <option value="" disabled selected>Choose your optio</option>
+                      <option value="1">1年生</option>
+                      <option value="2">2年生</option>
+                      <option value="3">3年生</option>
+                  </select>
+                  <label>対象学年</label>
               </div>
 
               <div id="event-content">

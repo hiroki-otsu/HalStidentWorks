@@ -177,10 +177,12 @@ $access = new DataAccess();
             </div>
         </div><!-- tab03-->
         <div id="test4">
-            <h4>イベント</h4>
+            <h6>イベント参加予定</h6>
+
+            <h6>イベント参加履歴</h6>
         </div>
         <div id="test5">
-            <h4>申請状況</h4>
+            <h5>教室予約申請</h5>
         </div>
         <div id="test6">
             <div id="expiration-date">

@@ -49,9 +49,9 @@ $access = new DataAccess();
             </div>
         </div>
         <div id="lost-article">
-            <form action="#" method="get">
+            <form action="lost_article.php" method="post" enctype="multipart/form-data">
                 <div class="input-field" id="lost-article-title">
-                    <input id="lost-article-name" type="text" class="validate">
+                    <input id="lost-article-name" type="text" class="validate" name="title">
                     <label for="lost-article-name">タイトル</label>
                 </div>
                 <div class="input-field" id="category">
@@ -67,7 +67,7 @@ $access = new DataAccess();
                 <div class="file-field" id="picture">
                     <div class="btn">
                         <span>File</span>
-                        <input type="file" multiple name="picture">
+                        <input type="file" name="image">
                     </div>
                     <div class="file-path-wrapper">
                         <input class="file-path validate" type="text" placeholder="Upload one or more files">
@@ -76,17 +76,16 @@ $access = new DataAccess();
 
                 <div id="lost-article-content">
                     <div class="input-field" id="lost-article-contents">
-                        <textarea class="materialize-textarea"></textarea>
+                        <textarea class="materialize-textarea" name="comment"></textarea>
                         <label for="contents">Comment</label>
                     </div>
                 </div>
 
                 <div id="send">
-                    <button class="btn waves-effect waves-light"  id="btn-send" type="submit" name="action">忘れ物を投稿
+                    <button class="btn waves-effect waves-light"  id="btn-send" type="submit">忘れ物を投稿
                         <i class="material-icons right">send</i>
                     </button>
                 </div>
-
             </form>
         </div>
         <div id="footer">

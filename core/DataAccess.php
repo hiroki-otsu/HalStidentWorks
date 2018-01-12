@@ -322,11 +322,13 @@ class DataAccess
      * @param $student
      * @return bool
      */
-  public function setLostArticle($no=null,$title,$category,$comment,$img,$student)
+  public function setLostArticle($no,$title,$category,$comment,$img,$student)
   {
+      $no=null;
       $datetime = date("Y/m/d/H:i:s");
-      $sql = "INSERT INTO Lostarticle(lostArticle_no,lostArticle_title,lostArticle_category,lostArticle_comment,image,datetime,student_no)";
-      $sql.= " VALUES (:no, :title, :category, :comment, :image, :datetime)";
+      $user=explode(":",$student);
+      $sql = "INSERT INTO lostarticle (lostArticle_no,lostArticle_title,lostArticle_category,lostArticle_comment,image,datetime,student_no)";
+      $sql.= " VALUES (:no, :title, :category, :comment, :image, :datetime, :student)";
       $stmt =self::$dbCon->prepare($sql);
       $stmt->bindValue(":no", $no, PDO::PARAM_INT);
       $stmt->bindValue(":title",$title, PDO::PARAM_STR);
@@ -334,10 +336,9 @@ class DataAccess
       $stmt->bindValue(":comment",$comment, PDO::PARAM_STR);
       $stmt->bindValue(":image", $img, PDO::PARAM_STR);
       $stmt->bindValue(":datetime",  $datetime, PDO::PARAM_STR);
-      $stmt->bindValue(":student",  $student, PDO::PARAM_STR);
-      $result = $stmt->execute();
+      $stmt->bindValue(":student",  $user[0], PDO::PARAM_STR);
 
-      return $result;
+      $stmt->execute();
   }
 
     /**

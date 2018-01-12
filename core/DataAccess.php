@@ -314,18 +314,17 @@ class DataAccess
     /**
      *  忘れ物情報を登録するメソッド
      *
-     * @param null $no
+     * @param $no
      * @param $title
      * @param $category
      * @param $comment
      * @param $img
      * @param $student
-     * @return bool
      */
-  public function setLostArticle($no,$title,$category,$comment,$img,$student)
+  public function setLostArticle($title,$category,$comment,$img,$student)
   {
-      $no=null;
       $datetime = date("Y/m/d/H:i:s");
+      $no=null;
       $user=explode(":",$student);
       $sql = "INSERT INTO lostarticle (lostArticle_no,lostArticle_title,lostArticle_category,lostArticle_comment,image,datetime,student_no)";
       $sql.= " VALUES (:no, :title, :category, :comment, :image, :datetime, :student)";

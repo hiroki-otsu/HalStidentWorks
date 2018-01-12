@@ -263,13 +263,13 @@ class DataAccess
      */
   public function getEventDetails($no)
   {
-    $sql ="SELECT * from events WHERE events_no=:no";
-    $stmt =self::$dbCon->prepare($sql);
-    $stmt->bindValue(":no", $no, PDO::PARAM_INT);
-    $stmt->execute();
-    $row = $stmt->fetchAll();
+      $sql ="SELECT * from events WHERE events_no=:no";
+      $stmt =self::$dbCon->prepare($sql);
+      $stmt->bindValue(":no", $no, PDO::PARAM_INT);
+      $stmt->execute();
+      $row = $stmt->fetchAll();
 
-    return $row;
+      return $row;
   }
 
     /**
@@ -279,21 +279,21 @@ class DataAccess
      */
   public function getMaxLostArticleNo()
   {
-    $sql="SELECT Max(LostArticle_No) as maxNo from LostArticle";
-    $stmt =self::$dbCon->prepare($sql);
-    $stmt->execute();
+      $sql="SELECT Max(LostArticle_No) as maxNo from LostArticle";
+      $stmt =self::$dbCon->prepare($sql);
+      $stmt->execute();
 
-    while ($row = $stmt->fetch()) {
-      $maxNo = $row["maxNo"];
-    }
-    if (empty($maxNo)) {
-      $no = sprintf('%04d', 1); // 00001
-    }
-    else {
-      $maxNo++;
-      $no = sprintf('%04d', $maxNo);
-    }
-    return $no;
+      while ($row = $stmt->fetch()) {
+          $maxNo = $row["maxNo"];
+      }
+      if (empty($maxNo)) {
+          $no = sprintf('%04d', 1); // 00001
+      }
+      else {
+          $maxNo++;
+          $no = sprintf('%04d', $maxNo);
+      }
+      return $no;
   }
 
     /**
@@ -303,37 +303,41 @@ class DataAccess
      */
   public function getLostArticlesList()
   {
-    $sql="SELECT * from LostArticle order by LostArticle_No desc";
-    $stmt =self::$dbCon->prepare($sql);
-    $stmt->execute();
-    $rows = $stmt->fetchAll();
+      $sql="SELECT * from LostArticle order by LostArticle_No desc";
+      $stmt =self::$dbCon->prepare($sql);
+      $stmt->execute();
+      $rows = $stmt->fetchAll();
 
-    return $rows;
+      return $rows;
   }
 
     /**
      *  忘れ物情報を登録するメソッド
      *
-     * @param $no
+     * @param null $no
      * @param $title
+     * @param $category
      * @param $comment
      * @param $img
-     * @param $time
+     * @param $student
      * @return bool
      */
-  public function setLostArticle($no,$title,$comment,$img,$time)
+  public function setLostArticle($no=null,$title,$category,$comment,$img,$student)
   {
-    $sql = "INSERT INTO LostArticle(LostArticle_No,LostArticle_Title,LostArticle_comment,LostArticle_Image,LostArticle_Time)";
-    $sql.= " VALUES (:no, :title, :comment, :image, :LostArticle_time)";
-    $stmt =self::$dbCon->prepare($sql);
-    $stmt->bindValue(":no", $no, PDO::PARAM_INT);
-    $stmt->bindValue(":title",$title, PDO::PARAM_STR);
-    $stmt->bindValue(":comment",$comment, PDO::PARAM_STR);
-    $stmt->bindValue(":image", $img, PDO::PARAM_STR);
-    $stmt->bindValue(":LostArticle_time",  $time, PDO::PARAM_INT);
-    $result = $stmt->execute();
+      $datetime = date("Y/m/d/H:i:s");
+      $sql = "INSERT INTO Lostarticle(lostArticle_no,lostArticle_title,lostArticle_category,lostArticle_comment,image,datetime,student_no)";
+      $sql.= " VALUES (:no, :title, :category, :comment, :image, :datetime)";
+      $stmt =self::$dbCon->prepare($sql);
+      $stmt->bindValue(":no", $no, PDO::PARAM_INT);
+      $stmt->bindValue(":title",$title, PDO::PARAM_STR);
+      $stmt->bindValue(":category",$category, PDO::PARAM_STR);
+      $stmt->bindValue(":comment",$comment, PDO::PARAM_STR);
+      $stmt->bindValue(":image", $img, PDO::PARAM_STR);
+      $stmt->bindValue(":datetime",  $datetime, PDO::PARAM_STR);
+      $stmt->bindValue(":student",  $student, PDO::PARAM_STR);
+      $result = $stmt->execute();
 
-    return $result;
+      return $result;
   }
 
     /**

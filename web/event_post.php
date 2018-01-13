@@ -48,14 +48,14 @@ $access = new DataAccess();
             </div>
         </div><!-- end header -->
         <div id="event">
-          <form action="event_" method="get">
+          <form action="event.php" method="get">
 
               <div class="input-field" id="even-title">
-                  <input id="event-name" type="text" class="validate">
+                  <input id="event-name" type="text" class="validate" name="title">
                   <label for="event-name">イベント名</label>
               </div>
               <div class="input-field" id="category">
-                  <select>
+                  <select name="category">
                       <option value="" disabled selected>Choose your option</option>
                       <option value="1">ゲーム</option>
                       <option value="3">デザイン</option>
@@ -67,13 +67,13 @@ $access = new DataAccess();
               </div>
 
               <div class="input-field" id="event-date">
-                  <input id="events-date" type="text" class="datepicker">
+                  <input id="events-date" type="text" class="datepicker" name="eventDate">
                   <label for="events-date">開催日</label>
               </div>
 
-              <div class="input-field">
-                  <select multiple name="schoolYear">
-                      <option value="" disabled selected>Choose your optio</option>
+              <div class="input-field" id="school-year">
+                  <select multiple name="target[]">
+                      <option value="" disabled selected>Choose your option</option>
                       <option value="1">1年生</option>
                       <option value="2">2年生</option>
                       <option value="3">3年生</option>
@@ -83,13 +83,13 @@ $access = new DataAccess();
 
               <div id="event-content">
                   <div class="input-field" id="event-contents">
-                      <textarea class="materialize-textarea"></textarea>
-                      <label for="contents">Comment</label>
+                      <textarea class="materialize-textarea" name="content"></textarea>
+                      <label for="contents">イベント内容</label>
                   </div>
               </div>
 
               <div id="send">
-                  <button class="btn waves-effect waves-light"  id="btn-send" type="submit" name="action">イベントを投稿
+                  <button class="btn waves-effect waves-light"  id="btn-send" type="submit" >イベントを投稿
                       <i class="material-icons right">send</i>
                   </button>
               </div>

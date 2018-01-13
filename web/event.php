@@ -16,4 +16,16 @@ $request = new Request();
 $access = new DataAccess();
 $error = new Errors();
 
+$title=$request->getGet('title');
+$category=$request->getGet('category');
+$date=$request->getGet('eventDate');
+$target=$request->getGet('target');
+$content=$request->getGet('content');
 
+$flg=true;
+
+echo 'タイトル'.$title.'<br>';
+echo '学科'.$category.'<br>';
+echo '開催日'.$date.'<br>';
+print_r($target);
+echo 'イベント内容'.nl2br($content).'<br>';

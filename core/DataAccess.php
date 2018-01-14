@@ -201,31 +201,35 @@ class DataAccess
 
     return $row;
   }
-    /**
-     *  開催予定のイベント情報を登録するメソッド
-     *
-     * @param $no
-     * @param $user
-     * @param $title
-     * @param $comment
-     * @param $eventDate
-     * @param $time
-     * @return bool
-     */
-  public function setEvent($no,$user,$title,$comment,$eventDate,$time)
-  {
-    $sql = "INSERT INTO Events(Events_No,Student_No,Events_Title,Events_Contents,Events_date,Events_Time) ";
-    $sql.= " VALUES (:no,:user,:title,:comment,:date,:time)";
-    $stmt =self::$dbCon->prepare($sql);
-    $stmt->bindValue(":no", $no, PDO::PARAM_INT);
-    $stmt->bindValue(":user", $user, PDO::PARAM_STR);
-    $stmt->bindValue(":title",$title, PDO::PARAM_STR);
-    $stmt->bindValue(":comment",$comment, PDO::PARAM_STR);
-    $stmt->bindValue(":date", $eventDate, PDO::PARAM_STR);
-    $stmt->bindValue(":time",  $time, PDO::PARAM_INT);
-    $result = $stmt->execute();
 
-    return $result;
+    /**
+     * イベント情報を登録するメソッド
+     *
+     * @param $title
+     * @param $category
+     * @param $target
+     * @param $contents
+     * @param $eventDate
+     * @param $student
+     */
+  public function setEvent($title,$category,$target,$contents,$eventDate,$student)
+  {
+      $no = null;
+      $user=explode(":",$student);
+      $postedDate = date('Y/m/d');
+      $sql = "INSERT INTO events(events_no,events_title,event_category,events_target,events_contents,events_date,posted_date,student_no) ";
+      $sql.= " VALUES (:no, :title, :category, :target, :contents, :eventDate, :postedDate, :student)";
+      $stmt =self::$dbCon->prepare($sql);
+      $stmt->bindValue(":no", $no, PDO::PARAM_INT);
+      $stmt->bindValue(":title",$title, PDO::PARAM_STR);
+      $stmt->bindValue(":category",$category, PDO::PARAM_STR);
+      $stmt->bindValue(":target",$target, PDO::PARAM_STR);
+      $stmt->bindValue(":contents",$contents, PDO::PARAM_STR);
+      $stmt->bindValue(":eventDate",$eventDate, PDO::PARAM_STR);
+      $stmt->bindValue(":postedDate",$postedDate, PDO::PARAM_STR);
+      $stmt->bindValue(":student",$user[0], PDO::PARAM_STR);
+
+      $stmt->execute();
   }
 
     /**

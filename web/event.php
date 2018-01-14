@@ -24,8 +24,32 @@ $content=$request->getGet('content');
 
 $flg=true;
 
-echo 'タイトル'.$title.'<br>';
-echo '学科'.$category.'<br>';
-echo '開催日'.$date.'<br>';
-print_r($target);
-echo 'イベント内容'.nl2br($content).'<br>';
+if(empty($title)){
+    $flg=false;
+}
+if(empty($category)){
+    $flg=false;
+}
+if(empty($date)){
+    $flg=false;
+}
+if(empty($target)){
+    $flg=false;
+}
+if(empty($content)){
+    $flg=false;
+}
+if($flg){
+    for ($i=0;$i<count($target);$i++){
+        $schoolYear=$target[$i].'年生';
+        if(isset($target[$i+1])){
+            $schoolYear.=',';
+        }
+    }
+    $search = array('年','月');
+    $date=str_replace($search,'/',$date);
+    $date=str_replace('日','',$date);
+    $access->setEvent($title,$category,$schoolYear,$content,$date,$student=$session->get('ohs50054'));
+}else {
+
+}

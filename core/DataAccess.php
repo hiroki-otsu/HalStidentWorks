@@ -71,7 +71,7 @@ class DataAccess
      */
     public function getUserId($name)
     {
-        $sql="SELECT Student_No from  Student_Account WHERE Student_Name=:userName";
+        $sql="SELECT Student_No from Student_Account WHERE Student_Name=:userName";
         $stmt =self::$dbCon->prepare($sql);
         $stmt->bindValue(":userName", $name, PDO::PARAM_STR);
         $stmt->execute();
@@ -439,6 +439,35 @@ class DataAccess
       $stmt->bindValue(":student",$user[0], PDO::PARAM_STR);
 
       $stmt->execute();
+  }
+
+  public function getMessage($student){
+      $user=explode(":",$student);
+      $student=$this->getUserMailAddress($user[0]);
+      $sql="SELECT * FROM message msg ";
+      $sql.="inner join student_account student ";
+      $sql.="on msg.message_To  = student_Mail ";
+      $sql.="inner join teacher_account teacher ";
+      $sql.="on msg.message_From = teacher.teacher_mailAddress ";
+      $sql.="Where msg.message_To = :student";
+      $stmt =self::$dbCon->prepare($sql);
+      $stmt->bindValue(":student",$student['Student_Mail'], PDO::PARAM_STR);
+      $stmt->execute();
+
+      $result=$stmt->fetchAll();
+
+      return $result;
+  }
+  private function getUserMailAddress($user){
+      $sql="SELECT Student_Mail FROM student_account ";
+      $sql.="where Student_No = :student";
+      $stmt =self::$dbCon->prepare($sql);
+      $stmt->bindValue(":student",$user, PDO::PARAM_STR);
+      $stmt->execute();
+
+      $result=$stmt->fetch(PDO::FETCH_ASSOC);
+
+      return $result;
   }
 }
 

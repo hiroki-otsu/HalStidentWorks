@@ -42,7 +42,7 @@ $access = new DataAccess();
                 <h2>HAL Students System</h2>
             </div>
             <div id="user">
-                <p><a href="home.php"><img src="image/icon/ic_person_black_24dp_1x.png" width="24" height="24" alt="アカウント"/><?php echo $session->get('ohs50054')?></a></p>
+                <p><a href="home.php"><img src="image/icon/ic_person_black_24dp_1x.png" width="24" height="24" alt="アカウント"/><?php echo $student=$session->get('ohs50054')?></a></p>
             </div>
         </div><!-- end header -->
         <div>
@@ -165,16 +165,40 @@ $access = new DataAccess();
                         <th id="">詳細</th>
                     </tr>
                     <tbody>
-                    <tr>
-                        <td class="title">就職連絡</td>
-                        <td class="sender">山口陽一</td>
-                        <td class="time">2017/12/23(火)</td>
-                        <td class="details"><a class="waves-effect waves-light modal-trigger" href="#modal1"><img src="img/icon/ic_expand_more_black_24dp_1x.png" width="24" height="24" alt="" /></a></td>
-                    </tr>
+                    <?php
+                    $mailList=$access->getMessage($student);
+                    foreach ($mailList as $mail){
+                        echo '<tr>';
+                        echo '<td class="title">'.$mail['message_title'].'</td>';
+                        echo '<td class="sender">'.$mail['teacher_name'].'</td>';
+                        echo '<td class="time">'.$mail['date'].'</td>';
+                        echo '<td class="details">';
+                        echo '<a class="waves-effect waves-light modal-trigger" href="#mail'.$mail['message_no'].'">';
+                        echo '<img src="image/icon/ic_expand_more_black_24dp_1x.png" width="24" height="24" alt="" /></a>';
+                        echo '</td>';
+                        echo '</tr>';
+                    }
+                    ?>
                     </tbody>
                     </thead>
                 </table>
             </div>
+            <?php
+            $mailList=$access->getMessage($student);
+            foreach ($mailList as $mail){
+                echo '<div id="mail'.$mail['message_no'].'" class="modal modal-fixed-footer">';
+                echo '<div class="modal-content">';
+                echo '<h4>'.$mail['message_title'].'</h4>';
+                echo '<p>'.$mail['teacher_name'].'</p>';
+                echo '<p>'.$mail['Student_Name'].'</p>';
+                echo '<p>'.nl2br($mail['message_content']).'</p>';
+                echo '</div>';
+                echo '<div class="modal-footer">';
+                echo '<a href="#!" class="modal-action modal-close waves-effect waves-green btn-flat ">Agree</a>';
+                echo '</div>';
+                echo ' </div>';
+            }
+            ?>
         </div><!-- tab03-->
         <div id="test4">
             <h6>イベント投稿</h6>

@@ -188,16 +188,20 @@ $access = new DataAccess();
             foreach ($mailList as $mail){
                 echo '<div id="mail'.$mail['message_no'].'" class="modal modal-fixed-footer">';
                 echo '<div class="modal-content">';
-                echo '<h4>'.$mail['message_title'].'</h4>';
-                echo '<p>'.$mail['teacher_name'].'</p>';
-                echo '<p>'.$mail['Student_Name'].'</p>';
-                echo '<p>'.nl2br($mail['message_content']).'</p>';
+                echo '<ul class="collection with-header">';
+                echo '<li class="collection-header">Title:'.$mail['message_title'].'</li>';
+                echo '<li class="collection-item">From:'.$mail['teacher_name'].'</li>';
+                echo '<li class="collection-item">To:'.$mail['teacher_name'].'</li>';
+                echo '<li class="collection-item">日時:'.$mail['date'].'</li>';
+                echo '<li class="collection-item">'.nl2br($mail['message_content']).'</li>';
+                echo '</ul>';
                 echo '</div>';
                 echo '<div class="modal-footer">';
-                echo '<a href="#!" class="modal-action modal-close waves-effect waves-green btn-flat ">Agree</a>';
+                echo '<a href="#!" class="modal-action modal-close waves-effect waves-green btn-flat ">Close</a>';
                 echo '</div>';
-                echo ' </div>';
+                echo '</div>';
             }
+
             ?>
         </div><!-- tab03-->
         <div id="test4">

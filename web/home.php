@@ -205,11 +205,24 @@ $access = new DataAccess();
             ?>
         </div><!-- tab03-->
         <div id="test4">
-            <h6>イベント投稿</h6>
-
-            <h6>イベント参加予定</h6>
-
-            <h6>イベント参加履歴</h6>
+            <div id="schedule">
+                <dl>
+                    <dt><i class="material-icons left">insert_invitation</i><h5>イベント参加スケジュール</h5></dt>
+                    <dd class="schedule-title"><p>Kotlinを学ぼう!!</p></dd>
+                    <dd class="schedule-date"><p>20118/01/29</p></dd>
+                    <dd class="schedule-details"><a href="#" class="waves-effect waves-light btn text-cut"><i class="material-icons right">chevron_right</i>詳細</a></dd>
+                </dl>
+            </div>
+            <div id="event-relation">
+                <dl>
+                    <dt><i class="material-icons left">access_time</i><h5>イベント参加履歴</h5></dt>
+                    <dd><a class="waves-effect waves-light btn text-cut"><i class="material-icons left">chevron_right</i><p>Kotlinを学ぼう!!zzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzz</p></a></dd>
+                </dl>
+                <dl>
+                    <dt><i class="material-icons left">create</i><h5>イベント投稿履歴</h5></dt>
+                    <dd><a class="waves-effect waves-light btn text-cut"><i class="material-icons left">chevron_right</i><p>Kotlinを学ぼう!!zzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzz</p></a></dd>
+                </dl>
+            </div>
         </div>
         <div id="test5">
             <h5>教室予約申請</h5>

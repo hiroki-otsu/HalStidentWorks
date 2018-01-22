@@ -126,7 +126,7 @@ $access = new DataAccess();
                         echo '</table>';
                         echo '</div>';
                         echo '<div class="modal-footer">';
-                        echo '<a href="#!" class="modal-action modal-close waves-effect waves-green btn-flat ">Agree</a>';
+                        echo '<a href="#!" class="modal-action modal-close waves-effect waves-green btn-flat ">Close</a>';
                         echo '</div>';
                         echo '</div>';
                     }
@@ -225,7 +225,47 @@ $access = new DataAccess();
             </div>
         </div>
         <div id="test5">
-            <h5>教室予約申請</h5>
+            <div id="request">
+                <div id="sub-title">
+                    <i class="material-icons left">send</i><h5>教室予約申請</h5>
+                </div>
+                <div id="request-list">
+                    <table class="centered">
+                        <thead>
+                        <tr>
+                            <th>教室</th>
+                            <th>日時</th>
+                            <th>限目</th>
+                            <th>申請日</th>
+                            <th>ステータス</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr>
+                            <td>182</td>
+                            <td>2018/02/05</td>
+                            <td>4限目</td>
+                            <td>2018/02/04</td>
+                            <td><img src="image/icon/check-circle.png" width="24px" href="24px" alt="承認">承認</td>
+                        </tr>
+                        <tr>
+                            <td>182</td>
+                            <td>2018/02/05</td>
+                            <td>4限目</td>
+                            <td>2018/02/04</td>
+                            <td><img src="image/icon/send.png" width="24px" href="24px" alt="承認">申請中</td>
+                        </tr>
+                        <tr>
+                            <td>182</td>
+                            <td>2018/02/05</td>
+                            <td>4限目</td>
+                            <td>2018/02/04</td>
+                            <td><img src="image/icon/close-circle.png" width="24px" href="24px" alt="承認">非承認</td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
         </div>
         <div id="test6">
             <div id="expiration-date">

@@ -33,8 +33,8 @@ $access = new DataAccess();
             <ul>
                 <li class="menubar"><a href="home.php"><img src="image/icon/ic_home_black_24dp_1x.png" width="24" height="24" alt="home"/>Home</a></li>
                 <li class="menubar"><a href="enrollment.php"><img src="image/icon/ic_airline_seat_recline_extra_black_24dp_1x.png" width="24" height="24" alt="座席確認"/>在籍確認</a></li>
-                <li class="menubar"><a href="events.php"><img src="image/icon/ic_event_note_black_24dp_1x.png" width="24" height="24" alt="イベント掲示板"/>イベント掲示板</a></li>
-                <li class="menubar"><a href="lost_article_list.php"><img src="image/icon/ic_live_help_black_24dp_1x.png" width="24" height="24" alt="忘れ物掲示板"/>忘れ物掲示板</a></li>
+                <li class="menubar"><a href="events.php"><img src="image/icon/ic_event_note_black_24dp_1x.png" width="24" height="24" alt="イベント掲示板"/>イベント</a></li>
+                <li class="menubar"><a href="lost_article_list.php"><img src="image/icon/ic_live_help_black_24dp_1x.png" width="24" height="24" alt="忘れ物掲示板"/>拾得物</a></li>
                 <li class="menubar"><a href="classroom.php"><img src="image/icon/ic_search_black_24dp_1x.png" width="24" height="24" alt="教室予約"/>教室検索・予約</a></li>
             </ul>
         </div>
@@ -49,351 +49,95 @@ $access = new DataAccess();
             </div>
         </div>
         <div id="lost-article-post">
-            <a href="lost_article_post.php"class="waves-effect waves-light btn-large">忘れ物を投稿</a>
+            <a href="lost_article_post.php"class="waves-effect waves-light btn-large">拾得物を投稿</a>
         </div>
         <div id="lost-article">
-            <ul class="collection with-header">
-                <li class="collection-header"><h6>忘れ物掲示板</h6></li>
-                <li class="collection-item" id="lost-article-area">
-                    <div class="card-list">
-                        <div class="card">
-                            <div class="card-image waves-effect waves-block waves-light">
-                                <img class="activator" src="img/Sample.jpg">
-                            </div>
-                            <div class="card-content">
-                                <span class="card-title activator grey-text text-darken-4">Card Title<i class="material-icons right">more_vert</i></span>
-                            </div>
-                            <div class="card-reveal">
-                                <span class="card-title grey-text text-darken-4">Card Title<i class="material-icons right">close</i></span>
-                                <p>Here is some more information about this product that is only revealed once clicked on.</p>
-                            </div>
-                        </div>
+            <div id="sub-title">
+                <i class="material-icons left">live_help</i><h5>拾得物一覧</h5>
+            </div>
+            <div id="card">
+                <div class="lost-article-card">
+                    <div class="card-title">
+                        <dl>
+                            <dt><h5>拾得物名:ノート</h5></dt>
+                            <dt><p>カテゴリー:文房具</p></dt>
+                            <dd class="card-time"><p>2018/01/25-14:35:00</p></dd>
+                        </dl>
                     </div>
-                    <div class="card-list">
-                        <div class="card">
-                            <div class="card-image waves-effect waves-block waves-light">
-                                <img class="activator" src="img/Sample.jpg">
-                            </div>
-                            <div class="card-content">
-                                <span class="card-title activator grey-text text-darken-4">Card Title<i class="material-icons right">more_vert</i></span>
-                            </div>
-                            <div class="card-reveal">
-                                <span class="card-title grey-text text-darken-4">Card Title<i class="material-icons right">close</i></span>
-                                <p>Here is some more information about this product that is only revealed once clicked on.</p>
-                            </div>
-                        </div>
+                    <div class="card-content">
+                        182教室に忘れ物20時半までは182教室に置いておきます。<br>
+                        以降は学生カウンターに持って行きます。<br>
                     </div>
-                    <div class="card-list">
-                        <div class="card">
-                            <div class="card-image waves-effect waves-block waves-light">
-                                <img class="activator" src="img/Sample.jpg">
-                            </div>
-                            <div class="card-content">
-                                <span class="card-title activator grey-text text-darken-4">Card Title<i class="material-icons right">more_vert</i></span>
-                            </div>
-                            <div class="card-reveal">
-                                <span class="card-title grey-text text-darken-4">Card Title<i class="material-icons right">close</i></span>
-                                <p>Here is some more information about this product that is only revealed once clicked on.</p>
-                            </div>
-                        </div>
+                    <div class="card-link">
+                        <a href="#">image show</a>
                     </div>
-                    <div class="card-list">
-                        <div class="card">
-                            <div class="card-image waves-effect waves-block waves-light">
-                                <img class="activator" src="img/Sample.jpg">
-                            </div>
-                            <div class="card-content">
-                                <span class="card-title activator grey-text text-darken-4">Card Title<i class="material-icons right">more_vert</i></span>
-                            </div>
-                            <div class="card-reveal">
-                                <span class="card-title grey-text text-darken-4">Card Title<i class="material-icons right">close</i></span>
-                                <p>Here is some more information about this product that is only revealed once clicked on.</p>
-                            </div>
-                        </div>
+                </div>
+                <div class="lost-article-card">
+                    <div class="card-title">
+                        <dl>
+                            <dt><h5>拾得物名:ノート</h5></dt>
+                            <dt><p>カテゴリー:文房具</p></dt>
+                            <dd class="card-time"><p>2018/01/25-14:35:00</p></dd>
+                        </dl>
                     </div>
-                    <div class="card-list">
-                        <div class="card">
-                            <div class="card-image waves-effect waves-block waves-light">
-                                <img class="activator" src="img/Sample.jpg">
-                            </div>
-                            <div class="card-content">
-                                <span class="card-title activator grey-text text-darken-4">Card Title<i class="material-icons right">more_vert</i></span>
-                            </div>
-                            <div class="card-reveal">
-                                <span class="card-title grey-text text-darken-4">Card Title<i class="material-icons right">close</i></span>
-                                <p>Here is some more information about this product that is only revealed once clicked on.</p>
-                            </div>
-                        </div>
+                    <div class="card-content">
+                        182教室に忘れ物20時半までは182教室に置いておきます。<br>
+                        以降は学生カウンターに持って行きます。<br>
                     </div>
-                    <div class="card-list">
-                        <div class="card">
-                            <div class="card-image waves-effect waves-block waves-light">
-                                <img class="activator" src="img/Sample.jpg">
-                            </div>
-                            <div class="card-content">
-                                <span class="card-title activator grey-text text-darken-4">Card Title<i class="material-icons right">more_vert</i></span>
-                            </div>
-                            <div class="card-reveal">
-                                <span class="card-title grey-text text-darken-4">Card Title<i class="material-icons right">close</i></span>
-                                <p>Here is some more information about this product that is only revealed once clicked on.</p>
-                            </div>
-                        </div>
+                    <div class="card-link">
+                        <a href="#">image show</a>
                     </div>
-                    <div class="card-list">
-                        <div class="card">
-                            <div class="card-image waves-effect waves-block waves-light">
-                                <img class="activator" src="img/Sample.jpg">
-                            </div>
-                            <div class="card-content">
-                                <span class="card-title activator grey-text text-darken-4">Card Title<i class="material-icons right">more_vert</i></span>
-                            </div>
-                            <div class="card-reveal">
-                                <span class="card-title grey-text text-darken-4">Card Title<i class="material-icons right">close</i></span>
-                                <p>Here is some more information about this product that is only revealed once clicked on.</p>
-                            </div>
-                        </div>
+                </div>
+                <div class="lost-article-card">
+                    <div class="card-title">
+                        <dl>
+                            <dt><h5>拾得物名:ノート</h5></dt>
+                            <dt><p>カテゴリー:文房具</p></dt>
+                            <dd class="card-time"><p>2018/01/25-14:35:00</p></dd>
+                        </dl>
                     </div>
-                    <div class="card-list">
-                        <div class="card">
-                            <div class="card-image waves-effect waves-block waves-light">
-                                <img class="activator" src="img/Sample.jpg">
-                            </div>
-                            <div class="card-content">
-                                <span class="card-title activator grey-text text-darken-4">Card Title<i class="material-icons right">more_vert</i></span>
-                            </div>
-                            <div class="card-reveal">
-                                <span class="card-title grey-text text-darken-4">Card Title<i class="material-icons right">close</i></span>
-                                <p>Here is some more information about this product that is only revealed once clicked on.</p>
-                            </div>
-                        </div>
+                    <div class="card-content">
+                        182教室に忘れ物20時半までは182教室に置いておきます。<br>
+                        以降は学生カウンターに持って行きます。<br>
                     </div>
-                    <div class="card-list">
-                        <div class="card">
-                            <div class="card-image waves-effect waves-block waves-light">
-                                <img class="activator" src="img/Sample.jpg">
-                            </div>
-                            <div class="card-content">
-                                <span class="card-title activator grey-text text-darken-4">Card Title<i class="material-icons right">more_vert</i></span>
-                            </div>
-                            <div class="card-reveal">
-                                <span class="card-title grey-text text-darken-4">Card Title<i class="material-icons right">close</i></span>
-                                <p>Here is some more information about this product that is only revealed once clicked on.</p>
-                            </div>
-                        </div>
+                    <div class="card-link">
+                        <a href="#">image show</a>
                     </div>
-                    <div class="card-list">
-                        <div class="card">
-                            <div class="card-image waves-effect waves-block waves-light">
-                                <img class="activator" src="img/Sample.jpg">
-                            </div>
-                            <div class="card-content">
-                                <span class="card-title activator grey-text text-darken-4">Card Title<i class="material-icons right">more_vert</i></span>
-                            </div>
-                            <div class="card-reveal">
-                                <span class="card-title grey-text text-darken-4">Card Title<i class="material-icons right">close</i></span>
-                                <p>Here is some more information about this product that is only revealed once clicked on.</p>
-                            </div>
-                        </div>
+                </div>
+                <div class="lost-article-card">
+                    <div class="card-title">
+                        <dl>
+                            <dt><h5>拾得物名:ノート</h5></dt>
+                            <dt><p>カテゴリー:文房具</p></dt>
+                            <dd class="card-time"><p>2018/01/25-14:35:00</p></dd>
+                        </dl>
                     </div>
-                    <div class="card-list">
-                        <div class="card">
-                            <div class="card-image waves-effect waves-block waves-light">
-                                <img class="activator" src="img/Sample.jpg">
-                            </div>
-                            <div class="card-content">
-                                <span class="card-title activator grey-text text-darken-4">Card Title<i class="material-icons right">more_vert</i></span>
-                            </div>
-                            <div class="card-reveal">
-                                <span class="card-title grey-text text-darken-4">Card Title<i class="material-icons right">close</i></span>
-                                <p>Here is some more information about this product that is only revealed once clicked on.</p>
-                            </div>
-                        </div>
+                    <div class="card-content">
+                        182教室に忘れ物20時半までは182教室に置いておきます。<br>
+                        以降は学生カウンターに持って行きます。<br>
                     </div>
-                    <div class="card-list">
-                        <div class="card">
-                            <div class="card-image waves-effect waves-block waves-light">
-                                <img class="activator" src="img/Sample.jpg">
-                            </div>
-                            <div class="card-content">
-                                <span class="card-title activator grey-text text-darken-4">Card Title<i class="material-icons right">more_vert</i></span>
-                            </div>
-                            <div class="card-reveal">
-                                <span class="card-title grey-text text-darken-4">Card Title<i class="material-icons right">close</i></span>
-                                <p>Here is some more information about this product that is only revealed once clicked on.</p>
-                            </div>
-                        </div>
+                    <div class="card-link">
+                        <a href="#">image show</a>
                     </div>
-                    <div class="card-list">
-                        <div class="card">
-                            <div class="card-image waves-effect waves-block waves-light">
-                                <img class="activator" src="img/Sample.jpg">
-                            </div>
-                            <div class="card-content">
-                                <span class="card-title activator grey-text text-darken-4">Card Title<i class="material-icons right">more_vert</i></span>
-                            </div>
-                            <div class="card-reveal">
-                                <span class="card-title grey-text text-darken-4">Card Title<i class="material-icons right">close</i></span>
-                                <p>Here is some more information about this product that is only revealed once clicked on.</p>
-                            </div>
-                        </div>
+                </div>
+                <div class="lost-article-card">
+                    <div class="card-title">
+                        <dl>
+                            <dt><h5>拾得物名:ノート</h5></dt>
+                            <dt><p>カテゴリー:文房具</p></dt>
+                            <dd class="card-time"><p>2018/01/25-14:35:00</p></dd>
+                        </dl>
                     </div>
-                    <div class="card-list">
-                        <div class="card">
-                            <div class="card-image waves-effect waves-block waves-light">
-                                <img class="activator" src="img/Sample.jpg">
-                            </div>
-                            <div class="card-content">
-                                <span class="card-title activator grey-text text-darken-4">Card Title<i class="material-icons right">more_vert</i></span>
-                            </div>
-                            <div class="card-reveal">
-                                <span class="card-title grey-text text-darken-4">Card Title<i class="material-icons right">close</i></span>
-                                <p>Here is some more information about this product that is only revealed once clicked on.</p>
-                            </div>
-                        </div>
+                    <div class="card-content">
+                        182教室に忘れ物20時半までは182教室に置いておきます。<br>
+                        以降は学生カウンターに持って行きます。<br>
                     </div>
-                    <div class="card-list">
-                        <div class="card">
-                            <div class="card-image waves-effect waves-block waves-light">
-                                <img class="activator" src="img/Sample.jpg">
-                            </div>
-                            <div class="card-content">
-                                <span class="card-title activator grey-text text-darken-4">Card Title<i class="material-icons right">more_vert</i></span>
-                            </div>
-                            <div class="card-reveal">
-                                <span class="card-title grey-text text-darken-4">Card Title<i class="material-icons right">close</i></span>
-                                <p>Here is some more information about this product that is only revealed once clicked on.</p>
-                            </div>
-                        </div>
+                    <div class="card-link">
+                        <a href="#">image show</a>
                     </div>
-                    <div class="card-list">
-                        <div class="card">
-                            <div class="card-image waves-effect waves-block waves-light">
-                                <img class="activator" src="img/Sample.jpg">
-                            </div>
-                            <div class="card-content">
-                                <span class="card-title activator grey-text text-darken-4">Card Title<i class="material-icons right">more_vert</i></span>
-                            </div>
-                            <div class="card-reveal">
-                                <span class="card-title grey-text text-darken-4">Card Title<i class="material-icons right">close</i></span>
-                                <p>Here is some more information about this product that is only revealed once clicked on.</p>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="card-list">
-                        <div class="card">
-                            <div class="card-image waves-effect waves-block waves-light">
-                                <img class="activator" src="img/Sample.jpg">
-                            </div>
-                            <div class="card-content">
-                                <span class="card-title activator grey-text text-darken-4">Card Title<i class="material-icons right">more_vert</i></span>
-                            </div>
-                            <div class="card-reveal">
-                                <span class="card-title grey-text text-darken-4">Card Title<i class="material-icons right">close</i></span>
-                                <p>Here is some more information about this product that is only revealed once clicked on.</p>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="card-list">
-                        <div class="card">
-                            <div class="card-image waves-effect waves-block waves-light">
-                                <img class="activator" src="img/Sample.jpg">
-                            </div>
-                            <div class="card-content">
-                                <span class="card-title activator grey-text text-darken-4">Card Title<i class="material-icons right">more_vert</i></span>
-                            </div>
-                            <div class="card-reveal">
-                                <span class="card-title grey-text text-darken-4">Card Title<i class="material-icons right">close</i></span>
-                                <p>Here is some more information about this product that is only revealed once clicked on.</p>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="card-list">
-                        <div class="card">
-                            <div class="card-image waves-effect waves-block waves-light">
-                                <img class="activator" src="img/Sample.jpg">
-                            </div>
-                            <div class="card-content">
-                                <span class="card-title activator grey-text text-darken-4">Card Title<i class="material-icons right">more_vert</i></span>
-                            </div>
-                            <div class="card-reveal">
-                                <span class="card-title grey-text text-darken-4">Card Title<i class="material-icons right">close</i></span>
-                                <p>Here is some more information about this product that is only revealed once clicked on.</p>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="card-list">
-                        <div class="card">
-                            <div class="card-image waves-effect waves-block waves-light">
-                                <img class="activator" src="img/Sample.jpg">
-                            </div>
-                            <div class="card-content">
-                                <span class="card-title activator grey-text text-darken-4">Card Title<i class="material-icons right">more_vert</i></span>
-                            </div>
-                            <div class="card-reveal">
-                                <span class="card-title grey-text text-darken-4">Card Title<i class="material-icons right">close</i></span>
-                                <p>Here is some more information about this product that is only revealed once clicked on.</p>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="card-list">
-                        <div class="card">
-                            <div class="card-image waves-effect waves-block waves-light">
-                                <img class="activator" src="img/Sample.jpg">
-                            </div>
-                            <div class="card-content">
-                                <span class="card-title activator grey-text text-darken-4">Card Title<i class="material-icons right">more_vert</i></span>
-                            </div>
-                            <div class="card-reveal">
-                                <span class="card-title grey-text text-darken-4">Card Title<i class="material-icons right">close</i></span>
-                                <p>Here is some more information about this product that is only revealed once clicked on.</p>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="card-list">
-                        <div class="card">
-                            <div class="card-image waves-effect waves-block waves-light">
-                                <img class="activator" src="img/Sample.jpg">
-                            </div>
-                            <div class="card-content">
-                                <span class="card-title activator grey-text text-darken-4">Card Title<i class="material-icons right">more_vert</i></span>
-                            </div>
-                            <div class="card-reveal">
-                                <span class="card-title grey-text text-darken-4">Card Title<i class="material-icons right">close</i></span>
-                                <p>Here is some more information about this product that is only revealed once clicked on.</p>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="card-list">
-                        <div class="card">
-                            <div class="card-image waves-effect waves-block waves-light">
-                                <img class="activator" src="img/Sample.jpg">
-                            </div>
-                            <div class="card-content">
-                                <span class="card-title activator grey-text text-darken-4">Card Title<i class="material-icons right">more_vert</i></span>
-                            </div>
-                            <div class="card-reveal">
-                                <span class="card-title grey-text text-darken-4">Card Title<i class="material-icons right">close</i></span>
-                                <p>Here is some more information about this product that is only revealed once clicked on.</p>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="card-list">
-                        <div class="card">
-                            <div class="card-image waves-effect waves-block waves-light">
-                                <img class="activator" src="img/Sample.jpg">
-                            </div>
-                            <div class="card-content">
-                                <span class="card-title activator grey-text text-darken-4">Card Title<i class="material-icons right">more_vert</i></span>
-                            </div>
-                            <div class="card-reveal">
-                                <span class="card-title grey-text text-darken-4">Card Title<i class="material-icons right">close</i></span>
-                                <p>Here is some more information about this product that is only revealed once clicked on.</p>
-                            </div>
-                        </div>
-                    </div>
+                </div>
 
-                </li>
-            </ul>
+            </div>
         </div>
         <div id="footer">
             <footer>2017 HAL Students System</footer>

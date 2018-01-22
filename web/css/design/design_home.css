@@ -50,6 +50,118 @@
 /**
     tab_イベント
  */
+#test4 {
+  display:table;
+  margin-left: auto;
+  margin-right: auto;
+  margin-bottom: 15px;
+}
+#schedule {
+  width: 103rem;
+  height: auto;
+}
+#schedule dl {
+  margin-top: 15px;
+  margin-bottom: 35px;
+}
+#schedule dt{
+  width: 103rem;
+  height: auto;
+  display: block;
+  vertical-align: middle;
+  border-bottom:solid 1px rgb(227, 227, 227);
+}
+#schedule dt h5 {
+  width: auto;
+  vertical-align: middle;
+  font-size: large;
+}
+#schedule dt i{
+  vertical-align: middle;
+}
+
+#schedule dd{
+  text-align: left;
+  display: inline-block;
+  vertical-align: middle;
+  margin: 15px 0px 15px 15px;
+}
+
+.schedule-title {
+  width: 60rem;
+  height: 36px;
+  display: inline-block;
+  margin-left: 35px;
+}
+.schedule-title  p{
+  height: 36px;
+  line-height: 36px;
+  align-items: center;
+  vertical-align: middle;
+  text-overflow:ellipsis;
+  overflow: hidden;
+  white-space: nowrap;
+
+  font-size: larger;
+}
+.schedule-date {
+  width: 20rem;
+  height: 36px;
+}
+.schedule-date p {
+  height: 36px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: larger;
+}
+.schedule-details a {
+  width: 150px;
+}
+
+/**
+    イベント参加履歴・投稿履歴
+ */
+#event-relation {
+  width: 103rem;
+  height: auto;
+}
+#event-relation dl {
+  margin-top: 15px;
+  margin-bottom: 35px;
+}
+#event-relation dt {
+  width: 103rem;
+  height: auto;
+  display: block;
+  vertical-align: middle;
+  border-bottom:solid 1px rgb(227, 227, 227);
+}
+#event-relation dt h5 {
+  width: auto;
+  vertical-align: middle;
+  font-size: large;
+}
+#event-relation dt i{
+  vertical-align: middle;
+}
+
+#event-relation dd  {
+  display: inline-block;
+  width: 250px;
+  height: 35px;
+  margin: 15px 15px 15px 25px;
+}
+#event-relation dd a {
+  width: 250px;
+  border-radius:100px;
+  text-transform: none;
+}
+#event-relation dd a p {
+  text-overflow:ellipsis;
+  overflow: hidden;
+  white-space: nowrap;
+}
 
 /**
     tab_パスワード

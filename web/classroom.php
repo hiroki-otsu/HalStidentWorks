@@ -224,7 +224,7 @@ $access = new DataAccess();
                     echo '</table>';
                     echo '</div>';
                     echo '<div class="modal-footer">';
-                    echo '<a href="#!" class="modal-action modal-close waves-effect waves-green btn-flat ">Agree</a>';
+                    echo '<a href="#!" class="modal-action modal-close waves-effect waves-green btn-flat ">Close</a>';
                     echo '</div>';
                     echo '</div>';
                 }

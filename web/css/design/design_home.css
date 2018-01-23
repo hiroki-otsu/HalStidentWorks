@@ -1,11 +1,29 @@
 /**
+    sub_タイトル
+ */
+.sub-title {
+  width: 103rem;
+  height: auto;
+  display: block;
+  vertical-align: middle;
+  margin-bottom: 40px;
+  border-bottom:solid 1px rgb(227, 227, 227);
+}
+
+/**
     tab_成績
  */
+#test1 {
+  display:table;
+  margin-left: auto;
+  margin-right: auto;
+  margin-bottom: 15px;
+}
 #achievement {
-  width: 103rem;
-  height:35rem;
-  display: block;
-  margin: auto;
+  width: 95rem;
+  height: auto;
+  margin-right: auto;
+  margin-left: auto;
 }
 #subjectCode {
   width:100px;
@@ -42,11 +60,50 @@
 /**
     tab_出席
  */
-
+#test2 {
+  display:table;
+  margin-left: auto;
+  margin-right: auto;
+  margin-bottom: 15px;
+}
+#attend {
+  width: 95rem;
+  height: auto;
+  margin-right: auto;
+  margin-left: auto;
+}
 /**
     tab_メッセージ
  */
-
+#test3 {
+  display:table;
+  margin-left: auto;
+  margin-right: auto;
+  margin-bottom: 15px;
+}
+#message-list {
+  width: 95rem;
+  height: auto;
+  margin-right: auto;
+  margin-left: auto;
+}
+.message {
+  width: 63rem;
+  height:auto;
+  text-align: justify;
+}
+.modal-content p {
+  width: auto;
+  height: auto;
+  margin-left: 10px;
+  display: inline-block;
+}
+.modal-content h6 {
+  width: 3rem;
+  height: auto;
+  text-align: right;
+  display: inline-block;
+}
 /**
     tab_イベント
  */
@@ -175,16 +232,11 @@
   width: 103rem;
   height: auto;
 }
-#sub-title {
-  width: 103rem;
-  height: auto;
-  display: block;
-  vertical-align: middle;
-  margin-bottom: 50px;
-  border-bottom:solid 1px rgb(227, 227, 227);
-}
 #request-list {
-
+  width: 95rem;
+  height: auto;
+  margin-right: auto;
+  margin-left: auto;
 }
 #request-list  img {
   display:inline-block;
@@ -194,6 +246,12 @@
 /**
     tab_パスワード
  */
+#test6{
+  display:table;
+  margin-left: auto;
+  margin-right: auto;
+  margin-bottom: 15px;
+}
 #expiration-date {
   width: 30rem;
   height: 5%;
@@ -241,8 +299,14 @@
 /**
     tab_問い合わせ
  */
+#test7 {
+  display:table;
+  margin-left: auto;
+  margin-right: auto;
+  margin-bottom: 15px;
+}
 #contact {
-  width: 103rem;
+  width: 96rem;
   height:10rem;
   display: block;
   margin-top: 15px;
@@ -256,14 +320,14 @@
   display: block;
   overflow: auto;
   padding-top:5px;
-  margin-left:35px;
+  margin-left:50px;
   margin-bottom: 15px;
 }
 
 #contact-title {
   width: 35rem;
   height: 5rem;
-  margin-left:35px;
+  margin-left:50px;
 }
 #contact-comment {
   width: 50rem;

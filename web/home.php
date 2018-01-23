@@ -57,6 +57,9 @@ $access = new DataAccess();
             </ul>
         </div>
         <div id="test1">
+            <div class="sub-title">
+                <i class="material-icons left">assessment</i><h5>成績情報</h5>
+            </div>
             <div id="achievement">
                 <table class="centered">
                     <thead>
@@ -135,6 +138,9 @@ $access = new DataAccess();
             ?>
         </div><!-- tab01-->
         <div id="test2">
+            <div class="sub-title">
+                <i class="material-icons left">airline_seat_recline_normal</i><h5>出席情報</h5>
+            </div>
             <div id="attend">
                 <table class="centered">
                     <thead>
@@ -155,7 +161,10 @@ $access = new DataAccess();
             </div>
         </div><!-- tab02 -->
         <div id="test3">
-            <div id="message">
+            <div class="sub-title">
+                <i class="material-icons left">mail</i><h5>メッセージ一覧</h5>
+            </div>
+            <div id="message-list">
                 <table class="centered">
                     <thead>
                     <tr>
@@ -189,11 +198,11 @@ $access = new DataAccess();
                 echo '<div id="mail'.$mail['message_no'].'" class="modal modal-fixed-footer">';
                 echo '<div class="modal-content">';
                 echo '<ul class="collection with-header">';
-                echo '<li class="collection-header">Title:'.$mail['message_title'].'</li>';
-                echo '<li class="collection-item">From:'.$mail['teacher_name'].'</li>';
-                echo '<li class="collection-item">To:'.$mail['teacher_name'].'</li>';
-                echo '<li class="collection-item">日時:'.$mail['date'].'</li>';
-                echo '<li class="collection-item">'.nl2br($mail['message_content']).'</li>';
+                echo '<li class="collection-item"><h6>Title:</h6><p>'.$mail['message_title'].'</p></li>';
+                echo '<li class="collection-item"><h6>From:</h6><p>'.$mail['teacher_name'].'</p></li>';
+                echo '<li class="collection-item"><h6>To:</h6><p>'.$mail['teacher_name'].'</p></li>';
+                echo '<li class="collection-item"><h6>日時:</h6><p>'.$mail['date'].'</p></li>';
+                echo '<li class="collection-item"><div class="message">'.nl2br($mail['message_content']).'</div></li>';
                 echo '</ul>';
                 echo '</div>';
                 echo '<div class="modal-footer">';
@@ -201,7 +210,6 @@ $access = new DataAccess();
                 echo '</div>';
                 echo '</div>';
             }
-
             ?>
         </div><!-- tab03-->
         <div id="test4">
@@ -223,10 +231,10 @@ $access = new DataAccess();
                     <dd><a class="waves-effect waves-light btn text-cut"><i class="material-icons left">chevron_right</i><p>Kotlinを学ぼう!!zzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzz</p></a></dd>
                 </dl>
             </div>
-        </div>
+        </div><!-- tab04-->
         <div id="test5">
             <div id="request">
-                <div id="sub-title">
+                <div class="sub-title">
                     <i class="material-icons left">send</i><h5>教室予約申請</h5>
                 </div>
                 <div id="request-list">
@@ -266,8 +274,11 @@ $access = new DataAccess();
                     </table>
                 </div>
             </div>
-        </div>
+        </div><!-- tab05-->
         <div id="test6">
+            <div class="sub-title">
+                <i class="material-icons left">lock</i><h5>パスワード</h5>
+            </div>
             <div id="expiration-date">
                 <h5>パスワード有効期限:
                     <?php
@@ -299,6 +310,9 @@ $access = new DataAccess();
             </div>
         </div><!-- tab06-->
         <div id="test7">
+            <div class="sub-title">
+                <i class="material-icons left">help</i><h5>お問い合わせ</h5>
+            </div>
             <div id="contact">
 
             </div>
@@ -319,7 +333,7 @@ $access = new DataAccess();
                     </button>
                 </div>
             </form>
-        </div>
+        </div><!-- tab07-->
         <div id="footer">
             <footer>2017 HAL Students System</footer>
         </div><!-- footer -->

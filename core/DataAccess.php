@@ -71,7 +71,7 @@ class DataAccess
      */
     public function getUserId($name)
     {
-        $sql="SELECT Student_No from Student_Account WHERE Student_Name=:userName";
+        $sql="SELECT Student_No from Student_Account WHERE Student_Name=:userName AND CURDATE()<=Pass_Update";
         $stmt =self::$dbCon->prepare($sql);
         $stmt->bindValue(":userName", $name, PDO::PARAM_STR);
         $stmt->execute();

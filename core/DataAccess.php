@@ -469,5 +469,44 @@ class DataAccess
 
       return $result;
   }
+
+    /**
+     * 参加する予定のイベント情報を取得するメソッド
+     *
+     */
+  public function getEventsSchedule(){
+      $sql="SELECT Student_Mail FROM student_account ";
+      $sql.="where Student_No = :student";
+      $stmt =self::$dbCon->prepare($sql);
+      $stmt->bindValue(":student",$user, PDO::PARAM_STR);
+      $stmt->execute();
+
+      $result=$stmt->fetch(PDO::FETCH_ASSOC);
+
+      return $result;
+  }
+
+    /**
+     * イベントに参加・不参加の情報をsetするメソッド
+     *
+     * @param $eventsNo
+     * @param $status
+     * @param $student
+     */
+  public function setEventJoinStatus($eventsNo,$status,$student){
+      $date = date("Y/m/d");
+      $user=explode(":",$student);
+      $no=null;
+      $sql = "INSERT INTO inquiry (inquiry_no,inquiry_title,inquiry_contents,date,student_no) ";
+      $sql.= " VALUES (:no,:title,:comment,:date,:student)";
+      $stmt =self::$dbCon->prepare($sql);
+      $stmt->bindValue(":no",$no, PDO::PARAM_STR);
+      $stmt->bindValue(":eventsNo",$eventsNo, PDO::PARAM_STR);
+      $stmt->bindValue(":student",$user[0], PDO::PARAM_STR);
+      $stmt->bindValue(":status",$status, PDO::PARAM_STR);
+      $stmt->bindValue(":date", $date, PDO::PARAM_STR);
+
+      $stmt->execute();
+  }
 }
 

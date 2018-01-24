@@ -25,7 +25,7 @@ $access = new DataAccess();
     <div id="contents">
         <div id="nav" class="z-depth-3">
             <div id="logo">
-                <img src="" width="" height="" alt=""/>
+                <img src="image/logo.jpg" width="258" height="255" alt="ロゴ">
             </div>
             <div id="menu">
                 <ul>

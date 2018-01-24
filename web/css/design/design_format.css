@@ -17,13 +17,17 @@ body{
 	background-color: rgb(255, 255, 255);
 }
 #logo {
-	width: 200px;
-	height: 200px;
+	width: 258px;
+	height: 255px;
 	display: block;
 	margin-right:auto;
 	margin-left: auto;
 	margin-bottom: 30px;
-	background-color: rgb(123, 236, 199);
+}
+#logo  img {
+	width: 258px;
+	height: 255px;
+	text-align: center;
 }
 .menubar img {
 	vertical-align: middle;

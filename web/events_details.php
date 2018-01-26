@@ -51,8 +51,7 @@ $access = new DataAccess();
       <div id="eventcomment">
         <ul class="collection with-header" id="comment">
             <?php
-            $event_code=$_GET['event'];
-            $dataList =$access -> getEventDetails($event_code);
+            $dataList =$access -> getEventDetails($_GET['event']);
                 foreach ($dataList as $value){
                     echo '<li class="collection-header" ><h4>'.$value['events_title'].'</h4></li>';
                     echo '<li class="collection-item" id="item">';

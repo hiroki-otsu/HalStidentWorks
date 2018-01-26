@@ -104,6 +104,11 @@ class DataAccess
 
         $stmt->execute();
     }
+
+    /**
+     * @param $user
+     * @return mixed
+     */
     public function getLimitPassWord($user){
         $sql="SELECT Pass_Update FROM student_account WHERE Student_No=:student";
         $stmt = self::$dbCon->prepare($sql);
@@ -420,7 +425,7 @@ class DataAccess
   }
 
     /**
-     *
+     *  入力されたお問い合わせデータを登録するメソッド
      * @param $title
      * @param $content
      * @param $student
@@ -441,6 +446,11 @@ class DataAccess
       $stmt->execute();
   }
 
+    /**
+     * ユーザに送られてきているメッセージを取得するメソッド
+     * @param $student
+     * @return array
+     */
   public function getMessage($student){
       $user=explode(":",$student);
       $student=$this->getUserMailAddress($user[0]);
@@ -458,6 +468,13 @@ class DataAccess
 
       return $result;
   }
+
+    /**
+     * 学生のメールアドレスを取得するメソッド
+     *
+     * @param $user
+     * @return mixed
+     */
   private function getUserMailAddress($user){
       $sql="SELECT Student_Mail FROM student_account ";
       $sql.="where Student_No = :student";
@@ -475,10 +492,10 @@ class DataAccess
      *
      */
   public function getEventsSchedule(){
-      $sql="SELECT Student_Mail FROM student_account ";
-      $sql.="where Student_No = :student";
+      $sql="";
+      $sql.="";
       $stmt =self::$dbCon->prepare($sql);
-      $stmt->bindValue(":student",$user, PDO::PARAM_STR);
+//      $stmt->bindValue(":",, PDO::PARAM_STR);
       $stmt->execute();
 
       $result=$stmt->fetch(PDO::FETCH_ASSOC);
@@ -507,6 +524,23 @@ class DataAccess
       $stmt->bindValue(":date", $date, PDO::PARAM_STR);
 
       $stmt->execute();
+  }
+
+    /**
+     * 入力された文字から教師のデータを取得するメソッド
+     *
+     * @param $teacherName
+     * @return array
+     */
+  public function getTeacher($teacherName){
+      $sql="";
+      $sql.="";
+      $stmt = self::$dbCon->prepare($sql);
+      $stmt->execute();
+      $stmt->bindValue(":name",$teacherName, PDO::PARAM_STR);
+      $row =$stmt->fetchAll(PDO::FETCH_ASSOC);
+
+      return $row;
   }
 }
 

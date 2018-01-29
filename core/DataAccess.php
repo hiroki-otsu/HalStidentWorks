@@ -159,16 +159,83 @@ class DataAccess
     /**
      * 教官情報を全件取得するメソッド
      *
+     * @param $page
+     * @param $TEACHER_PAGE
      * @return array
      */
-  public function getTeacherList()
+  public function getTeacherList($page,$TEACHER_PAGE)
   {
-    $sql="SELECT * FROM teacher_account";
-    $stmt = self::$dbCon->prepare($sql);
-    $stmt->execute();
-    $rows = $stmt->fetchAll();
-    return $rows;
+      $offset = $TEACHER_PAGE * ($page - 1);
+      $sql="SELECT * from teacher_account LIMIT :offset,:page";
+      $stmt = self::$dbCon->prepare($sql);
+      $stmt->bindValue(":offset", $offset, PDO::PARAM_INT);
+      $stmt->bindValue(":page",$TEACHER_PAGE, PDO::PARAM_INT);
+      $stmt->execute();
+      $rows = $stmt->fetchAll();
+      $result = $this->setStatusTeacher($rows);
+
+      return $result;
   }
+
+    /**
+     *
+     * @param $teacherList
+     * @return array
+     */
+  private function setStatusTeacher($teacherList){
+      $list = array();
+      for ($i=0;$i<count($teacherList);$i++){
+          $statusColor=$this->setStatusEnrollmentColor($teacherList[$i]['teacher_status']);
+          $statusCharacter=$this->setStatusEnrollment($teacherList[$i]['teacher_status']);
+          $list[$i]= array(
+              'teacher'=>$teacherList[$i]['teacher_name'],
+              'lampCharacter'=>$statusCharacter,
+              'lampColor'=>$statusColor,
+              'date'=>$teacherList[$i]['teacher_update'],
+          );
+      }
+      return $list;
+  }
+
+    /**
+     * @param $teacherStatus
+     * @return null|string
+     */
+    private function setStatusEnrollmentColor($teacherStatus){
+        $status =null;
+        switch ($teacherStatus){
+            case 1:
+                $status ='lamp_color_green';
+                break;
+            case 2:
+                $status ='lamp_color_orange';
+                break;
+            default :
+                $status ='lamp_color_gray';
+                break;
+        }
+        return $status;
+    }
+
+    /**
+     * @param $teacherStatus
+     * @return null|string
+     */
+    private function setStatusEnrollment($teacherStatus){
+        $status =null;
+        switch ($teacherStatus){
+            case 1:
+                $character ='在籍中';
+                break;
+            case 2:
+                $character ='離席中';
+                break;
+            default :
+                $character = '不在中';
+                break;
+        }
+        return $character;
+    }
 
     /**
      * 全件情報を取得するメソッド
@@ -191,21 +258,27 @@ class DataAccess
   }
 
     /**
-     * 検索された教官情報を取得するメソッド
+     * 入力された文字から教師のデータを取得するメソッド
      *
-     * @param $teacherName 先生の名前
-     * @return row 取得した情報を返す
+     * @param $teacherName
+     * @param $page
+     * @param $TEACHER_PAGE
+     * @return array
      */
-  public function getSelectTeacher($teacherName)
-  {
-    $sql="SELECT * from Student_Account WHERE teacher = :teacher";
-    $stmt = self::$dbCon->prepare($sql);
-    $stmt->bindValue(":teacher", $teacherName, PDO::PARAM_STR);
-    $stmt->execute();
-    $row = $stmt->fetch();
+    public function getTeacher($teacherName,$page,$TEACHER_PAGE){
+        $offset = $TEACHER_PAGE * ($page - 1);
+        $sql="SELECT * FROM teacher_account ";
+        $sql.="where  teacher_name LIKE '%:teacher%' or teacher_name_kana LIKE '%:teacher%' or teacher_name_hira LIKE '%:teacher%'";
+        $sql.="limit :offset,:page";
+        $stmt = self::$dbCon->prepare($sql);
+        $stmt->execute();
+        $stmt->bindValue(":teacher",$teacherName, PDO::PARAM_STR);
+        $stmt->bindValue(":offset", $offset, PDO::PARAM_INT);
+        $stmt->bindValue(":page",$TEACHER_PAGE, PDO::PARAM_INT);
+        $row =$stmt->fetchAll(PDO::FETCH_ASSOC);
 
-    return $row;
-  }
+        return $row;
+    }
 
     /**
      * イベント情報を登録するメソッド
@@ -236,34 +309,24 @@ class DataAccess
 
       $stmt->execute();
   }
-
     /**
      * イベント情報を取得するメソッド(全件)
      *
-     * @return null|string
+     * @param $page
+     * @param $EVENT_PAGE
+     * @return array
      */
-    public function getEventsInformation(){
-        $sql="SELECT * from events ORDER By events_No DESC";
+    public function getEventsInformation($page,$EVENT_PAGE){
+        $offset = $EVENT_PAGE * ($page - 1);
+        $sql="SELECT * from events  ORDER By events_No DESC LIMIT :offset,:page";
         $stmt =self::$dbCon->prepare($sql);
+        $stmt->bindValue(":offset", $offset, PDO::PARAM_INT);
+        $stmt->bindValue(":page",$EVENT_PAGE, PDO::PARAM_INT);
         $stmt->execute();
         $rows = $stmt->fetchAll();
-        $event=$this->showEventsList($rows);
-        return $event;
-    }
 
-    private function showEventsList($list,$event= null){
-        foreach ($list as $value) {
-            $event ='<tr>';
-            $event.='<td class="events_name">'.$value['events_title'].PHP_EOL.'</td>';
-            $event.='<td class="school_year">'.$value['events_target'].PHP_EOL.'</td>';
-            $event.='<td class="events_date">'.$value['events_date'].PHP_EOL.'</td>';
-            $event.='<td class="details_link"><a href="events_details.php?event='.$value['events_no'].PHP_EOL.'">';
-            $event.='<img src="image/icon/ic_expand_more_black_24dp_1x.png" width="24" height="24" alt="詳細リンク" /></a></td>';
-            $event.='<tr>';
-        }
-        return $event;
+        return $rows;
     }
-
     /**
      * 開催されるイベント詳細情報を取得するメソッド
      *
@@ -306,24 +369,76 @@ class DataAccess
   }
 
     /**
-     *  投稿されている忘れ物情報を取得するメソッド(全件)
+     * 投稿されている忘れ物情報を取得するメソッド(全件)
      *
+     * @param $page
+     * @param $LOST_ARTICLE_PAGE
      * @return array
      */
-  public function getLostArticlesList()
+  public function getLostArticlesList($page,$LOST_ARTICLE_PAGE)
   {
-      $sql="SELECT * from LostArticle order by LostArticle_No desc";
-      $stmt =self::$dbCon->prepare($sql);
+      $offset = $LOST_ARTICLE_PAGE * ($page - 1);
+      $sql="SELECT * from lostarticle order by lostArticle_no desc limit :offset,:page";
+      $stmt = self::$dbCon->prepare($sql);
+      $stmt->bindValue(":offset", $offset, PDO::PARAM_INT);
+      $stmt->bindValue(":page",$LOST_ARTICLE_PAGE, PDO::PARAM_INT);
       $stmt->execute();
       $rows = $stmt->fetchAll();
-
-      return $rows;
+      $result = $this->setLostArticleCard($rows);
+      return $result;
   }
+
+    /**
+     *　各教室の情報を配列に格納するメソッド
+     *
+     * @param $lostArticle
+     * @return array
+     */
+    private function setLostArticleCard($lostArticle){
+        $list = array();
+        for ($i=0;$i<count($lostArticle);$i++){
+            $category=$this->setCategoryStatus($lostArticle[$i]['lostArticle_category']);
+            $list[$i]= array(
+                'no'=>$lostArticle[$i]['lostArticle_no'],
+                'title'=> $lostArticle[$i]['lostArticle_title'],
+                'category'=>$category,
+                'comment'=> $lostArticle[$i]['lostArticle_comment'],
+                'image'=> $lostArticle[$i]['image'],
+                'datetime'=>$lostArticle[$i]['datetime'],
+                'student'=>$lostArticle[$i]['student_no'],
+            );
+        }
+        return $list;
+    }
+
+    /**
+     * 各教室のPortのステータスを確認するメソッド
+     *
+     * @param $CategoryStatus
+     * @return null|string
+     */
+    private function setCategoryStatus($CategoryStatus){
+        $status =null;
+        switch ($CategoryStatus){
+            case 1:
+                $status ='貴重品';
+                break;
+            case 2:
+                $status ='電化製品';
+                break;
+            case 3:
+                $status ='文房具';
+                break;
+            case 4:
+                $status ='その他';
+                break;
+        }
+        return $status;
+    }
 
     /**
      *  忘れ物情報を登録するメソッド
      *
-     * @param $no
      * @param $title
      * @param $category
      * @param $comment
@@ -354,40 +469,51 @@ class DataAccess
      *
      * @return array
      */
-  public function getClassRoomDataList(){
-      $sql='SELECT * FROM classroom;';
+  public function getClassRoomDataList($page,$CLASSROOM_PAGE){
+      $offset = $CLASSROOM_PAGE * ($page - 1);
+      $sql='SELECT * FROM classroom LIMIT :offset,:page';
       $stmt = self::$dbCon->prepare($sql);
+      $stmt->bindValue(":offset", $offset, PDO::PARAM_INT);
+      $stmt->bindValue(":page",$CLASSROOM_PAGE, PDO::PARAM_INT);
       $stmt->execute();
+
       $row = $stmt->fetchAll(PDO::FETCH_ASSOC);
       $result =$this->setPagination($row);
 
       return $result;
   }
+
     /**
-     *　各教室の情報を多次元連想配列に格納するメソッド
+     * 登録されているデータをカウントするメソッド
+     *
+     * @param $table カウントするテーブル名
+     * @return mixedn
+     */
+  public  function getCountDate($table){
+      $sql='SELECT count(*) FROM '.$table;
+      $stmt = self::$dbCon->prepare($sql);
+      $stmt->execute();
+      $row = $stmt->fetchColumn();
+
+      return $row;
+  }
+    /**
+     *　各教室の情報を配列に格納するメソッド
      *
      * @param $roomListData
      * @return array
      */
   private function setPagination($roomListData){
       $list = array();
-      $COUNT=10;
-      $number=0;
       for ($i=0;$i<count($roomListData);$i++){
-          if($i===$COUNT){
-              $number=0;
-              $COUNT=$COUNT+10;
-          }
-          else{
-              $lan=$this->setPortStatus($roomListData[$i]['lan_port']);
-              $power=$this->setPortStatus($roomListData[$i]['power_port']);
-              $list[$COUNT][$number++]= array(
-                  'class'=> $roomListData[$i]['classroom_no'],
-                  'lan'=>$lan,
-                  'power'=>$power,
-                  'size'=>$roomListData[$i]['classroom_size'],
-              );
-          }
+          $lan=$this->setPortStatus($roomListData[$i]['lan_port']);
+          $power=$this->setPortStatus($roomListData[$i]['power_port']);
+          $list[$i]= array(
+              'class'=> $roomListData[$i]['classroom_no'],
+              'lan'=>$lan,
+              'power'=>$power,
+              'size'=>$roomListData[$i]['classroom_size'],
+          );
       }
       return $list;
   }
@@ -488,17 +614,40 @@ class DataAccess
   }
 
     /**
-     * 参加する予定のイベント情報を取得するメソッド
+     * 参加する予定のイベントと参加したイベント情報を取得するメソッド
      *
+     * @param $user
+     * @param $status
+     * @return array
      */
-  public function getEventsSchedule(){
-      $sql="";
-      $sql.="";
+  public function getEventsSchedule($user,$status){
+      $student=explode(":",$user);
+      $sql="SELECT * FROM StudentWorks.events_join ";
+      $sql.="inner join events ";
+      $sql.="on events.events_no = events_join.events_no ";
+      $sql.="where status = :status and date <= CURDATE() and events_join.student_no = :student ";
       $stmt =self::$dbCon->prepare($sql);
-//      $stmt->bindValue(":",, PDO::PARAM_STR);
+      $stmt->bindValue(":student",$student[0], PDO::PARAM_STR);
+      $stmt->bindValue(":status",$status, PDO::PARAM_STR);
       $stmt->execute();
+      $result=$stmt->fetchAll(PDO::FETCH_ASSOC);
 
-      $result=$stmt->fetch(PDO::FETCH_ASSOC);
+      return $result;
+  }
+
+    /**
+     * ログインしているユーザがイベントに投稿しているデータを取得するメソッド
+     *
+     * @param $user
+     * @return array
+     */
+  public function getEventsPostHistory($user){
+      $student=explode(":",$user);
+      $sql="SELECT * FROM events where student_no =:student";
+      $stmt =self::$dbCon->prepare($sql);
+      $stmt->bindValue(":student",$student[0], PDO::PARAM_STR);
+      $stmt->execute();
+      $result=$stmt->fetchAll(PDO::FETCH_ASSOC);
 
       return $result;
   }
@@ -514,7 +663,7 @@ class DataAccess
       $date = date("Y/m/d");
       $user=explode(":",$student);
       $no=null;
-      $sql = "INSERT INTO inquiry (inquiry_no,inquiry_title,inquiry_contents,date,student_no) ";
+      $sql = "INSERT INTO  (inquiry_no,inquiry_title,inquiry_contents,date,student_no) ";
       $sql.= " VALUES (:no,:title,:comment,:date,:student)";
       $stmt =self::$dbCon->prepare($sql);
       $stmt->bindValue(":no",$no, PDO::PARAM_STR);
@@ -526,21 +675,5 @@ class DataAccess
       $stmt->execute();
   }
 
-    /**
-     * 入力された文字から教師のデータを取得するメソッド
-     *
-     * @param $teacherName
-     * @return array
-     */
-  public function getTeacher($teacherName){
-      $sql="";
-      $sql.="";
-      $stmt = self::$dbCon->prepare($sql);
-      $stmt->execute();
-      $stmt->bindValue(":name",$teacherName, PDO::PARAM_STR);
-      $row =$stmt->fetchAll(PDO::FETCH_ASSOC);
-
-      return $row;
-  }
 }
 

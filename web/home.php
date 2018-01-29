@@ -7,18 +7,20 @@ require '../bootstrap.php';
 //インスタンス化
 $session = new Session();
 $access = new DataAccess();
+define('EVENT_HISTORY',2);
+define('EVENT_JOIN',4);
 ?>
 <!DOCTYPE html>
 <html lang="ja">
 <head>
 <meta charset="utf-8">
-<title>HAL学生管理システム|</title>
-<link type="text/css" rel="stylesheet" href="css/reset/html5reset-1.6.1.css" />
-<link type="text/css" rel="stylesheet" href="css/materialize.min.css"  media="screen,projection"/>
-<link type="text/css" rel="stylesheet" href="css/materialize.min.css" />
-<link type="text/css" rel="stylesheet" href="css/design/design_format.css" />
-<link type="text/css" rel="stylesheet" href="css/design/design_home.css" />
-<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet" />
+    <title>HAL学生管理システム|</title>
+    <link type="text/css" rel="stylesheet" href="css/reset/html5reset-1.6.1.css" />
+    <link type="text/css" rel="stylesheet" href="css/materialize.min.css"  media="screen,projection"/>
+    <link type="text/css" rel="stylesheet" href="css/materialize.min.css" />
+    <link type="text/css" rel="stylesheet" href="css/design/design_format.css" />
+    <link type="text/css" rel="stylesheet" href="css/design/design_home.css" />
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet" />
 </head>
 <body>
 <div id="wrapper">
@@ -70,17 +72,23 @@ $access = new DataAccess();
                         <th id="subjectRating">評定</th>
                     </tr>
                     <tbody>
-                    <?php
-                    $dataList =$access -> getLessonDataList();
-                    foreach($dataList as $value){
-                        echo '<tr>';
-                        print '<td class="code">'.$value['subject_code'].'</td>';
-                        print '<td class="name">'.$value['subject_name'].'</td>';
-                        print '<td class="score"><a class="waves-effect waves-light modal-trigger" href="#0'.$value['subject_code'].'"><img src="image/icon/ic_expand_more_black_24dp_1x.png" width="24" height="24" alt="" /></a></td>';
-                        print '<td class="rating"><a class="waves-effect waves-light modal-trigger" href="#1'.$value['subject_code'].'"><img src="image/icon/ic_expand_more_black_24dp_1x.png" width="24" height="24" alt="" /></a></td>';
-                        print '</tr>';
-                    }
-                    ?>
+                    <?php $dataList =$access -> getLessonDataList() ?>
+                    <?php foreach($dataList as $value):?>
+                        <tr>
+                            <td class="code"><?php echo $value['subject_code']?></td>
+                            <td class="name"><?php echo $value['subject_name']?></td>
+                            <td class="score">
+                                <a class="waves-effect waves-light modal-trigger" href="#0<?php echo $value['subject_code']?>">
+                                    <img src="image/icon/ic_expand_more_black_24dp_1x.png" width="24" height="24" alt="" />
+                                </a>
+                            </td>
+                            <td class="rating">
+                                <a class="waves-effect waves-light modal-trigger" href="#1<?php echo $value['subject_code']?>">
+                                    <img src="image/icon/ic_expand_more_black_24dp_1x.png" width="24" height="24" alt="" />
+                                </a>
+                            </td>
+                        </tr>
+                    <?php endforeach;?>
                     </tbody>
                     </thead>
                 </table>
@@ -99,24 +107,27 @@ $access = new DataAccess();
                         echo '<div class="modal-content">';
                         echo '<h4>' . $dataList[$i]['subject_name'] . '[評価]</h4>';
                         break;
-                }
-                echo '<table class="centered">';
-                echo '<thead>';
-                echo '<tr>';
-                echo '<th>課題名</th>';
-                echo '<th>点数</th>';
-                echo '</tr>';
-                echo '<tbody>';
-                $flg = true;
-                $count=0;
-                $serial=0;
-                echo '<tr>';
-                echo '<td>'.$dataList[$i+$count]['task_name'].'</td>';
-                echo '<td>'.$dataList[$i+$count]['task_score'].'</td>';
-                echo '</tr>';
-                while ($flg){
-                    $count++;
-                    if ($dataList[$i]['subject_code'] == $dataList[$serial+$count]['subject_code']){
+                }?>
+                <table class="centered">
+                    <thead>
+                    <tr>
+                        <th>課題名</th>
+                        <th>点数</th>
+                    </tr>
+                    <tbody>
+                    <?php
+                    $flg = true;
+                    $count=0;
+                    $serial=0;
+                    ?>
+                    <tr>
+                        <td><?php echo $dataList[$i+$count]['task_name']?></td>
+                        <td><?php echo $dataList[$i+$count]['task_score']?></td>
+                    </tr>
+                    <?php
+                    while ($flg){
+                        $count++;
+                        if ($dataList[$i]['subject_code'] == $dataList[$serial+$count]['subject_code']){
                         echo '<tr>';
                         echo '<td>'.$dataList[$i+$count]['task_name'].'</td>';
                         echo '<td>'.$dataList[$i+$count]['task_score'].'</td>';
@@ -132,9 +143,9 @@ $access = new DataAccess();
                         echo '<a href="#!" class="modal-action modal-close waves-effect waves-green btn-flat ">Close</a>';
                         echo '</div>';
                         echo '</div>';
-                    }
-                }
-            }
+                    }//else
+                }//if
+            }//for
             ?>
         </div><!-- tab01-->
         <div id="test2">
@@ -174,62 +185,80 @@ $access = new DataAccess();
                         <th id="">詳細</th>
                     </tr>
                     <tbody>
-                    <?php
-                    $mailList=$access->getMessage($student);
-                    foreach ($mailList as $mail){
-                        echo '<tr>';
-                        echo '<td class="title">'.$mail['message_title'].'</td>';
-                        echo '<td class="sender">'.$mail['teacher_name'].'</td>';
-                        echo '<td class="time">'.$mail['date'].'</td>';
-                        echo '<td class="details">';
-                        echo '<a class="waves-effect waves-light modal-trigger" href="#mail'.$mail['message_no'].'">';
-                        echo '<img src="image/icon/ic_expand_more_black_24dp_1x.png" width="24" height="24" alt="" /></a>';
-                        echo '</td>';
-                        echo '</tr>';
-                    }
-                    ?>
+                    <?php $mailList=$access->getMessage($student)?>
+                    <?php foreach ($mailList as $mail) :?>
+                        <tr>
+                            <td class="title"><?php echo $mail['message_title'] ?></td>
+                            <td class="sender"><?php echo $mail['teacher_name'] ?></td>
+                            <td class="time"><?php echo $mail['date'] ?></td>
+                            <td class="details">
+                                <a class="waves-effect waves-light modal-trigger" href="#mail<?php echo $mail['message_no']?>">
+                                    <img src="image/icon/ic_expand_more_black_24dp_1x.png" width="24" height="24" alt="" />
+                                </a>
+                            </td>
+                        </tr>
+                    <?php endforeach;?>
                     </tbody>
                     </thead>
                 </table>
             </div>
-            <?php
-            $mailList=$access->getMessage($student);
-            foreach ($mailList as $mail){
-                echo '<div id="mail'.$mail['message_no'].'" class="modal modal-fixed-footer">';
-                echo '<div class="modal-content">';
-                echo '<ul class="collection with-header">';
-                echo '<li class="collection-item"><h6>Title:</h6><p>'.$mail['message_title'].'</p></li>';
-                echo '<li class="collection-item"><h6>From:</h6><p>'.$mail['teacher_name'].'['.$mail['message_From'].']</p></li>';
-                echo '<li class="collection-item"><h6>To:</h6><p>'.$mail['Student_Name'].'['.$mail['message_To'].']</p></li>';
-                echo '<li class="collection-item"><h6>日時:</h6><p>'.$mail['date'].'</p></li>';
-                echo '<li class="collection-item"><div class="message">'.nl2br($mail['message_content']).'</div></li>';
-                echo '</ul>';
-                echo '</div>';
-                echo '<div class="modal-footer">';
-                echo '<a href="#!" class="modal-action modal-close waves-effect waves-green btn-flat ">Close</a>';
-                echo '</div>';
-                echo '</div>';
-            }
-            ?>
+            <?php $mailList=$access->getMessage($student)?>
+            <?php foreach ($mailList as $mail): ?>
+                <div id="mail<?php echo $mail['message_no']?>" class="modal modal-fixed-footer">
+                    <div class="modal-content">
+                        <ul class="collection with-header">
+                            <li class="collection-item"><h6>Title:</h6><p><?php echo $mail['message_title']?></p></li>
+                            <li class="collection-item"><h6>From:</h6><p><?php echo $mail['teacher_name']?><<?php echo $mail['message_From']?>></p></li>
+                            <li class="collection-item"><h6>To:</h6><p><?php echo $mail['Student_Name']?><<?php echo $mail['message_To']?>></p></li>
+                            <li class="collection-item"><h6>日時:</h6><p><?php echo $mail['date']?></p></li>
+                            <li class="collection-item"><div class="message"><?php echo nl2br($mail['message_content'])?></div></li>
+                        </ul>
+                    </div>
+                    <div class="modal-footer">
+                        <a href="#!" class="modal-action modal-close waves-effect waves-green btn-flat ">Close</a>
+                    </div>
+                </div>
+            <?php endforeach; ?>
         </div><!-- tab03-->
         <div id="test4">
             <div id="schedule">
+                <?php $schedule=$access->getEventsSchedule($student,EVENT_HISTORY)?>
                 <dl>
                     <dt><i class="material-icons left">insert_invitation</i><h5>イベント参加スケジュール</h5></dt>
-                    <dd class="schedule-title"><p>Kotlinを学ぼう!!</p></dd>
-                    <dd class="schedule-date"><p>20118/01/29</p></dd>
-                    <dd class="schedule-details"><a href="#" class="waves-effect waves-light btn text-cut"><i class="material-icons right">chevron_right</i>詳細</a></dd>
+                    <?php foreach ($schedule as $value):?>
+                        <dd class="schedule-title"><p><?php echo $value['events_title']?></p></dd>
+                        <dd class="schedule-date"><p>開催日：<?php echo $value['date']?></p></dd>
+                        <dd class="schedule-details">
+                            <a href="events_details.php?event=<?php echo $value['events_no']?>" class="waves-effect waves-light btn text-cut">
+                                <i class="material-icons right">chevron_right</i>詳細
+                            </a>
+                        </dd>
+                    <?php endforeach;?>
                 </dl>
             </div>
             <div id="event-relation">
+                <?php $join = $access->getEventsSchedule($student,EVENT_JOIN)?>
                 <dl>
                     <dt><i class="material-icons left">access_time</i><h5>イベント参加履歴</h5></dt>
-                    <dd><a class="waves-effect waves-light btn text-cut"><i class="material-icons left">chevron_right</i><p>Kotlinを学ぼう!!zzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzz</p></a></dd>
+                    <?php foreach ($join as $value):?>
+                    <dd><a class="waves-effect waves-light btn text-cut" href="events_details.php?event=<?php echo $value['events_no']?>">
+                            <i class="material-icons left">chevron_right</i>
+                            <p><?php echo $value['events_title']?></p>
+                        </a>
+                    </dd>
+                    <?php endforeach;?>
                 </dl>
-                <dl>
-                    <dt><i class="material-icons left">create</i><h5>イベント投稿履歴</h5></dt>
-                    <dd><a class="waves-effect waves-light btn text-cut"><i class="material-icons left">chevron_right</i><p>Kotlinを学ぼう!!zzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzz</p></a></dd>
-                </dl>
+                <?php $history=$access->getEventsPostHistory($student)?>
+                    <dl>
+                        <dt><i class="material-icons left">create</i><h5>イベント投稿履歴</h5></dt>
+                        <?php foreach ($history as $value) :?>
+                            <dd><a class="waves-effect waves-light btn text-cut" href="events_details.php?event=<?php echo $value['events_no']?>">
+                                    <i class="material-icons left">chevron_right</i>
+                                    <p><?php echo $value['events_title']?></p>
+                                </a>
+                            </dd>
+                        <?php endforeach;?>
+                    </dl>
             </div>
         </div><!-- tab04-->
         <div id="test5">
@@ -281,11 +310,11 @@ $access = new DataAccess();
             </div>
             <div id="expiration-date">
                 <h5>パスワード有効期限:
-                    <?php
-                        $limitDate=$access->getLimitPassWord('ohs50054');
-                        $limit=explode("-",$limitDate[0]);
-                        echo $limit[0].'年'.$limit[1].'月'.$limit[2].'日';
-                    ?>
+                    <?php $limitDate=$access->getLimitPassWord('ohs50054');?>
+                        <?php $limit=explode("-",$limitDate[0]);?>
+                    <?php echo $limit[0]?>年
+                    <?php echo $limit[1]?>月
+                    <?php echo $limit[2]?>日
                 </h5>
             </div>
             <div id="pass">

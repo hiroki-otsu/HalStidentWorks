@@ -7,6 +7,18 @@ require '../bootstrap.php';
 //インスタンス化
 $session = new Session();
 $access = new DataAccess();
+define('EVENT_PAGE',10);
+define('events','events');
+
+if(isset($_GET['page'])){
+    preg_match('/^[1-9][0-9]*$/',$_GET['page']);
+    $page = (int)$_GET['page'];
+}
+else{
+    $page =1;
+}
+$total = $access->getCountDate(events);
+$totalPage = ceil($total / EVENT_PAGE);
 ?>
 <!DOCTYPE html>
 <html lang="ja">
@@ -68,21 +80,43 @@ $access = new DataAccess();
                 </tr>
                 </thead>
                 <tbody>
-                    <?php print $access -> getEventsInformation(); ?>
+                    <?php  $event=$access -> getEventsInformation($page,EVENT_PAGE); ?>
+                    <?php foreach ($event as $value):?>
+                    <tr>
+                        <td class="events_name"><?php echo $value['events_title'].PHP_EOL?></td>
+                        <td class="school_year"><?php echo $value['events_target'].PHP_EOL?></td>
+                        <td class="events_date"><?php echo $value['events_date'].PHP_EOL?></td>
+                        <td class="details_link"><a href="events_details.php?event=<?php echo $value['events_no'].PHP_EOL?>">
+                            <img src="image/icon/ic_expand_more_black_24dp_1x.png" width="24" height="24" alt="詳細リンク" /></a>
+                        </td>
+                    <tr>
+                    <?php endforeach;?>
                 </tbody>
             </table>
         </div>
+        <!--  ページング機能  -->
         <div id="page">
             <ul class="pagination">
-                <li class="disabled"><a href="#!"><i class="material-icons">chevron_left</i></a></li>
-                <li class="active"><a href="#!">1</a></li>
-                <li class="waves-effect"><a href="#!">2</a></li>
-                <li class="waves-effect"><a href="#!">3</a></li>
-                <li class="waves-effect"><a href="#!">4</a></li>
-                <li class="waves-effect"><a href="#!">5</a></li>
-                <li class="waves-effect"><a href="#!"><i class="material-icons">chevron_right</i></a></li>
+                <!--  前を表示させる  -->
+                <?php if ($page > 1) : ?>
+                    <li class="disabled"><a href="?page=<?php echo $page - 1; ?>"><i class="material-icons">chevron_left</i></a></li>
+                <?php endif; ?>
+                <!-- トータル件数が6件より少ない場合はページングを表示させない -->
+                <?php if($totalPage>EVENT_PAGE): ?>
+                    <?php for ($i=1 ; $i <= $totalPage; $i++): ?><!-- ページングを表示させる処理 -->
+                        <?php if($page == $i) :?>
+                            <li class="active"><a href="?page=<?php echo $i; ?>"><?php echo $i; ?></a></li>
+                        <?php else: ?>
+                            <li class="waves-effect"><a href="?page=<?php echo $i; ?>"><?php echo $i; ?></a></li>
+                        <?php endif; ?>
+                    <?php endfor; ?>
+                <?php endif; ?>
+                <!--  次を表示させる  -->
+                <?php if ($page < $totalPage) : ?>
+                    <li class="waves-effect"><a href="?page=<?php echo $page + 1; ?>"><i class="material-icons">chevron_right</i></a></li>
+                <?php endif; ?>
             </ul>
-        </div>
+        </div><!-- page -->
         <div id="footer">
             <footer>2017 HAL Students System</footer>
         </div><!-- footer -->

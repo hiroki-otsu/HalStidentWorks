@@ -61,3 +61,11 @@
 	height:10px;
 	background-color:rgb(161, 161, 161);
 }
+#page {
+	clear: right;
+	text-align: center;
+	width: 103rem;
+	height: 30px;
+	margin-right: auto;
+	margin-left: auto;
+}

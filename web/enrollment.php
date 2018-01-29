@@ -5,7 +5,18 @@ ini_set('display_errors','On');
 
 require '../bootstrap.php';
 $session = new Session();
-$dataAccess = new DataAccess();
+$access = new DataAccess();
+define('TEACHER_PAGE',10);
+define('TEACHER','teacher_account');
+if(isset($_GET['page'])){
+    preg_match('/^[1-9][0-9]*$/',$_GET['page']);
+    $page = (int)$_GET['page'];
+}
+else{
+    $page =1;
+}
+$total = $access->getCountDate(TEACHER);
+$totalPage = ceil($total / TEACHER_PAGE);
 
 ?>
 <!DOCTYPE html>
@@ -46,13 +57,13 @@ $dataAccess = new DataAccess();
       </div>
     </div><!-- end header -->
     <div id="search" class="input-field">
-      <form action="#!" method="post">
+      <form action="teacherSearch" method="get">
         <div id="search-name">
           <i class="material-icons prefix">account_circle</i>
-            <input id="icon_prefix" type="text" class="validate" >
+            <input id="icon_prefix" type="text" class="validate" name="teacher">
             <label for="icon_prefix">Teacher Name</label>
         </div>
-        <button class="btn waves-effect waves-light" type="submit" name="action">検索
+        <button class="btn waves-effect waves-light" type="submit">検索
             <i class="material-icons left">search</i>
         </button>
       </form>
@@ -68,35 +79,43 @@ $dataAccess = new DataAccess();
           </tr>
         </thead>
         <tbody>
-          <?php
-          $teacher = $dataAccess -> getTeacherList();
-          foreach ($teacher as $value) {
-            switch ($value['teacher_status']) {
-              case 1:
-                $TeacherStatus ="在籍中";
-                $lamp="<div id='lamp_color_green'>";
-                break;
-              case 2:
-                $TeacherStatus="離席中";
-                $lamp="<div id='lamp_color_orange'>";
-                break;
-              default:
-                $TeacherStatus ="不在中";
-                $lamp="<div id='lamp_color_gray'>";
-                break;
-            }
-            print("<tr>");
-            print("<td class='teacher-name'>".$value['teacher_name'].PHP_EOL."</td>");
-            print("<td class='teacher-enrollment'>".$TeacherStatus."</td>");
-            print("<td class='teacher-lamp'>".$lamp.PHP_EOL."</td>");
-            print("<td class='teacher-date'>".$value['teacher_update'].PHP_EOL."</td>");
-            print("</tr>");
-          }
-          ?>
+        <td class='teacher-enrollment'></td>
+        <?php $teacher = $access -> getTeacherList($page,TEACHER_PAGE);?>
+        <?php for ($i =0; $i<count($teacher);$i++) :?>
+            <tr>
+                <td class='teacher-name'><?php echo $teacher[$i]['teacher']?></td>
+                <td class='teacher-enrollment'><?php echo $teacher[$i]['lampCharacter']?></td>
+                <td class='teacher-lamp'><div id='<?php echo $teacher[$i]['lampColor'] ?>'></td>
+                <td class='teacher-date'><?php echo $teacher[$i]['date']?></td>
+            </tr>
+        <?php endfor; ?>
         </tbody>
       </table>
     </div>
-    <div id="footer">
+      <!--  ページング機能  -->
+      <div id="page">
+          <ul class="pagination">
+              <!--  前を表示させる  -->
+              <?php if ($page > 1) : ?>
+                  <li class="disabled"><a href="?page=<?php echo $page - 1; ?>"><i class="material-icons">chevron_left</i></a></li>
+              <?php endif; ?>
+              <!-- トータル件数が6件より少ない場合はページングを表示させない -->
+              <?php if($totalPage>TEACHER_PAGE): ?>
+                  <?php for ($i=1 ; $i <= $totalPage; $i++): ?><!-- ページングを表示させる処理 -->
+                      <?php if($page == $i) :?>
+                          <li class="active"><a href="?page=<?php echo $i; ?>"><?php echo $i; ?></a></li>
+                      <?php else: ?>
+                          <li class="waves-effect"><a href="?page=<?php echo $i; ?>"><?php echo $i; ?></a></li>
+                      <?php endif; ?>
+                  <?php endfor; ?>
+              <?php endif; ?>
+              <!--  次を表示させる  -->
+              <?php if ($page < $totalPage) : ?>
+                  <li class="waves-effect"><a href="?page=<?php echo $page + 1; ?>"><i class="material-icons">chevron_right</i></a></li>
+              <?php endif; ?>
+          </ul>
+      </div><!-- page -->
+      <div id="footer">
       <footer>2017 HAL Students System</footer>
     </div><!-- footer -->
   </div><!-- end contents -->

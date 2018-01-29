@@ -5,7 +5,6 @@
 }
 #lost-article-post a {
 	width: 20rem;
-	height: 4rem;
 	font-size:150%;
 }
 #lost-article {
@@ -76,4 +75,12 @@
 .card-link a{
 	margin-left: 15px;
 	line-height: 2.6;
+}
+#page {
+	clear: right;
+	text-align: center;
+	width: 103rem;
+	height: 30px;
+	margin-right: auto;
+	margin-left: auto;
 }

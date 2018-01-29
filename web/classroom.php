@@ -4,30 +4,37 @@ error_reporting(E_ALL | E_STRICT);
 ini_set('display_errors','On');
 //外部ファイル読み込み
 require '../bootstrap.php';
-//インスタンス化
 $session = new Session();
 $access = new DataAccess();
+define('CLASSROOM_PAGE',10);
+define('CLASSROOM','classroom');
+if(isset($_GET['page'])){
+    preg_match('/^[1-9][0-9]*$/',$_GET['page']);
+    $page = (int)$_GET['page'];
+}
+else{
+    $page =1;
+}
+$total = $access->getCountDate(CLASSROOM);
+$totalPage = ceil($total/CLASSROOM_PAGE);
 ?>
 <!DOCTYPE html>
 <html lang="ja">
 <head>
-<meta charset="utf-8">
-<title>HAL学生管理システム|教室検索・予約</title>
-<link type="text/css" rel="stylesheet" href="css/reset/html5reset-1.6.1.css" />
-<link type="text/css" rel="stylesheet" href="css/materialize.min.css"  media="screen,projection"/>
-<link type="text/css" rel="stylesheet" href="css/themes/default.css">
-<link type="text/css" rel="stylesheet" href="css/themes/default.date.css">
-<link type="text/css" rel="stylesheet" href="css/materialize.min.css" />
-<link type="text/css" rel="stylesheet" href="css/design/design_format.css" />
-<link type="text/css" rel="stylesheet" href="css/design/design_classroom.css" />
-<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet" />
+    <meta charset="utf-8">
+    <title>教室検索・予約</title>
+    <link type="text/css" rel="stylesheet" href="css/reset/html5reset-1.6.1.css" />
+    <link type="text/css" rel="stylesheet" href="css/materialize.min.css"  media="screen,projection"/>
+    <link type="text/css" rel="stylesheet" href="css/design/design_format.css" />
+    <link type="text/css" rel="stylesheet" href="css/design/design_classroom.css" />
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet" />
 </head>
 <body>
 <div id="wrapper">
     <div id="nav" class="z-depth-3">
         <div id="logo">
             <img src="image/logo.jpg" width="258" height="255" alt="ロゴ">
-        </div>
+        </div><!-- logo -->
         <div id="menu">
             <ul>
                 <li class="menubar"><a href="home.php"><img src="image/icon/ic_home_black_24dp_1x.png" width="24" height="24" alt="home"/>Home</a></li>
@@ -36,26 +43,26 @@ $access = new DataAccess();
                 <li class="menubar"><a href="lost_article_list.php"><img src="image/icon/ic_live_help_black_24dp_1x.png" width="24" height="24" alt="忘れ物掲示板"/>拾得物</a></li>
                 <li class="menubar"><a href="classroom.php"><img src="image/icon/ic_search_black_24dp_1x.png" width="24" height="24" alt="教室予約"/>教室検索・予約</a></li>
             </ul>
-        </div>
-    </div>
+        </div><!-- menu -->
+    </div><!-- nav -->
     <div id="contents">
         <div id="header">
             <div id="title">
                 <h2>HAL Students System</h2>
-            </div>
+            </div><!-- title -->
             <div id="user">
                 <p><a href="home.php"><img src="image/icon/ic_person_black_24dp_1x.png" width="24" height="24" alt="アカウント"/><?php echo $session->get('ohs50054')?></a></p>
-            </div>
-        </div>
+            </div><!-- user -->
+        </div><!-- header  -->
         <div id="reservation">
             <div id="room-search">
                 <form action="#" method="get">
-                    <div id="btn-search"><!-- 絞り込み検索 -->
+                    <div id="btn-search">
                         <button class="btn waves-effect waves-light" id="btn-room-search" type="submit" name="action">絞り込み検索
                             <i class="material-icons left">search</i>
                         </button>
-                    </div>
-                    <div id="room-size"><!-- 教室のサイズ -->
+                    </div><!-- 絞り込み検索 -->
+                    <div id="room-size">
                         <p>教室サイズ</p>
                         <input class="with-gap" name="size" type="radio" id="size-s"  checked/>
                         <label for="size-s">S</label>
@@ -63,21 +70,21 @@ $access = new DataAccess();
                         <label for="size-m">M</label>
                         <input class="with-gap" name="size" type="radio" id="size-l"  />
                         <label for="size-l">L</label>
-                    </div>
-                    <div id="room-power-port"><!--電源ﾎﾟｰﾄ -->
+                    </div><!-- 教室のサイズ -->
+                    <div id="room-power-port">
                         <p> 電源ポート</p>
                         <input class="with-gap" name="power" type="radio" id="power-true"  checked/>
                         <label for="power-true">有り</label>
                         <input class="with-gap" name="power" type="radio" id="power-false"  />
                         <label for="power-false">無し</label>
-                    </div>
-                    <div id="room-lan-port"><!-- LANﾎﾟｰﾄ-->
+                    </div><!--電源ﾎﾟｰﾄ -->
+                    <div id="room-lan-port">
                         <p>LANポート</p>
                         <input class="with-gap" name="lan" type="radio" id="lan-true"  checked/>
                         <label for="lan-true">有り</label>
                         <input class="with-gap" name="lan" type="radio" id="lan-false"  />
                         <label for="lan-false">無し</label>
-                    </div>
+                    </div><!-- LANﾎﾟｰﾄ-->
                     <div id="room-floor">
                         <div class="input-field">
                             <select>
@@ -89,172 +96,58 @@ $access = new DataAccess();
                         </div>
                     </div>
                 </form>
-            </div>
-            <div id="plans">
-                <table class="centered highlight">
-                    <thead>
-                    <tr>
-                        <th>教室</th>
-                        <th>LANポート</th>
-                        <th>電源ポート</th>
-                        <th>サイズ</th>
-                        <th>空き状況確認</th>
-                    </tr>
-                    </thead>
-                    <?php
-                    $j=0;
-                    $limit=10;
-                    $class = $access->getClassRoomDataList();
-                    for ($i =0; $i<count($class,1);$i++){
-                        if($i===10){
-                            break;
-                        }
-                        else{
-                            echo '<tr>';
-                            print '<td>'.$class[$limit][$i]['class'].'</td>';
-                            print '<td>'.$class[$limit][$i]['lan'].'</td>';
-                            print '<td>'.$class[$limit][$i]['power'].'</td>';
-                            print '<td>'.$class[$limit][$i]['size'].'</td>';
-                            print '<td><a class="waves-effect waves-light btn modal-trigger" href="#'.$class[$limit][$i]['class'].'">確認</a></td>';
-                            echo '</tr>';
-                            $j++;
-                        }
-                    }
-                    ?>
-                </table>
-                <?php
-                $schedule = $access->getClassSchedule();
-                foreach ($schedule as $value){
-                    echo '<div id="'.$value['classroom_no'].'" class="modal modal-fixed-footer">';
-                    echo '<div class="modal-content">';
-                    echo '<h4>'.$value['classroom_no'].'教室</h4>';
-                    echo '<table class="centered highlight">';
-                    echo '<tbody>';
+            </div><!-- room-search -->
+        </div><!-- reservation -->
+        <div id="plans">
+            <table class="centered highlight">
+                <thead>
+                <tr>
+                    <th>教室</th>
+                    <th>LANポート</th>
+                    <th>電源ポート</th>
+                    <th>サイズ</th>
+                    <th>空き状況確認</th>
+                </tr>
+                </thead>
+                <?php  $classRoom = $access->getClassRoomDataList($page,CLASSROOM_PAGE)?>
+                <?php  for ($i =0; $i<count($classRoom);$i++){
                     echo '<tr>';
-                    switch ($value['first_limit']){
-                        case 0:
-                            echo '<td>1限目</td>';
-                            echo '<td>×</td>';
-                            echo '<td>使用中</td>';
-                            echo '<td><a class="waves-effect waves-light btn modal-trigger" href="#modal1" disabled="disabled">予約申請</a></td>';
-                            break;
-                        case 1:
-                            echo '<td>1限目</td>';
-                            echo '<td>〇</td>';
-                            echo '<td>使用可能</td>';
-                            echo '<td><a class="waves-effect waves-light btn modal-trigger" href="#modal1">予約申請</a></td>';
-                            break;
-                    }
+                    echo '<td>'.$classRoom[$i]['class'].'</td>'.PHP_EOL;
+                    echo '<td>'.$classRoom[$i]['lan'].'</td>'.PHP_EOL;
+                    echo '<td>'.$classRoom[$i]['power'].'</td>'.PHP_EOL;
+                    echo '<td>'.$classRoom[$i]['size'].'</td>'.PHP_EOL;
+                    echo '<td><a class="waves-effect waves-light btn modal-trigger" href="#'.$classRoom[$i]['class'].'">確認</a></td>';
                     echo '</tr>';
-                    switch ($value['second_limit']){
-                        case 0:
-                            echo '<td>2限目</td>';
-                            echo '<td>×</td>';
-                            echo '<td>使用中</td>';
-                            echo '<td><a class="waves-effect waves-light btn modal-trigger" href="#modal1" disabled="disabled">予約申請</a></td>';
-                            break;
-                        case 1:
-                            echo '<td>2限目</td>';
-                            echo '<td>〇</td>';
-                            echo '<td>使用可能</td>';
-                            echo '<td><a class="waves-effect waves-light btn modal-trigger" href="#modal1">予約申請</a></td>';
-                            break;
-                    }
-                    echo '</tr>';
-                    switch ($value['third_limit']){
-                        case 0:
-                            echo '<td>3限目</td>';
-                            echo '<td>×</td>';
-                            echo '<td>使用中</td>';
-                            echo '<td><a class="waves-effect waves-light btn modal-trigger" href="#modal1" disabled="disabled">予約申請</a></td>';
-                            break;
-                        case 1:
-                            echo '<td>3限目</td>';
-                            echo '<td>〇</td>';
-                            echo '<td>使用可能</td>';
-                            echo '<td><a class="waves-effect waves-light btn modal-trigger" href="#modal1">予約申請</a></td>';
-                            break;
-                    }
-                    echo '</tr>';
-                    switch ($value['fourth_limit']){
-                        case 0:
-                            echo '<td>4限目</td>';
-                            echo '<td>×</td>';
-                            echo '<td>使用中</td>';
-                            echo '<td><a class="waves-effect waves-light btn modal-trigger" href="#modal1" disabled="disabled">予約申請</a></td>';
-                            break;
-                        case 1:
-                            echo '<td>4限目</td>';
-                            echo '<td>〇</td>';
-                            echo '<td>使用可能</td>';
-                            echo '<td><a class="waves-effect waves-light btn modal-trigger" href="#modal1">予約申請</a></td>';
-                            break;
-                    }
-                    echo '</tr>';
-                    switch ($value['five_limit']){
-                        case 0:
-                            echo '<td>5限目</td>';
-                            echo '<td>×</td>';
-                            echo '<td>使用中</td>';
-                            echo '<td><a class="waves-effect waves-light btn modal-trigger" href="#modal1" disabled="disabled">予約申請</a></td>';
-                            break;
-                        case 1:
-                            echo '<td>5限目</td>';
-                            echo '<td>〇</td>';
-                            echo '<td>使用可能</td>';
-                            echo '<td><a class="waves-effect waves-light btn modal-trigger" href="#modal1">予約申請</a></td>';
-                            break;
-                    }
-                    echo '</tr>';
-                    switch ($value['sixth_limit']){
-                        case 0:
-                            echo '<td>6限目</td>';
-                            echo '<td>×</td>';
-                            echo '<td>使用中</td>';
-                            echo '<td><a class="waves-effect waves-light btn modal-trigger" href="#modal1" disabled="disabled">予約申請</a></td>';
-                            break;
-                        case 1:
-                            echo '<td>6限目</td>';
-                            echo '<td>〇</td>';
-                            echo '<td>使用可能</td>';
-                            echo '<td><a class="waves-effect waves-light btn modal-trigger" href="#modal1">予約申請</a></td>';
-                            break;
-                    }
-                    echo '</tbody>';
-                    echo '</table>';
-                    echo '</div>';
-                    echo '<div class="modal-footer">';
-                    echo '<a href="#!" class="modal-action modal-close waves-effect waves-green btn-flat ">Close</a>';
-                    echo '</div>';
-                    echo '</div>';
-                }
-                ?>
-            </div>
-            <div id="page">
-                <ul class="pagination">
-                    <li class="disabled"><a href="#!"><i class="material-icons">chevron_left</i></a></li>
-                    <li class="active"><a href="#!">1</a></li>
-                    <li class="waves-effect"><a href="#!">2</a></li>
-                    <li class="waves-effect"><a href="#!">3</a></li>
-                    <li class="waves-effect"><a href="#!">4</a></li>
-                    <li class="waves-effect"><a href="#!">5</a></li>
-                    <li class="waves-effect"><a href="#!"><i class="material-icons">chevron_right</i></a></li>
-                </ul>
-            </div>
+                }?>
+            </table>
         </div>
+        <!--  ページング機能  -->
+        <div id="page">
+            <ul class="pagination">
+                <!--  前を表示させる  -->
+                <?php if ($page > 1) : ?>
+                    <li class="disabled"><a href="?page=<?php echo $page - 1; ?>"><i class="material-icons">chevron_left</i></a></li>
+                <?php endif; ?>
+                <!--  1 2...とか表示  -->
+                <?php for ($i=1 ; $i <= $totalPage; $i++): ?>
+                    <?php if($page == $i) :?>
+                        <li class="active"><a href="?page=<?php echo $i; ?>"><?php echo $i; ?></a></li>
+                    <?php else: ?>
+                        <li class="waves-effect"><a href="?page=<?php echo $i; ?>"><?php echo $i; ?></a></li>
+                    <?php endif; ?>
+                <?php endfor; ?>
+                <!--  次を表示させる  -->
+                <?php if ($page < $totalPage) : ?>
+                    <li class="waves-effect"><a href="?page=<?php echo $page + 1; ?>"><i class="material-icons">chevron_right</i></a></li>
+                <?php endif; ?>
+            </ul>
+        </div><!-- page -->
         <div id="footer">
             <footer>2017 HAL Students System</footer>
         </div><!-- footer -->
-    </div>
-</div>
+    </div><!-- content -->
+</div><!-- wrapper -->
 <script type="text/javascript" src="jq/jquery-3.2.1.min.js"></script>
-<script type="text/javascript" src="js/check.js"></script>
-<script type="text/javascript" src="js/model.js"></script>
 <script type="text/javascript" src="js/materialize.min.js"></script>
-<script type="text/javascript" src="js/legacy.js"></script>
-<script type="text/javascript" src="js/lang-ja.js"></script>
-<script type="text/javascript" src="js/app.js"></script>
-<script type="text/javascript" src="js/picker.js"></script>
-<script type="text/javascript" src="js/picker.date.js"></script>
 </body>
 </html>

@@ -3,8 +3,6 @@ $(document).ready(function(){
   $('.modal').modal();
 });
 
-$('#modal1').modal('open');
-
 $('.modal').modal({
     dismissible: true, // Modal can be dismissed by clicking outside of the modal
     opacity: .5, // Opacity of modal background
@@ -20,5 +18,3 @@ $('.modal').modal({
   }
 );
 
-
-$('#modal1').modal('close');

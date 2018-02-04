@@ -10,7 +10,7 @@ require '../bootstrap.php';
 <html lang="ja">
 <head>
 <meta charset="utf-8">
-<title>HAL学生管理システム|</title>
+<title>HAL学生管理システム</title>
 <link type="text/css" rel="stylesheet" href="css/reset/html5reset-1.6.1.css" />
 <link type="text/css" rel="stylesheet" href="css/materialize.min.css"  media="screen,projection"/>
 <link type="text/css" rel="stylesheet" href="css/materialize.min.css" />

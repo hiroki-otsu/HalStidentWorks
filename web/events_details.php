@@ -12,7 +12,7 @@ $access = new DataAccess();
 <html lang="ja">
 <head>
 <meta charset="utf-8">
-<title>HAL学生管理システム|イベント詳細</title>
+<title>イベント詳細</title>
 <link type="text/css" rel="stylesheet" href="css/reset/html5reset-1.6.1.css" />
 <link type="text/css" rel="stylesheet" href="css/materialize.min.css"  media="screen,projection"/>
 <link type="text/css" rel="stylesheet" href="css/themes/default.css">
@@ -55,7 +55,7 @@ $access = new DataAccess();
                 foreach ($dataList as $value){
                     echo '<li class="collection-header" ><h4>'.$value['events_title'].'</h4></li>';
                     echo '<li class="collection-item" id="item">';
-                    echo $value['events_contents'].PHP_EOL;
+                    echo nl2br($value['events_contents']);
                     echo '</li>';
                 }
             ?>

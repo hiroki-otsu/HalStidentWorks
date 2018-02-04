@@ -62,7 +62,7 @@ if ($request-> isPost()) {
         if(move_uploaded_file($_FILES['image']['tmp_name'], $imageDirectory)){
             $msg = $imageDirectory. 'のアップロードに成功しました';
             $access->setLostArticle($title,$category,$comment,$imageDirectory,$student);
-//            header();
+            header('Location: /php/HalStudentWorks/web/home.php');
         }else {
             $msg = 'アップロードに失敗しました';
         }

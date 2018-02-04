@@ -484,6 +484,25 @@ class DataAccess
   }
 
     /**
+     * 曜日ごとの教室情報を取得するメソッド
+     *
+     * @param $classNo
+     * @return array
+     */
+  public function getSchedule($classNo){
+      $sql='SELECT * FROM schedule ';
+      $sql.='where schedule_weekNo =:weekNo AND schedule_no =:classNo ';
+      $sql.='order by schedule_no,schedule_weekNo,schedule_limit';
+      $stmt = self::$dbCon->prepare($sql);
+      $stmt->bindValue(":weekNo",$date = date('w'), PDO::PARAM_INT);
+      $stmt->bindValue(":classNo",$classNo, PDO::PARAM_INT);
+      $stmt->execute();
+      $row = $stmt->fetchAll(PDO::FETCH_ASSOC);
+
+      return $row;
+  }
+
+    /**
      * 登録されているデータをカウントするメソッド
      *
      * @param $table カウントするテーブル名
@@ -674,6 +693,94 @@ class DataAccess
 
       $stmt->execute();
   }
+
+    /**
+     * @param $request
+     * @param $limit
+     * @param $student
+     * @return bool
+     */
+  public function setRequestClassRoom($request,$limit,$student){
+
+      $user=explode(":",$student);
+      $no=null;
+      $status =0;
+      $requestDate = '2018-02-06';
+      $teacherNo = '1';
+      $sql = "INSERT INTO reservation (reservation_no, reservation_classRoom, roomlimit, student, reservation_status, request_date ,date, responsibility) ";
+      $sql.= " VALUES (:no,:requestNo,:limit,:student,:status,:requestDate,:today,:responsibility)";
+      $stmt =self::$dbCon->prepare($sql);
+      $stmt->bindValue(":no",$no, PDO::PARAM_INT);
+      $stmt->bindValue(":requestNo",$request, PDO::PARAM_INT);
+      $stmt->bindValue(":limit",$limit, PDO::PARAM_INT);
+      $stmt->bindValue(":student",$user[0], PDO::PARAM_STR);
+      $stmt->bindValue(":status", $status, PDO::PARAM_INT);
+      $stmt->bindValue(":requestDate",$requestDate, PDO::PARAM_STR);
+      $stmt->bindValue(":today", $date = date("Y/m/d"), PDO::PARAM_STR);
+      $stmt->bindValue(":responsibility",$teacherNo, PDO::PARAM_INT);
+
+      $row=$stmt->execute();
+      $this->updateRequestClassRoom(2,$request,$limit);
+      return $row;
+  }
+
+    /**
+     * @param $status
+     * @param $schedule
+     * @param $limit
+     * @return bool
+     */
+  private function updateRequestClassRoom($status,$schedule,$limit){
+      $sql = " UPDATE schedule SET status = :status where schedule_no = :schedule AND schedule_weekNo = :weekNo AND schedule_limit =:limit ";
+      $stmt =self::$dbCon->prepare($sql);
+      $stmt->bindValue(":status",$status, PDO::PARAM_INT);
+      $stmt->bindValue(":schedule",$schedule, PDO::PARAM_INT);
+      $stmt->bindValue(":weekNo",$date = date('w'), PDO::PARAM_INT);
+      $stmt->bindValue(":limit",$limit, PDO::PARAM_INT);
+
+      $row=$stmt->execute();
+
+      return $row;
+  }
+
+  public function getRequestRoom($student){
+      $user=explode(":",$student);
+      $sql='SELECT * FROM reservation ';
+      $sql.='inner join student_account student ';
+      $sql.='on student.student_No = reservation.student ';
+      $sql.='inner join teacher_account teacher ';
+      $sql.='on teacher.teacher_No = reservation.responsibility ';
+      $sql.='where reservation.student =:student;';
+      $stmt = self::$dbCon->prepare($sql);
+      $stmt->bindValue(":student",$user[0], PDO::PARAM_STR);
+      $stmt->execute();
+      $row = $stmt->fetchAll(PDO::FETCH_ASSOC);
+
+      return $row;
+  }
+
+  public function getAttend($student){
+        $user=explode(":",$student);
+        $sql='SELECT * FROM attend ';
+        $sql.='inner join teacher_account teacher ';
+        $sql.='on teacher.teacher_no = attend.teacher_code ';
+        $sql.='inner join student_account student ';
+        $sql.='on student.student_no = attend.student_no ';
+        $sql.='inner join subject ';
+        $sql.='on subject.subject_code = attend.subject_code ';
+        $sql.='WHERE attend.student_no =:student;';
+        $stmt = self::$dbCon->prepare($sql);
+        $stmt->bindValue(":student",$user[0], PDO::PARAM_STR);
+        $stmt->execute();
+        $row = $stmt->fetchAll(PDO::FETCH_ASSOC);
+
+        return $row;
+
+
+
+
+
+    }
 
 }
 

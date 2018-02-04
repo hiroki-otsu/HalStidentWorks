@@ -24,7 +24,7 @@ $totalPage = ceil($total / EVENT_PAGE);
 <html lang="ja">
 <head>
 <meta charset="utf-8">
-    <title>HAL学生管理システム|イベント掲示板</title>
+    <title>イベント掲示板</title>
     <link type="text/css" rel="stylesheet" href="css/reset/html5reset-1.6.1.css" />
     <link type="text/css" rel="stylesheet" href="css/materialize.min.css"  media="screen,projection"/>
     <link type="text/css" rel="stylesheet" href="css/materialize.min.css" />

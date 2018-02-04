@@ -50,6 +50,7 @@ if($flg){
     $date=str_replace($search,'/',$date);
     $date=str_replace('日','',$date);
     $access->setEvent($title,$category,$schoolYear,$content,$date,$student=$session->get('ohs50054'));
+    header('Location: /php/HalStudentWorks/web/home.php');
 }else {
 
 }

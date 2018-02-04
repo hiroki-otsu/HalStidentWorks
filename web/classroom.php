@@ -110,16 +110,28 @@ $totalPage = ceil($total/CLASSROOM_PAGE);
                 </tr>
                 </thead>
                 <?php  $classRoom = $access->getClassRoomDataList($page,CLASSROOM_PAGE)?>
-                <?php  for ($i =0; $i<count($classRoom);$i++){
-                    echo '<tr>';
-                    echo '<td>'.$classRoom[$i]['class'].'</td>'.PHP_EOL;
-                    echo '<td>'.$classRoom[$i]['lan'].'</td>'.PHP_EOL;
-                    echo '<td>'.$classRoom[$i]['power'].'</td>'.PHP_EOL;
-                    echo '<td>'.$classRoom[$i]['size'].'</td>'.PHP_EOL;
-                    echo '<td><a class="waves-effect waves-light btn modal-trigger" href="#'.$classRoom[$i]['class'].'">確認</a></td>';
-                    echo '</tr>';
-                }?>
+                <?php  for ($i =0; $i<count($classRoom);$i++) :?>
+                <tr>
+                    <td><?php echo $classRoom[$i]['class'] ?></td>
+                    <td><?php echo $classRoom[$i]['lan'] ?></td>
+                    <td><?php echo $classRoom[$i]['power'] ?></td>
+                    <td><?php echo $classRoom[$i]['size'] ?></td>
+                    <td><a class="waves-effect waves-light btn modal-trigger" href="#modal" data-class="#<?php echo $classRoom[$i]['class']?>">確認</a></td>
+                </tr>
+                <?php endfor; ?>
             </table>
+
+            <!-- Modal Structure -->
+            <div id="modal" class="modal modal-fixed-footer">
+                <div class="modal-content">
+                    <table id="limit" class="centered highlight">
+
+                    </table>
+                </div>
+                <div class="modal-footer">
+                    <a href="#!" class="modal-action modal-close waves-effect waves-green btn-flat ">Close</a>
+                </div>
+            </div>
         </div>
         <!--  ページング機能  -->
         <div id="page">
@@ -149,5 +161,7 @@ $totalPage = ceil($total/CLASSROOM_PAGE);
 </div><!-- wrapper -->
 <script type="text/javascript" src="jq/jquery-3.2.1.min.js"></script>
 <script type="text/javascript" src="js/materialize.min.js"></script>
+<script type="text/javascript" src="js/schedule-list.js"></script>
+<script type="text/javascript" src="js/model.js"></script>
 </body>
 </html>

@@ -14,7 +14,7 @@ define('EVENT_JOIN',4);
 <html lang="ja">
 <head>
 <meta charset="utf-8">
-    <title>HAL学生管理システム|</title>
+    <title>HOME</title>
     <link type="text/css" rel="stylesheet" href="css/reset/html5reset-1.6.1.css" />
     <link type="text/css" rel="stylesheet" href="css/materialize.min.css"  media="screen,projection"/>
     <link type="text/css" rel="stylesheet" href="css/materialize.min.css" />
@@ -161,11 +161,14 @@ define('EVENT_JOIN',4);
                         <th id="subject">出席率</th>
                     </tr>
                     <tbody>
+                    <?php $attend = $access->getAttend($student)?>
+                    <?php foreach ($attend as $value) :?>
                     <tr>
-                        <td class="code">JV34</td>
-                        <td class="name">JavaプログラミングⅣ</td>
-                        <td class="score"></td>
+                        <td class="code"><?php echo $value['subject_code']?></td>
+                        <td class="name"><?php echo $value['subject_name']?></td>
+                        <td class="score"><?php echo $value['attendance_rate']?></td>
                     </tr>
+                    <?php endforeach; ?>
                     </tbody>
                     </thead>
                 </table>
@@ -274,31 +277,33 @@ define('EVENT_JOIN',4);
                             <th>日時</th>
                             <th>限目</th>
                             <th>申請日</th>
+                            <th>責任者</th>
                             <th>ステータス</th>
                         </tr>
                         </thead>
                         <tbody>
+                        <?php $requestRoom= $access->getRequestRoom($student) ?>
+                        <?php foreach ($requestRoom as $value): ?>
                         <tr>
-                            <td>182</td>
-                            <td>2018/02/05</td>
-                            <td>4限目</td>
-                            <td>2018/02/04</td>
-                            <td><img src="image/icon/check-circle.png" width="24px" href="24px" alt="承認">承認</td>
+                            <td><?php echo $value['reservation_classRoom'] ?></td>
+                            <td><?php echo  $value['request_date']?></td>
+                            <td><?php echo $value['roomlimit']?>限目</td>
+                            <td><?php echo  $value['date']?></td>
+                            <td><?php echo  $value['teacher_name']?></td>
+                            <?php switch ($value['reservation_status']) {
+                                case 0:
+                                    echo '<td><img src="image/icon/send.png" width="24px" href="24px" alt="承認">申請中</td>';
+                                    break;
+                                case 1:
+                                    echo '<td><img src="image/icon/check-circle.png" width="24px" href="24px" alt="承認">承認</td>';
+                                    break;
+                                case 2:
+                                    echo '<td><img src="image/icon/close-circle.png" width="24px" href="24px" alt="承認">非承認</td>';
+                                    break;
+                            }
+                            ?>
                         </tr>
-                        <tr>
-                            <td>182</td>
-                            <td>2018/02/05</td>
-                            <td>4限目</td>
-                            <td>2018/02/04</td>
-                            <td><img src="image/icon/send.png" width="24px" href="24px" alt="承認">申請中</td>
-                        </tr>
-                        <tr>
-                            <td>182</td>
-                            <td>2018/02/05</td>
-                            <td>4限目</td>
-                            <td>2018/02/04</td>
-                            <td><img src="image/icon/close-circle.png" width="24px" href="24px" alt="承認">非承認</td>
-                        </tr>
+                        <?php endforeach; ?>
                         </tbody>
                     </table>
                 </div>
@@ -343,7 +348,7 @@ define('EVENT_JOIN',4);
                 <i class="material-icons left">help</i><h5>お問い合わせ</h5>
             </div>
             <div id="contact">
-
+                <h5>何か破損している場合やなどはここに入力して下さい。</h5>
             </div>
             <form action="contact.php" method="get">
                 <div class="input-field" id="contact-title">

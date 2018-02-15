@@ -40,12 +40,11 @@ class Session
   {
     $_SESSION = array();
   }
-  /**
-   *セッションIDを新しく発行するメソッド
-   *
-   * @param  boolean $destroy [description]
-   * @return [type]           [description]
-   */
+    /**
+     * セッションIDを新しく発行するメソッド
+     *
+     * @param bool $destroy
+     */
   public function regenerate($destroy = true)
   {
     if (!self::$sessionIdRegenerated) {
@@ -65,11 +64,12 @@ class Session
 
     $this->regenerate();
   }
-  /**
-   * ログイン状態を制御するメソッド
-   *
-   * @param string $value [description]
-   */
+
+    /**
+     * ログイン状態を制御するメソッド
+     *
+     * @return null
+     */
   public function isAuthenticated()
   {
     return $this->get('_authenticated',false);

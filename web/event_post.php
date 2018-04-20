@@ -12,15 +12,14 @@ $access = new DataAccess();
 <html lang="ja">
 <head>
 <meta charset="utf-8">
-<title>イベント投稿</title>
-<link type="text/css" rel="stylesheet" href="css/reset/html5reset-1.6.1.css" />
-<link type="text/css" rel="stylesheet" href="css/materialize.min.css"  media="screen,projection"/>
-<link type="text/css" rel="stylesheet" href="css/themes/default.css">
-<link type="text/css" rel="stylesheet" href="css/themes/default.date.css">
-<link type="text/css" rel="stylesheet" href="css/materialize.min.css" />
-<link type="text/css" rel="stylesheet" href="css/design/design_format.css" />
-<link type="text/css" rel="stylesheet" href="css/design/design_events_post.css" />
-<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet" />
+    <title>イベント投稿</title>
+    <link type="text/css" rel="stylesheet" href="css/reset/html5reset-1.6.1.css" />
+    <link type="text/css" rel="stylesheet" href="css/materialize.min.css"  media="screen,projection"/>
+    <link type="text/css" rel="stylesheet" href="css/materialize.min.css" />
+    <link type="text/css" rel="stylesheet" href="css/sweetalert.css" />
+    <link type="text/css" rel="stylesheet" href="css/design/design_format.css" />
+    <link type="text/css" rel="stylesheet" href="css/design/design_events_post.css" />
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet" />
 </head>
 <body>
 <div id="wrapper">
@@ -48,7 +47,7 @@ $access = new DataAccess();
             </div>
         </div><!-- end header -->
         <div id="event">
-          <form action="event.php" method="get">
+          <form method="post">
 
               <div class="input-field" id="even-title">
                   <input id="event-name" type="text" class="validate" name="title">
@@ -57,11 +56,11 @@ $access = new DataAccess();
               <div class="input-field" id="category">
                   <select name="category">
                       <option value="" disabled selected>Choose your option</option>
-                      <option value="1">ゲーム</option>
-                      <option value="3">デザイン</option>
-                      <option value="4">ミュージック</option>
-                      <option value="5">IT</option>
-                      <option value="6">その他</option>
+                      <option value="0">ゲーム</option>
+                      <option value="1">デザイン</option>
+                      <option value="2">ミュージック</option>
+                      <option value="3">IT</option>
+                      <option value="4">その他</option>
                   </select>
                   <label>Category Select</label>
               </div>
@@ -89,7 +88,7 @@ $access = new DataAccess();
               </div>
 
               <div id="send">
-                  <button class="btn waves-effect waves-light"  id="btn-send" type="submit" >イベントを投稿
+                  <button class="btn waves-effect waves-light sweet"id="btn-send" type="button" >イベントを投稿
                       <i class="material-icons right">send</i>
                   </button>
               </div>
@@ -102,6 +101,8 @@ $access = new DataAccess();
 </div><!-- end wrapper -->
 <script type="text/javascript" src="jq/jquery-3.2.1.min.js"></script>
 <script type="text/javascript" src="js/check.js"></script>
+<script type="text/javascript" src="js/sweetalert.min.js"></script>
+<script type="text/javascript" src="js/event.js"></script>
 <script type="text/javascript" src="js/materialize.min.js"></script>
 <script type="text/javascript" src="js/legacy.js"></script>
 <script type="text/javascript" src="js/lang-ja.js"></script>

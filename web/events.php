@@ -54,7 +54,7 @@ $totalPage = ceil($total / EVENT_PAGE);
                 <h2>HAL Students System</h2>
             </div>
             <div id="user">
-                <p><a href="home.php"><img src="image/icon/ic_person_black_24dp_1x.png" width="24" height="24" alt="アカウント"/><?php echo $session->get('ohs50054')?></a></p>
+                <p><a href="home.php"><img src="image/icon/ic_person_black_24dp_1x.png" width="24" height="24" alt="アカウント"/><?php echo $student=$session->get('ohs50054')?></a></p>
             </div>
         </div><!-- end header -->
         <div id="eventpost">
@@ -76,21 +76,23 @@ $totalPage = ceil($total / EVENT_PAGE);
                     <th class="events_name">イベント名</th>
                     <th class="school_year">対象学年</th>
                     <th class="events_date">開催日</th>
+                    <th class="events_date">カテゴリー</th>
                     <th class="details_link">詳細</th>
                 </tr>
                 </thead>
                 <tbody>
-                    <?php  $event=$access -> getEventsInformation($page,EVENT_PAGE); ?>
-                    <?php foreach ($event as $value):?>
+                    <?php  $event=$access -> getEventsInformation($student,$page,EVENT_PAGE); ?>
+                    <?php for ($i =0; $i<count($event);$i++) :?>
                     <tr>
-                        <td class="events_name"><?php echo $value['events_title'].PHP_EOL?></td>
-                        <td class="school_year"><?php echo $value['events_target'].PHP_EOL?></td>
-                        <td class="events_date"><?php echo $value['events_date'].PHP_EOL?></td>
-                        <td class="details_link"><a href="events_details.php?event=<?php echo $value['events_no'].PHP_EOL?>">
-                            <img src="image/icon/ic_expand_more_black_24dp_1x.png" width="24" height="24" alt="詳細リンク" /></a>
+                        <td class="events_name"><?php echo $event[$i]['title'].PHP_EOL?></td>
+                        <td class="school_year"><?php echo $event[$i]['target'].PHP_EOL?></td>
+                        <td class="events_date"><?php echo $event[$i]['date'].PHP_EOL?></td>
+                        <td class="events_date"><?php echo $event[$i]['category'].PHP_EOL?></td>
+                        <td class="details_link"><a href="events_details.php?event=<?php echo $event[$i]['link'].PHP_EOL?>&details=date">
+                                <img src="image/icon/ic_expand_more_black_24dp_1x.png" width="24" height="24" alt="詳細リンク" /></a>
                         </td>
                     <tr>
-                    <?php endforeach;?>
+                    <?php endfor;?>
                 </tbody>
             </table>
         </div>
@@ -101,8 +103,8 @@ $totalPage = ceil($total / EVENT_PAGE);
                 <?php if ($page > 1) : ?>
                     <li class="disabled"><a href="?page=<?php echo $page - 1; ?>"><i class="material-icons">chevron_left</i></a></li>
                 <?php endif; ?>
-                <!-- トータル件数が6件より少ない場合はページングを表示させない -->
-                <?php if($totalPage>EVENT_PAGE): ?>
+                <!-- トータル件数が10件より少ない場合はページングを表示させない -->
+                <?php if($totalPage<>EVENT_PAGE): ?>
                     <?php for ($i=1 ; $i <= $totalPage; $i++): ?><!-- ページングを表示させる処理 -->
                         <?php if($page == $i) :?>
                             <li class="active"><a href="?page=<?php echo $i; ?>"><?php echo $i; ?></a></li>

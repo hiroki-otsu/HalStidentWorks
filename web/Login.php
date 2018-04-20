@@ -1,40 +1,34 @@
 <?php
-//エラー表示
 error_reporting(E_ALL | E_STRICT);
 ini_set('display_errors','On');
-//外部ファイル読み込み
 require '../bootstrap.php';
-//インスタンス化
 $session = new Session();
 $request = new Request();
 $access = new DataAccess();
 $error = new Errors();
 if ($request->isPost()) {
 
-    if ($request->getPost('student')){
-         $studentNo=$request->getPost('student');
-    }
-    else{
+    $student=$request->getPost('student');
+    $pass = $request->getPost('pass');
+    $flg = true;
+    if (empty($student)){
         $error->setErrors('ユーザIDが入力されていません');
+        $flg = false;
     }
-    if($request->getPost('pass')){
-        $passWord=$request->getPost('pass');
-    }else {
+    if(empty($pass)){
         $error->setErrors('パスワードが入力されていません');
+        $flg = false;
     }
-
-    if(isset($studentNo) && isset($passWord)){
-        $user = $access->getLoginUserInformation($studentNo);
-        if(password_verify($passWord,$user[1])){
-            $userName = $studentNo.':'.$user[0];
-            $session ->set($studentNo,$userName);
+    if ($flg){
+        $user = $access->getLoginUserInformation($student);
+        if(password_verify($pass,$user[1])){
+            $userName = $student.':'.$user[0];
+            $session ->set($student,$userName);
             header('Location: /php/HalStudentWorks/web/home.php');
         }
-        else{
-            $error->setErrors('パスワードかユーザIDが間違っています');
-        }
+    }else{
+        $error->setErrors('パスワードかユーザIDが間違っています');
     }
-    else{
-        header('Location: '.$_SERVER['HTTP_REFERER']);
-    }
+}else{
+    header('Location: '.$_SERVER['HTTP_REFERER']);
 }

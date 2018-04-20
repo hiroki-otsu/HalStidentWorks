@@ -75,7 +75,7 @@ $totalPage = ceil($total / LOST_ARTICLE_PAGE);
                         </dl>
                     </div>
                     <div class="card-content">
-                        <?php  echo $lostArticle[$i]['comment']?>
+                        <?php  echo nl2br($lostArticle[$i]['comment']);?>
                     </div>
                     <div class="card-link">
                         <!-- Modal Trigger -->

@@ -1,5 +1,7 @@
 <?php
 /**
+ * 入力されたイベント情報を登録するphpファイル
+ *
  * Created by PhpStorm.
  * User: hiro
  * Date: 2018/01/12
@@ -16,41 +18,49 @@ $request = new Request();
 $access = new DataAccess();
 $error = new Errors();
 
-$title=$request->getGet('title');
-$category=$request->getGet('category');
-$date=$request->getGet('eventDate');
-$target=$request->getGet('target');
-$content=$request->getGet('content');
+$title=$request->getPost('title');
+$category=$request->getPost('category');
+$date=$request->getPost('date');
+$target=$request->getPost('target');
+$content=$request->getPost('content');
 
 $flg=true;
 
-if(empty($title)){
-    $flg=false;
-}
-if(empty($category)){
-    $flg=false;
-}
-if(empty($date)){
-    $flg=false;
-}
-if(empty($target)){
-    $flg=false;
-}
-if(empty($content)){
-    $flg=false;
-}
-if($flg){
-    for ($i=0;$i<count($target);$i++){
-        $schoolYear=$target[$i].'年生';
-        if(isset($target[$i+1])){
-            $schoolYear.=',';
-        }
+if($request->isPost()){
+    if(empty($title)){
+        $flg=false;
+        echo 'タイトル';
     }
-    $search = array('年','月');
-    $date=str_replace($search,'/',$date);
-    $date=str_replace('日','',$date);
-    $access->setEvent($title,$category,$schoolYear,$content,$date,$student=$session->get('ohs50054'));
-    header('Location: /php/HalStudentWorks/web/home.php');
-}else {
-
+    if(empty($category)){
+        echo 'カテゴリー';
+        $flg=false;
+    }
+    if(empty($date)){
+        echo '開催日';
+        $flg=false;
+    }
+    if(empty($target)){
+        echo '対象学年';
+        $flg=false;
+    }
+    if(empty($content)){
+        echo '内容';
+        $flg=false;
+    }
+    if($flg){
+        $schoolYear=null;
+        for ($i=0;$i<count($target);$i++){
+            $schoolYear.=$target[$i].'年生';
+            if(isset($target[$i+1])){
+                $schoolYear.=',';
+            }
+        }
+        $search = array('年','月');
+        $date=str_replace($search,'/',$date);
+        $date=str_replace('日','',$date);
+        $result=$access->setEvent($title,$category,$schoolYear,$content,$date,$student=$session->get('ohs50054'));
+        echo json_encode($result);
+    }else {
+        echo 'エラー';
+    }
 }

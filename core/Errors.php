@@ -5,7 +5,7 @@ class errors
     protected $errors = array();
 
     public function setErrors($errorMsg){
-        $this->errors[] ='<li>'.$errorMsg.'</li>';
+        $this->errors[] =$errorMsg;
     }
 
     public function  getErrors(){

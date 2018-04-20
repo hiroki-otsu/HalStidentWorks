@@ -86,7 +86,7 @@ $totalPage = ceil($total / TEACHER_PAGE);
                 <td class='teacher-name'><?php echo $teacher[$i]['teacher']?></td>
                 <td class='teacher-enrollment'><?php echo $teacher[$i]['lampCharacter']?></td>
                 <td class='teacher-lamp'><div id='<?php echo $teacher[$i]['lampColor'] ?>'></td>
-                <td class='teacher-date'><?php echo $teacher[$i]['date']?></td>
+                <td class='teacher-date'><?php echo $teacher[$i]['timestamp']?></td>
             </tr>
         <?php endfor; ?>
         </tbody>

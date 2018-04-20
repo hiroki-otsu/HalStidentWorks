@@ -1,10 +1,8 @@
 <?php
-//エラー表示
 error_reporting(E_ALL | E_STRICT);
 ini_set('display_errors','On');
-//外部ファイル読み込み
 require '../bootstrap.php';
-//インスタンス化
+$error = new Errors();
 ?>
 <!DOCTYPE html>
 <html lang="ja">
@@ -26,25 +24,21 @@ require '../bootstrap.php';
     </div><!-- end header -->
     <div id="contents">
         <div id="login-form">
-
             <ul class="collection with-header">
                 <li class="collection-item">ログインフォーム</li>
                 <li class="collection-item">
                     <form action="Login.php" method="post">
                         <div id="error-msg">
                             <ul>
-                                <?php
-                                $error = new Errors();
-                                $error->getErrors();
-                                ?>
+                                <?php $error->getErrors(); ?>
                             </ul>
                         </div>
                         <div class="input-field" id="login-student">
-                            <input id="user" type="text" name="student" value="" class="validate">
+                            <input id="user" type="text" name="student" class="validate">
                             <label for="user">ユーザID</label>
                         </div>
                         <div class="input-field" id="login-pass">
-                            <input id="pass" type="password" name="pass" value="" class="validate">
+                            <input id="pass" type="password" name="pass"class="validate">
                             <label for="pass">パスワード</label>
                         </div>
                         <button class="btn waves-effect waves-light" type="submit" name="action" id="btn-login">ログイン
@@ -55,11 +49,7 @@ require '../bootstrap.php';
             </ul>
         </div>
     </div><!-- end contents -->
-    <div id="footer">
-        <footer>2017 HAL Students System</footer>
-    </div><!-- footer -->
 </div><!-- end wrapper -->
-
 <script type="text/javascript" src="jq/jquery-3.2.1.min.js"></script>
 <script type="text/javascript" src="js/materialize.min.js"></script>
 </body>

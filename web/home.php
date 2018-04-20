@@ -1,14 +1,10 @@
 <?php
-//エラー表示
 error_reporting(E_ALL | E_STRICT);
 ini_set('display_errors','On');
-//外部ファイル読み込み
 require '../bootstrap.php';
-//インスタンス化
 $session = new Session();
 $access = new DataAccess();
-define('EVENT_HISTORY',2);
-define('EVENT_JOIN',4);
+define('EVENT_HISTORY',3);
 ?>
 <!DOCTYPE html>
 <html lang="ja">
@@ -37,15 +33,15 @@ define('EVENT_JOIN',4);
                     <li class="menubar"><a href="lost_article_list.php"><img src="image/icon/ic_live_help_black_24dp_1x.png" width="24" height="24" alt="忘れ物掲示板"/>拾得物</a></li>
                     <li class="menubar"><a href="classroom.php"><img src="image/icon/ic_search_black_24dp_1x.png" width="24" height="24" alt="教室予約"/>教室検索・予約</a></li>
                 </ul>
-            </div>
-        </div>
+            </div><!-- end menu -->
+        </div><!-- end nav -->
         <div id="header">
             <div id="title">
                 <h2>HAL Students System</h2>
-            </div>
+            </div><!-- end title -->
             <div id="user">
                 <p><a href="home.php"><img src="image/icon/ic_person_black_24dp_1x.png" width="24" height="24" alt="アカウント"/><?php echo $student=$session->get('ohs50054')?></a></p>
-            </div>
+            </div><!-- end user -->
         </div><!-- end header -->
         <div>
             <ul class="tabs">
@@ -71,82 +67,36 @@ define('EVENT_JOIN',4);
                         <th id="subjectScore">点数</th>
                         <th id="subjectRating">評定</th>
                     </tr>
+                    </thead>
                     <tbody>
-                    <?php $dataList =$access -> getLessonDataList() ?>
+                    <?php $dataList =$access -> getLessonDataList($student) ?>
                     <?php foreach($dataList as $value):?>
                         <tr>
                             <td class="code"><?php echo $value['subject_code']?></td>
                             <td class="name"><?php echo $value['subject_name']?></td>
                             <td class="score">
-                                <a class="waves-effect waves-light modal-trigger" href="#0<?php echo $value['subject_code']?>">
+                                <a class="waves-effect waves-light modal-trigger" href="#modal1" data-subject="0#<?php echo $value['subject_code']?>">
                                     <img src="image/icon/ic_expand_more_black_24dp_1x.png" width="24" height="24" alt="" />
                                 </a>
                             </td>
                             <td class="rating">
-                                <a class="waves-effect waves-light modal-trigger" href="#1<?php echo $value['subject_code']?>">
+                                <a class="waves-effect waves-light modal-trigger" href="#modal1" data-subject="1#<?php echo $value['subject_code']?>">
                                     <img src="image/icon/ic_expand_more_black_24dp_1x.png" width="24" height="24" alt="" />
                                 </a>
                             </td>
                         </tr>
                     <?php endforeach;?>
                     </tbody>
-                    </thead>
                 </table>
+                <div class="modal modal-fixed-footer" id="modal1">
+                    <div class="modal-content" id="achievementData">
+
+                    </div>
+                    <div class="modal-footer">
+                        <a href="#!" class="modal-action modal-close waves-effect waves-green btn-flat ">Close</a>
+                    </div>
+                </div>
             </div>
-            <?php
-            $dataList =$access -> getAchievementDataList();
-            for ($i=0;$i<count($dataList);$i++){
-                switch ($dataList[$i]['task_status']) {
-                    case 0:
-                        echo '<div id="0' . $dataList[$i]['subject_code'] . '" class="modal modal-fixed-footer">';
-                        echo '<div class="modal-content">';
-                        echo '<h4>' . $dataList[$i]['subject_name'] . '[課題]</h4>';
-                        break;
-                    case 1:
-                        echo '<div id="1' . $dataList[$i]['subject_code'] . '" class="modal modal-fixed-footer">';
-                        echo '<div class="modal-content">';
-                        echo '<h4>' . $dataList[$i]['subject_name'] . '[評価]</h4>';
-                        break;
-                }?>
-                <table class="centered">
-                    <thead>
-                    <tr>
-                        <th>課題名</th>
-                        <th>点数</th>
-                    </tr>
-                    <tbody>
-                    <?php
-                    $flg = true;
-                    $count=0;
-                    $serial=0;
-                    ?>
-                    <tr>
-                        <td><?php echo $dataList[$i+$count]['task_name']?></td>
-                        <td><?php echo $dataList[$i+$count]['task_score']?></td>
-                    </tr>
-                    <?php
-                    while ($flg){
-                        $count++;
-                        if ($dataList[$i]['subject_code'] == $dataList[$serial+$count]['subject_code']){
-                        echo '<tr>';
-                        echo '<td>'.$dataList[$i+$count]['task_name'].'</td>';
-                        echo '<td>'.$dataList[$i+$count]['task_score'].'</td>';
-                        echo '</tr>';
-                        $serial++;
-                    }else{
-                        $flg = false;
-                        echo '</tbody>';
-                        echo '</thead>';
-                        echo '</table>';
-                        echo '</div>';
-                        echo '<div class="modal-footer">';
-                        echo '<a href="#!" class="modal-action modal-close waves-effect waves-green btn-flat ">Close</a>';
-                        echo '</div>';
-                        echo '</div>';
-                    }//else
-                }//if
-            }//for
-            ?>
         </div><!-- tab01-->
         <div id="test2">
             <div class="sub-title">
@@ -163,17 +113,18 @@ define('EVENT_JOIN',4);
                     <tbody>
                     <?php $attend = $access->getAttend($student)?>
                     <?php foreach ($attend as $value) :?>
-                    <tr>
-                        <td class="code"><?php echo $value['subject_code']?></td>
-                        <td class="name"><?php echo $value['subject_name']?></td>
-                        <td class="score"><?php echo $value['attendance_rate']?></td>
-                    </tr>
+                        <tr>
+                            <td class="code"><?php echo $value['subject_code']?></td>
+                            <td class="name"><?php echo $value['subject_name']?></td>
+                            <td class="score"><?php echo $value['attendance_rate']?></td>
+                        </tr>
                     <?php endforeach; ?>
                     </tbody>
                     </thead>
                 </table>
             </div>
         </div><!-- tab02 -->
+
         <div id="test3">
             <div class="sub-title">
                 <i class="material-icons left">mail</i><h5>メッセージ一覧</h5>
@@ -211,8 +162,8 @@ define('EVENT_JOIN',4);
                     <div class="modal-content">
                         <ul class="collection with-header">
                             <li class="collection-item"><h6>Title:</h6><p><?php echo $mail['message_title']?></p></li>
-                            <li class="collection-item"><h6>From:</h6><p><?php echo $mail['teacher_name']?><<?php echo $mail['message_From']?>></p></li>
-                            <li class="collection-item"><h6>To:</h6><p><?php echo $mail['Student_Name']?><<?php echo $mail['message_To']?>></p></li>
+                            <li class="collection-item"><h6>From:</h6><p><?php echo $mail['teacher_name']?>＜<?php echo $mail['message_From']?>＞</p></li>
+                            <li class="collection-item"><h6>To:</h6><p><?php echo $mail['Student_Name']?>＜<?php echo $mail['message_To']?>＞</p></li>
                             <li class="collection-item"><h6>日時:</h6><p><?php echo $mail['date']?></p></li>
                             <li class="collection-item"><div class="message"><?php echo nl2br($mail['message_content'])?></div></li>
                         </ul>
@@ -225,7 +176,7 @@ define('EVENT_JOIN',4);
         </div><!-- tab03-->
         <div id="test4">
             <div id="schedule">
-                <?php $schedule=$access->getEventsSchedule($student,EVENT_HISTORY)?>
+                <?php $schedule=$access->getEventsSchedule($student)?>
                 <dl>
                     <dt><i class="material-icons left">insert_invitation</i><h5>イベント参加スケジュール</h5></dt>
                     <?php foreach ($schedule as $value):?>
@@ -240,28 +191,28 @@ define('EVENT_JOIN',4);
                 </dl>
             </div>
             <div id="event-relation">
-                <?php $join = $access->getEventsSchedule($student,EVENT_JOIN)?>
+                <?php $join = $access->getEventsHistory($student,EVENT_HISTORY)?>
                 <dl>
                     <dt><i class="material-icons left">access_time</i><h5>イベント参加履歴</h5></dt>
                     <?php foreach ($join as $value):?>
-                    <dd><a class="waves-effect waves-light btn text-cut" href="events_details.php?event=<?php echo $value['events_no']?>">
-                            <i class="material-icons left">chevron_right</i>
-                            <p><?php echo $value['events_title']?></p>
-                        </a>
-                    </dd>
+                        <dd><a class="waves-effect waves-light btn text-cut" href="events_details.php?event=<?php echo $value['events_no']?>">
+                                <i class="material-icons left">chevron_right</i>
+                                <p><?php echo $value['events_title']?></p>
+                            </a>
+                        </dd>
                     <?php endforeach;?>
                 </dl>
                 <?php $history=$access->getEventsPostHistory($student)?>
-                    <dl>
-                        <dt><i class="material-icons left">create</i><h5>イベント投稿履歴</h5></dt>
-                        <?php foreach ($history as $value) :?>
-                            <dd><a class="waves-effect waves-light btn text-cut" href="events_details.php?event=<?php echo $value['events_no']?>">
-                                    <i class="material-icons left">chevron_right</i>
-                                    <p><?php echo $value['events_title']?></p>
-                                </a>
-                            </dd>
-                        <?php endforeach;?>
-                    </dl>
+                <dl>
+                    <dt><i class="material-icons left">create</i><h5>イベント投稿履歴</h5></dt>
+                    <?php foreach ($history as $value) :?>
+                        <dd><a class="waves-effect waves-light btn text-cut" href="events_details.php?event=<?php echo $value['events_no']?>">
+                                <i class="material-icons left">chevron_right</i>
+                                <p><?php echo $value['events_title']?></p>
+                            </a>
+                        </dd>
+                    <?php endforeach;?>
+                </dl>
             </div>
         </div><!-- tab04-->
         <div id="test5">
@@ -284,25 +235,25 @@ define('EVENT_JOIN',4);
                         <tbody>
                         <?php $requestRoom= $access->getRequestRoom($student) ?>
                         <?php foreach ($requestRoom as $value): ?>
-                        <tr>
-                            <td><?php echo $value['reservation_classRoom'] ?></td>
-                            <td><?php echo  $value['request_date']?></td>
-                            <td><?php echo $value['roomlimit']?>限目</td>
-                            <td><?php echo  $value['date']?></td>
-                            <td><?php echo  $value['teacher_name']?></td>
-                            <?php switch ($value['reservation_status']) {
-                                case 0:
-                                    echo '<td><img src="image/icon/send.png" width="24px" href="24px" alt="承認">申請中</td>';
-                                    break;
-                                case 1:
-                                    echo '<td><img src="image/icon/check-circle.png" width="24px" href="24px" alt="承認">承認</td>';
-                                    break;
-                                case 2:
-                                    echo '<td><img src="image/icon/close-circle.png" width="24px" href="24px" alt="承認">非承認</td>';
-                                    break;
-                            }
-                            ?>
-                        </tr>
+                            <tr>
+                                <td><?php echo $value['reservation_classRoom'] ?></td>
+                                <td><?php echo  $value['request_date']?></td>
+                                <td><?php echo $value['roomlimit']?>限目</td>
+                                <td><?php echo  $value['date']?></td>
+                                <td><?php echo  $value['teacher_name']?></td>
+                                <?php switch ($value['reservation_status']) {
+                                    case 0:
+                                        echo '<td><img src="image/icon/send.png" width="24px" href="24px" alt="承認">申請中</td>';
+                                        break;
+                                    case 1:
+                                        echo '<td><img src="image/icon/check-circle.png" width="24px" href="24px" alt="承認">承認　</td>';
+                                        break;
+                                    case 2:
+                                        echo '<td><img src="image/icon/close-circle.png" width="24px" href="24px" alt="承認">非承認</td>';
+                                        break;
+                                }
+                                ?>
+                            </tr>
                         <?php endforeach; ?>
                         </tbody>
                     </table>
@@ -316,24 +267,22 @@ define('EVENT_JOIN',4);
             <div id="expiration-date">
                 <h5>パスワード有効期限:
                     <?php $limitDate=$access->getLimitPassWord('ohs50054');?>
-                        <?php $limit=explode("-",$limitDate[0]);?>
-                    <?php echo $limit[0]?>年
-                    <?php echo $limit[1]?>月
-                    <?php echo $limit[2]?>日
+                    <?php $limit=explode("-",$limitDate[0]);?>
+                    <?php echo $limit[0]?>年<?php echo $limit[1]?>月<?php echo $limit[2]?>日
                 </h5>
             </div>
             <div id="pass">
                 <form action="password_change.php" method="post">
                     <div class="input-field " id="current">
-                        <input id="password" type="password" class="validate" name="current">
+                        <input class="password" type="password" class="validate" name="current">
                         <label for="password">現在のパスワード</label>
                     </div>
                     <div class="input-field " id="new">
-                        <input id="password" type="password" class="validate" name="new">
+                        <input class="password" type="password" class="validate" name="new">
                         <label for="password">新しいパスワード</label>
                     </div>
                     <div class="input-field " id="confirmation">
-                        <input id="password" type="password" class="validate" name="confirmation">
+                        <input class="password" type="password" class="validate" name="confirmation">
                         <label for="password">新しいパスワード(確認)</label>
                     </div>
                     <button class="btn waves-effect waves-light" type="submit" name="action" id="btn-update">
@@ -371,16 +320,11 @@ define('EVENT_JOIN',4);
         <div id="footer">
             <footer>2017 HAL Students System</footer>
         </div><!-- footer -->
+
     </div><!-- end contents -->
 </div><!-- end wrapper -->
 <script type="text/javascript" src="jq/jquery-3.2.1.min.js"></script>
-<script type="text/javascript" src="js/check.js"></script>
-<script type="text/javascript" src="js/model.js"></script>
 <script type="text/javascript" src="js/materialize.min.js"></script>
-<script type="text/javascript" src="js/legacy.js"></script>
-<script type="text/javascript" src="js/lang-ja.js"></script>
-<script type="text/javascript" src="js/app.js"></script>
-<script type="text/javascript" src="js/picker.js"></script>
-<script type="text/javascript" src="js/picker.date.js"></script>
+<script type="text/javascript" src="js/home.js"></script>
 </body>
 </html>

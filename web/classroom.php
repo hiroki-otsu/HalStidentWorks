@@ -120,12 +120,14 @@ $totalPage = ceil($total/CLASSROOM_PAGE);
                 </tr>
                 <?php endfor; ?>
             </table>
-
             <!-- Modal Structure -->
             <div id="modal" class="modal modal-fixed-footer">
                 <div class="modal-content">
                     <table id="limit" class="centered highlight">
 
+                        <tbody>
+
+                        </tbody>
                     </table>
                 </div>
                 <div class="modal-footer">

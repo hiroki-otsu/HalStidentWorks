@@ -1,5 +1,8 @@
 # HalStidentWorks
   hal ポータルサイト
+
+# PHP version 5.6
+
 # core フォルダー (使用しているもの)
   * データベースに関するファイル
     * DataAccess.php 
